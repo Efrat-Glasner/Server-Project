@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../css/form.css";
-
+//
 function Register() {
   const location = useLocation();
   const navigate = useNavigate();
