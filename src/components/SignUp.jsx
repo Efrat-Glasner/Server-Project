@@ -1,42 +1,43 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/form.css";
-import { CurrentUser } from "../App";
 
-function Login() {
-  const [user, setUser] = useState({ name: "", password: "" });
+function Signup() {
+  const [user, setUser] = useState({ name: "", password: "", confirmPassword: "" });
   const [errorMessage, setErrorMessage] = useState("");
-  const {setCurrentUser } = useContext(CurrentUser);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (user.password !== user.confirmPassword) {
+      setErrorMessage("Passwords do not match.");
+      return;
+    }
+//
     try {
       const response = await fetch("http://localhost:3000/user");
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
       }
-      const users = await response.json();
-      const foundUser = users.find(
-        (u) => u.username === user.name && u.website === user.password
-      );
-      alert(foundUser.name);
 
-      if (foundUser) {
-        alert("Login successful!");
-        setCurrentUser({
-            name: foundUser.username,
-            password: foundUser.website
-          });
+      const users = await response.json();
+      const existingUser = users.find((u) => u.username === user.name);
+
+      if (existingUser) {
+        setErrorMessage("Username already exists.");
       } else {
-        setErrorMessage("Invalid username or password");
+        navigate("/register", { state: { username: user.name, password: user.password } });
       }
     } catch (error) {
       console.error("Error:", error);
       setErrorMessage("Something went wrong. Please try again later.");
     }
   };
+
   return (
-    <div className="login-container">
-      <h2>Login</h2>
+    <div className="signup-container">
+      <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">Username:</label>
@@ -58,11 +59,21 @@ function Login() {
             required
           />
         </div>
-        <button type="submit" className="login-button">Login</button>
+        <div className="form-group">
+          <label htmlFor="confirm-password">Confirm Password:</label>
+          <input
+            type="password"
+            id="confirm-password"
+            value={user.confirmPassword}
+            onChange={(e) => setUser({ ...user, confirmPassword: e.target.value })}
+            required
+          />
+        </div>
+        <button type="submit" className="signup-button">Signup</button>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </form>
     </div>
   );
 }
 
-export default Login;
+export default Signup;
