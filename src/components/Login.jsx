@@ -1,4 +1,3 @@
-//change to git
 
 import { useState, useContext } from "react";
 import "../css/form.css";
