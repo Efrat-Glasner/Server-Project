@@ -14,7 +14,7 @@ function Signup() {
       setErrorMessage("Passwords do not match.");
       return;
     }
-
+//
     try {
       const response = await fetch("http://localhost:3000/user");
       if (!response.ok) {
