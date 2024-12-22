@@ -249,6 +249,28 @@
         "catchPhrase": "",
         "bs": ""
       }
+    },
+   
+    {
+      "id": "947b",
+      "name": "אפרת גלסנר",
+      "email": "efratg2005@gmail.com",
+      "address": {
+        "street": "נחל שמשון",
+        "suite": "",
+        "city": "בית שמש",
+        "zipcode": "",
+        "geo": {
+          "lat": "",
+          "lng": ""
+        }
+      },
+      "phone": "0583221957",
+      "company": {
+        "name": "",
+        "catchPhrase": "",
+        "bs": ""
+      }
     }
   ],
   "todoes": [
