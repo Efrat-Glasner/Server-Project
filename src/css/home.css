@@ -1,0 +1,51 @@
+/* styles/Home.css */
+
+/* עיצוב קונטיינר של דף הבית */
+.home-container {
+    background-color: #f0f8ff;
+   margin: 0;
+  }
+  
+  /* עיצוב סרגל הניווט */
+  .home-navbar {
+    background-color: #333;
+    padding: 10px;
+  }
+  
+  .home-navbar-links {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .home-navbar-link {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+  }
+  
+  .home-navbar-link:hover {
+    color: #00d4ff;
+    cursor: pointer;
+  }
+  
+  /* עיצוב תוכן דף הבית */
+  .home-content {
+    text-align: center;
+    /* margin-top: 20px; */
+  }
+  
+  .home-content h1 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .home-content p {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  

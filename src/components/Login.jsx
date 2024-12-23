@@ -1,11 +1,14 @@
-import { useState, useContext } from "react";
+import { useState, useContext} from "react";
+import { useNavigate } from "react-router-dom";
+
 import "../css/form.css";
 import { CurrentUser } from "../App";
 //login
 function Login() {
   const [user, setUser] = useState({ name: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
-  const {setCurrentUser } = useContext(CurrentUser);
+  const { setCurrentUser } = useContext(CurrentUser);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,9 +26,15 @@ function Login() {
       if (foundUser) {
         alert("Login successful!");
         setCurrentUser({
-            name: foundUser.username,
-            password: foundUser.website
-          });
+          username: foundUser.username,
+          password: foundUser.website,
+          id: foundUser.id,
+          name:foundUser.name,
+          email:foundUser.email,
+          address:foundUser.address
+        });
+        navigate("/home");
+
       } else {
         setErrorMessage("Invalid username or password");
       }

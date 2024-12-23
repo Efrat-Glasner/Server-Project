@@ -21,7 +21,7 @@ function Register() {
     try {
       const newUser = {
         username,
-        website: password, // Store password in website field
+        website: password, 
         ...details,
       };
 
@@ -37,7 +37,7 @@ function Register() {
         throw new Error("Failed to create user");
       }
 
-      navigate("/login");
+      navigate("/home");
     } catch (error) {
       console.error("Error:", error);
       alert("Something went wrong. Please try again later.");
