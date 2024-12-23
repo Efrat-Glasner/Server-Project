@@ -230,42 +230,24 @@
         "bs": "target end-to-end models"
       }
     },
+   
     {
-      "id": "d29c",
-      "username": "glasner",
-      "password": "1111",
-      "name": "efrat-glasner",
-      "email": "efratg2005@gmail.com",
+      "id": "5631",
+      "username": "p",
+      "website": "p",
+      "name": "ppp",
+      "email": "p@p",
       "address": {
         "street": "",
         "suite": "",
-        "city": "",
-        "zipcode": ""
-      },
-      "phone": "",
-      "website": "",
-      "company": {
-        "name": "",
-        "catchPhrase": "",
-        "bs": ""
-      }
-    },
-   
-    {
-      "id": "947b",
-      "name": "אפרת גלסנר",
-      "email": "efratg2005@gmail.com",
-      "address": {
-        "street": "נחל שמשון",
-        "suite": "",
-        "city": "בית שמש",
+        "city": "po",
         "zipcode": "",
         "geo": {
           "lat": "",
           "lng": ""
         }
       },
-      "phone": "0583221957",
+      "phone": "8",
       "company": {
         "name": "",
         "catchPhrase": "",

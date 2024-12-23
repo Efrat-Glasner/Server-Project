@@ -1,10 +1,12 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect } from "react";
+// import React from "react";
+import { Link, useNavigate, useParams, Outlet } from "react-router-dom";
+import { useContext } from "react";
 
 import "../css/home.css";
 import { CurrentUser } from "../App";
 
 const Home = () => {
+  // eslint-disable-next-line no-unused-vars
   const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
   const navigate = useNavigate();
@@ -43,14 +45,15 @@ const Home = () => {
           <h2>User Info</h2>
           <p>Username: {currentUser.username}</p>
           <p>Email: {currentUser.email}</p>
-          <p>Address: {currentUser.address}</p>
-
+          <p>Address: {currentUser.address.street}, {currentUser.address.city}</p>
+          <p>Company: {currentUser.company.name}</p>
+          <p>Phone: {currentUser.phone}</p>
           {/* פרטים נוספים */}
         </div>
       )}
 
       {/* תצוגת נתיבים */}
-
+      <Outlet />
     </div>
   );
 };
