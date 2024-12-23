@@ -31,7 +31,9 @@ function Login() {
           id: foundUser.id,
           name:foundUser.name,
           email:foundUser.email,
-          address:foundUser.address
+          address:foundUser.address,
+          phone:foundUser.phone,
+          company:foundUser.company
         });
         navigate("/home");
 

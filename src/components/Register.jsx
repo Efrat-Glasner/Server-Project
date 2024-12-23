@@ -1,43 +1,60 @@
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../css/form.css";
-//
-function Register() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { username, password } = location.state || {};
+import { CurrentUser } from "../App";
 
+function Register() {
+  const {  setCurrentUser } = useContext(CurrentUser);
+  const navigate = useNavigate();
+  const location = useLocation(); // Hook לגישה לנתוני state
+  const { username, password } = location.state || {}; // קריאה לנתונים מ-state
   const [details, setDetails] = useState({
+    username: username,
+    website: password,
     name: "",
     email: "",
     address: { street: "", suite: "", city: "", zipcode: "", geo: { lat: "", lng: "" } },
     phone: "",
-    company: { name: "", catchPhrase: "", bs: "" },
+    company: { name: "", catchPhrase: "", bs: "" }
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const newUser = {
-        username,
-        website: password, 
-        ...details,
-      };
+      // const newUser = {
+      //   ...currentUser, // Use the existing data from CurrentUser
+      //   ...details, // Merge with the new details
+      // };
 
+      // Update CurrentUser context
+
+      setCurrentUser({
+        username: username,
+        password: details.website,
+        name: details.name,
+        email: details.email,
+        address: details.address,
+        phone: details.phone,
+        company: details.company
+      });
+
+
+      // Save to the server
       const response = await fetch("http://localhost:3000/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newUser),
+        body: JSON.stringify(details),
       });
 
       if (!response.ok) {
         throw new Error("Failed to create user");
       }
 
-      navigate("/home");
+      // Navigate to the home page
+      navigate(`/home/user/:id`);
     } catch (error) {
       console.error("Error:", error);
       alert("Something went wrong. Please try again later.");
@@ -116,12 +133,17 @@ function Register() {
         </div>
         <div className="form-group">
           <label htmlFor="lng">Longitude:</label>
-          <input
-            type="text"
-            id="lng"
-            value={details.address.geo.lng}
-            onChange={(e) => setDetails({ ...details, address: { ...details.address, geo: { ...details.address.geo, lng: e.target.value } } })}
-          />
+          onChange={(e) => setDetails({
+            ...details,
+            address: {
+              ...details.address,
+              geo: {
+                ...details.address.geo,
+                lng: e.target.value
+              }
+            }
+          })}
+
         </div>
         <div className="form-group">
           <label htmlFor="phone">Phone:</label>

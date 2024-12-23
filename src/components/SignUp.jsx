@@ -10,12 +10,14 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // בדיקה אם הסיסמאות תואמות
     if (user.password !== user.confirmPassword) {
       setErrorMessage("Passwords do not match.");
       return;
     }
-//
+
     try {
+      // בקשת GET לבדוק אם המשתמש קיים
       const response = await fetch("http://localhost:3000/user");
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
@@ -27,6 +29,7 @@ function Signup() {
       if (existingUser) {
         setErrorMessage("Username already exists.");
       } else {
+        // אם המשתמש לא קיים, העברה ל-Register עם פרטים
         navigate("/register", { state: { username: user.name, password: user.password } });
       }
     } catch (error) {
