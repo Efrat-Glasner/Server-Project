@@ -28,9 +28,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/register" element={<RegisterDetails />} />
-        {/* דף הבית */}
         <Route path="/home/user/:id" element={<Home />}>
-          {/* כאן ה-ID יהיה בסוף */}
           <Route path=":section" element={<Home />} />
           <Route path="todos" element={<Todos />} />
           <Route path="posts" element={<Posts />} />

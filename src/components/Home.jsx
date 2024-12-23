@@ -1,4 +1,3 @@
-// import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
@@ -9,16 +8,9 @@ const Home = () => {
   const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     // עדכון ה-URL כך שיכלול את ה-ID של המשתמש בסוף
-  //     navigate(`/home/user/${currentUser.id}`);
-  //   }
-  // }, [currentUser, navigate]);
-  const { section } = useParams(); // מקבלים את ה-param של הכתובת
+  const { section } = useParams(); 
 
   const handleInfoClick = () => {
-    // מעדכנים את ה-URL ל-/home/info
     navigate(`/home/user/${currentUser.id}/info`);
   };
   return (
