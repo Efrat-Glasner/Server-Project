@@ -1,27 +1,28 @@
 .todos-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* שני טורים */
-    gap: 20px 30px; /* רווחים בין הטורים ובין השורות */
+    grid-template-columns: repeat(2, 1fr); /* 2 טורים */
+    gap: 20px; /* רווח בין המשימות */
     justify-content: center;
     padding: 20px;
-    max-width: 100%; /* תופס את כל הרוחב של העמוד */
-    margin: 0 auto;
+    width: 100%; /* תופס את כל הרוחב של העמוד */
+    box-sizing: border-box; /* מתחשב בגבולות וב-padding */
   }
   
   .todo-container {
     position: relative;
     border: 1px solid #ccc;
-    padding: 15px; /* הקטנתי את המרווחים בתוך המשימה */
-    border-radius: 8px; /* פינות מעוגלות */
+    padding: 20px;
+    border-radius: 8px;
     background-color: #f9f9f9;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%; /* המשימות יתפסו את כל הרוחב */
-    max-width: 500px; /* הגבלתי את הרוחב של כל משימה */
-    height: auto; /* הגובה יתאים לתוכן */
+    width: 100%;
+    max-width: 400px; /* גודל קבוע למשימות */
+    height: auto;
+    list-style: none; /* הסרת הנקודות */
   }
   
   .todo-details {
@@ -29,10 +30,6 @@
     text-align: left;
     font-size: 14px;
     margin-bottom: 10px;
-  }
-  
-  .todo-details p {
-    margin: 5px 0;
   }
   
   .todo-checkbox-container {
@@ -45,7 +42,7 @@
   .todo-checkbox-label {
     font-size: 14px;
     color: #555;
-    margin-bottom: 5px; /* מרווח בין ה-ID ל-checkbox */
+    margin-bottom: 5px;
   }
   
   .todo-checkbox {
@@ -64,15 +61,6 @@
     border-color: #0056b3;
   }
   
-  .todo-checkbox:checked::after {
-    content: "✔";
-    display: block;
-    color: white;
-    font-size: 14px;
-    text-align: center;
-    line-height: 18px;
-  }
-  
   .todo-actions {
     display: flex;
     gap: 5px;
@@ -82,7 +70,7 @@
   }
   
   button {
-    padding: 8px 15px; /* הקטנתי את הגודל של הכפתורים */
+    padding: 8px 15px;
     font-size: 14px;
     border: none;
     border-radius: 3px;

@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { CurrentUser } from "../App";
 import Todo from './Todo';
+import "../css/todo.css";
 
 function Todos() {
   const { currentUser } = useContext(CurrentUser); // גישה ל-currentUser מתוך הקונטקסט
@@ -85,14 +86,15 @@ function Todos() {
       </div>
       {/* הודעה למשתמש */}
       {message && <p style={{ color: message.includes("successfully") ? "green" : "red" }}>{message}</p>}
-      <ul>
-        {/* עבור כל משימה, נציג את קומפוננטת Todo */}
+      
+      {/* שים את המשימות בתוך div עם class="todos-container" */}
+      <div className="todos-container">
         {todos.map((todo) => (
-          <li key={todo.id}>
+          <div key={todo.id}>
             <Todo todo={todo} />
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
