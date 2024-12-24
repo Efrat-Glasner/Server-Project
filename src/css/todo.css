@@ -1,32 +1,34 @@
 .todos-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* שתי עמודות */
-    gap: 15px;
+    grid-template-columns: repeat(2, 1fr); /* שני טורים */
+    gap: 20px 30px; /* רווחים בין הטורים ובין השורות */
     justify-content: center;
     padding: 20px;
-    max-width: 90%; /* מגביל את הרוחב */
+    max-width: 100%; /* תופס את כל הרוחב של העמוד */
     margin: 0 auto;
   }
   
   .todo-container {
     position: relative;
     border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 15px; /* הקטנתי את המרווחים בתוך המשימה */
+    border-radius: 8px; /* פינות מעוגלות */
     background-color: #f9f9f9;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 200px; /* גודל קבוע לכל משימה */
-    margin: 0 auto;
+    width: 100%; /* המשימות יתפסו את כל הרוחב */
+    max-width: 500px; /* הגבלתי את הרוחב של כל משימה */
+    height: auto; /* הגובה יתאים לתוכן */
   }
   
   .todo-details {
     width: 100%;
     text-align: left;
     font-size: 14px;
+    margin-bottom: 10px;
   }
   
   .todo-details p {
@@ -62,7 +64,7 @@
     border-color: #0056b3;
   }
   
-  /* .todo-checkbox:checked::after {
+  .todo-checkbox:checked::after {
     content: "✔";
     display: block;
     color: white;
@@ -70,7 +72,7 @@
     text-align: center;
     line-height: 18px;
   }
-   */
+  
   .todo-actions {
     display: flex;
     gap: 5px;
@@ -80,8 +82,8 @@
   }
   
   button {
-    padding: 5px 10px;
-    font-size: 12px;
+    padding: 8px 15px; /* הקטנתי את הגודל של הכפתורים */
+    font-size: 14px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
