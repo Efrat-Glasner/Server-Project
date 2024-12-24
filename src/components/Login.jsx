@@ -22,19 +22,9 @@ function Login() {
         (u) => u.username === user.name && u.website === user.password
       );
       alert(foundUser.name);
-
       if (foundUser) {
         alert("Login successful!");
-        setCurrentUser({
-          username: foundUser.username,
-          password: foundUser.website,
-          id: foundUser.id,
-          name:foundUser.name,
-          email:foundUser.email,
-          address:foundUser.address,
-          phone:foundUser.phone,
-          company:foundUser.company
-        });
+        setCurrentUser(foundUser);
         navigate("/home");
 
       } else {

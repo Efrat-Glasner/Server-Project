@@ -4,7 +4,7 @@ import "../css/form.css";
 import { CurrentUser } from "../App";
 
 function Register() {
-  const {  setCurrentUser } = useContext(CurrentUser);
+  const { setCurrentUser } = useContext(CurrentUser);
   const navigate = useNavigate();
   const location = useLocation(); // Hook לגישה לנתוני state
   const { username, password } = location.state || {}; // קריאה לנתונים מ-state
@@ -29,30 +29,28 @@ function Register() {
 
       // Update CurrentUser context
 
-      setCurrentUser({
-        username: username,
-        password: details.website,
-        name: details.name,
-        email: details.email,
-        address: details.address,
-        phone: details.phone,
-        company: details.company
-      });
+
 
 
       // Save to the server
-      const response = await fetch("http://localhost:3000/user", {
+       await fetch("http://localhost:3000/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(details),
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // ממיר את התשובה לאובייקט JSON
+      }).then((newUser) => {
+        // עדכון currentUser ישירות עם התשובה מהשרת
+        setCurrentUser(newUser);
+      }).catch((error) => {
+        console.error("Error:", error);
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to create user");
-      }
-
+      
       // Navigate to the home page
       navigate(`/home/user/:id`);
     } catch (error) {
