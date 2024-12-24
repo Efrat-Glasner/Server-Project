@@ -1,11 +1,12 @@
 import { useEffect, useState, useContext } from "react";
 import { CurrentUser } from "../App";
 import Todo from './Todo';
-import '../css/todo.css'
+
 function Todos() {
   const { currentUser } = useContext(CurrentUser); // גישה ל-currentUser מתוך הקונטקסט
   const [todos, setTodos] = useState([]); // סטייט לשמירת המשימות
   const [newTask, setNewTask] = useState(""); // סטייט לשמירת המשימה החדשה שהמשתמש מקיש
+  const [message, setMessage] = useState(""); // סטייט להצגת הודעה למשתמש
 
   useEffect(() => {
     // שליחת בקשת GET לשרת עבור המשימות של המשתמש הנוכחי
@@ -29,13 +30,20 @@ function Todos() {
 
   const handleAddTodo = async () => {
     if (!newTask.trim()) {
-      alert("Please enter a task!");
+      setMessage("Please enter a task!");
+      return;
+    }
+
+    // בדיקה אם המשימה כבר קיימת
+    const isDuplicate = todos.some((todo) => todo.title === newTask.trim());
+    if (isDuplicate) {
+      setMessage("The task already exists!");
       return;
     }
 
     const newTodo = {
       userId: currentUser.id, // ה-ID של המשתמש הנוכחי
-      title: newTask, // המשימה שהמשתמש הקיש
+      title: newTask.trim(), // המשימה שהמשתמש הקיש
       complete: false, // ברירת מחדל של false
     };
 
@@ -55,8 +63,10 @@ function Todos() {
       const addedTodo = await response.json();
       setTodos((prevTodos) => [...prevTodos, addedTodo]); // עדכון הסטייט עם המשימה החדשה
       setNewTask(""); // איפוס שדה המשימה
+      setMessage("The task was added successfully!"); // הודעת הצלחה
     } catch (error) {
       console.error("Error adding todo:", error);
+      setMessage("Failed to add the task."); // הודעת שגיאה
     }
   };
 
@@ -73,6 +83,8 @@ function Todos() {
         />
         <button onClick={handleAddTodo}>Add Task</button>
       </div>
+      {/* הודעה למשתמש */}
+      {message && <p style={{ color: message.includes("successfully") ? "green" : "red" }}>{message}</p>}
       <ul>
         {/* עבור כל משימה, נציג את קומפוננטת Todo */}
         {todos.map((todo) => (
