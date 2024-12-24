@@ -1,20 +1,28 @@
-// import React from "react";
-import { Link, Outlet } from "react-router-dom";
-import { useContext, useState } from "react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
 
 import "../css/home.css";
 import { CurrentUser } from "../App";
 
 const Home = () => {
-  const { currentUser, setCurrentUser } = useContext(CurrentUser)
-  const [showInfo, setShowInfo] = useState(false);
-  // const navigate = useNavigate();
-  // const { section } = useParams();
+  const { currentUser } = useContext(CurrentUser);
+  const [showInfo, setShowInfo] = useState(false); 
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleInfoClick = () => {
-    setShowInfo(!showInfo);
-    // navigate(`/home/user/${currentUser.id}`);
+    if (location.pathname !== `/home/user/${currentUser.id}`) {
+      navigate(`/home/user/${currentUser.id}`); // שינוי הנתיב
+    }
+    setShowInfo(true);
   };
+
+  useEffect(() => {
+    if (location.pathname !== `/home/user/${currentUser.id}`) {
+      setShowInfo(false);
+    }
+  }, [location.pathname]);
+
   return (
     <div className="home-container">
       <h1>{`Hello ${currentUser.username}`}</h1>
@@ -24,7 +32,7 @@ const Home = () => {
           <li>
             <span onClick={handleInfoClick} className="home-navbar-link">
               Info
-            </span >
+            </span>
           </li>
           <li>
             <Link to="todos" className="home-navbar-link">Todos</Link>
@@ -35,9 +43,6 @@ const Home = () => {
           <li>
             <Link to="albums" className="home-navbar-link">Albums</Link>
           </li>
-          {/* <li>
-            <Link to="logout" className="home-navbar-link">Logout</Link>
-          </li> */}
         </ul>
       </nav>
       {showInfo ? (
@@ -49,12 +54,12 @@ const Home = () => {
           <p>Company: {currentUser.company.name}</p>
           <p>Phone: {currentUser.phone}</p>
         </div>
-      ) : null}
-
-      {/* תצוגת נתיבים */}
-      <Outlet />
+      ) : (
+        <Outlet />
+      )}
     </div>
   );
 };
 
 export default Home;
+

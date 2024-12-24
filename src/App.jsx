@@ -4,7 +4,6 @@ import "./App.css";
 import Login from "./components/Login";
 import Signup from "./components/SignUp";
 import Home from "./components/Home";
-// import Info from "./components/Info";
 import Todos from "./components/Todos";
 import Posts from "./components/Posts";
 import Albums from "./components/Albums";
@@ -17,7 +16,6 @@ function App() {
   const  navigate  = useNavigate();
   useEffect(() => {
     if (currentUser) {
-      // נעדכן את ה-URL כך שיכלול את ה-ID של המשתמש בסוף
       navigate(`/home/user/${currentUser.id}`);
     }
   }, [currentUser]);
