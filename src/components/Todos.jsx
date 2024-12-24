@@ -8,6 +8,7 @@ function Todos() {
   const [todos, setTodos] = useState([]); // סטייט לשמירת המשימות
   const [newTask, setNewTask] = useState(""); // סטייט לשמירת המשימה החדשה שהמשתמש מקיש
   const [message, setMessage] = useState(""); // סטייט להצגת הודעה למשתמש
+  const [messageTimeout, setMessageTimeout] = useState(null); // סטייט לשמירת timeout של ההודעה
 
   useEffect(() => {
     // שליחת בקשת GET לשרת עבור המשימות של המשתמש הנוכחי
@@ -72,10 +73,19 @@ function Todos() {
   };
 
   const showMessage = (msg) => {
+    // אם יש הודעה קיימת, מבצעים איפוס של timeout
+    if (messageTimeout) {
+      clearTimeout(messageTimeout);
+    }
+
     setMessage(msg);
-    setTimeout(() => {
+
+    // הגדרת timeout חדש למחיקת ההודעה
+    const timeout = setTimeout(() => {
       setMessage(""); // איפוס ההודעה לאחר 2 שניות
     }, 2000);
+
+    setMessageTimeout(timeout); // שמירת ה-timeout בסטייט
   };
 
   return (
@@ -93,12 +103,18 @@ function Todos() {
       </div>
       {/* הודעה למשתמש */}
       {message && <p style={{ color: message.includes("successfully") ? "green" : "red" }}>{message}</p>}
-      
+
       {/* שים את המשימות בתוך div עם class="todos-container" */}
       <div className="todos-container">
         {todos.map((todo) => (
           <div key={todo.id}>
-            <Todo todo={todo} />
+            <Todo
+              todo={todo}
+              onDelete={(id) => {
+                setTodos((prevTodos) => prevTodos.filter((t) => t.id !== id));
+                showMessage("Task deleted successfully!"); // הצגת הודעה אם מחיקה הצליחה
+              }}
+            />
           </div>
         ))}
       </div>
