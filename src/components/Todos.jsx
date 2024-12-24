@@ -1,22 +1,43 @@
-<<<<<<< HEAD
-import Todo from './Todo';
+import { useEffect, useState, useContext } from "react";
+import { CurrentUser } from "../App";
 
 function Todos() {
-    return(
-        <>
-        <h1>Todos</h1>
-        <Todo/>
-        </>
-    ) 
-=======
-import { useEffect, useContext } from "react";
-import { CurrentUser } from "../App";
-function Todos() {
-    const [currentUser, setCurrentUser] = useContext(CurrentUser);
-    const response = await fetch("http://localhost:3000/todos");
-    return (
-        <h1>Todos</h1>
-    )
->>>>>>> 546de5465a4a77dcffbbd6430671d10800f3319e
+  const { currentUser } = useContext(CurrentUser); // גישה ל-currentUser מתוך הקונטקסט
+  const [todos, setTodos] = useState([]); // סטייט לשמירת המשימות
+
+  useEffect(() => {
+    // שליחת בקשת GET לשרת עבור המשימות של המשתמש הנוכחי
+    const fetchTodos = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/todoes?userId=${currentUser.id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch todos");
+        }
+        const data = await response.json();
+        setTodos(data); // שמירת המשימות בסטייט
+      } catch (error) {
+        console.error("Error fetching todos:", error);
+      }
+    };
+
+    if (currentUser) {
+      fetchTodos();
+    }
+  }, [currentUser]);
+
+  return (
+    <div>
+      <h1>Todos</h1>
+      <ul>
+        {/* עבור כל משימה, נציג את קומפוננטת Todo */}
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            <Todo todo={todo} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
+
 export default Todos;
