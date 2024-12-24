@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import "./Todo.css";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+import "../css/todo.css";
 
 const Todo = ({ todo }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -35,17 +36,17 @@ const Todo = ({ todo }) => {
         ) : (
           <p><strong>Title:</strong> {todo.title}</p>
         )}
-        <p>
-          <strong>Status:</strong>{" "}
-          <span className={`todo-status ${isCompleted ? "completed" : "pending"}`}>
-            {isCompleted ? "Completed" : "Not Completed"}
-          </span>
-        </p>
+      </div>
+      <div className="todo-checkbox-container">
+        <label className="todo-checkbox-label"></label>
+        <input
+          type="checkbox"
+          checked={isCompleted}
+          onChange={handleToggle}
+          className="todo-checkbox"
+        />
       </div>
       <div className="todo-actions">
-        <button onClick={handleToggle}>
-          {isCompleted ? "Unmark" : "Mark as Done"}
-        </button>
         {isEditing ? (
           <button onClick={handleSave}>Save</button>
         ) : (

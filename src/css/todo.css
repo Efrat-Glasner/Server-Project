@@ -1,54 +1,94 @@
-.todo-container {
+.todos-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* שתי עמודות */
+    gap: 15px;
+    justify-content: center;
+    padding: 20px;
+    max-width: 90%; /* מגביל את הרוחב */
+    margin: 0 auto;
+  }
+  
+  .todo-container {
+    position: relative;
     border: 1px solid #ccc;
     padding: 10px;
-    margin-bottom: 10px;
     border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 200px; /* גודל קבוע לכל משימה */
+    margin: 0 auto;
   }
   
   .todo-details {
-    flex: 1;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
   }
   
   .todo-details p {
     margin: 5px 0;
   }
   
-  .todo-edit-input {
-    width: 100%;
-    padding: 5px;
-    font-size: 14px;
+  .todo-checkbox-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10px;
   }
   
+  .todo-checkbox-label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px; /* מרווח בין ה-ID ל-checkbox */
+  }
+  
+  .todo-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    outline: none;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  .todo-checkbox:checked {
+    background-color: #007bff;
+    border-color: #0056b3;
+  }
+  
+  /* .todo-checkbox:checked::after {
+    content: "✔";
+    display: block;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    line-height: 18px;
+  }
+   */
   .todo-actions {
     display: flex;
-    gap: 10px;
+    gap: 5px;
+    margin-top: 10px;
+    justify-content: space-between;
+    width: 100%;
   }
   
-  .todo-actions button {
+  button {
     padding: 5px 10px;
-    font-size: 14px;
+    font-size: 12px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
+    transition: background-color 0.3s;
   }
   
-  .todo-actions button:hover {
-    opacity: 0.8;
-  }
-  
-  .todo-status {
-    font-weight: bold;
-  }
-  
-  .todo-status.completed {
-    color: green;
-  }
-  
-  .todo-status.pending {
-    color: red;
+  button:hover {
+    background-color: #f0f0f0;
   }
   
