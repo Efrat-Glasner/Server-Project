@@ -1,19 +1,19 @@
 // import React from "react";
-import { Link, useNavigate, useParams, Outlet } from "react-router-dom";
-import { useContext } from "react";
+import { Link, Outlet } from "react-router-dom";
+import { useContext, useState } from "react";
 
 import "../css/home.css";
 import { CurrentUser } from "../App";
 
 const Home = () => {
-  // eslint-disable-next-line no-unused-vars
   const { currentUser, setCurrentUser } = useContext(CurrentUser)
-
-  const navigate = useNavigate();
-  const { section } = useParams(); 
+  const [showInfo, setShowInfo] = useState(false);
+  // const navigate = useNavigate();
+  // const { section } = useParams();
 
   const handleInfoClick = () => {
-    navigate(`/home/user/${currentUser.id}/info`);
+    setShowInfo(!showInfo);
+    // navigate(`/home/user/${currentUser.id}`);
   };
   return (
     <div className="home-container">
@@ -40,7 +40,7 @@ const Home = () => {
           </li> */}
         </ul>
       </nav>
-      {section === "info" && (
+      {showInfo ? (
         <div className="user-info">
           <h2>User Info</h2>
           <p>Username: {currentUser.username}</p>
@@ -48,9 +48,8 @@ const Home = () => {
           <p>Address: {currentUser.address.street}, {currentUser.address.city}</p>
           <p>Company: {currentUser.company.name}</p>
           <p>Phone: {currentUser.phone}</p>
-          {/* פרטים נוספים */}
         </div>
-      )}
+      ) : null}
 
       {/* תצוגת נתיבים */}
       <Outlet />

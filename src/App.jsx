@@ -29,7 +29,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/register" element={<RegisterDetails />} />
         <Route path="/home/user/:id" element={<Home />}>
-          <Route path=":section" element={<Home />} />
+          <Route path="" element={<></>} />
           <Route path="todos" element={<Todos />} />
           <Route path="posts" element={<Posts />} />
           <Route path="albums" element={<Albums />} />
