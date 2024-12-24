@@ -1,6 +1,6 @@
 function Todos() {
     return(
-        <h1>Todo</h1>
+        <h1>Todos</h1>
     ) 
 }
 export default Todos;
