@@ -31,14 +31,14 @@ function Todos() {
 
   const handleAddTodo = async () => {
     if (!newTask.trim()) {
-      setMessage("Please enter a task!");
+      showMessage("Please enter a task!");
       return;
     }
 
     // בדיקה אם המשימה כבר קיימת
     const isDuplicate = todos.some((todo) => todo.title === newTask.trim());
     if (isDuplicate) {
-      setMessage("The task already exists!");
+      showMessage("The task already exists!");
       return;
     }
 
@@ -64,11 +64,18 @@ function Todos() {
       const addedTodo = await response.json();
       setTodos((prevTodos) => [...prevTodos, addedTodo]); // עדכון הסטייט עם המשימה החדשה
       setNewTask(""); // איפוס שדה המשימה
-      setMessage("The task was added successfully!"); // הודעת הצלחה
+      showMessage("The task was added successfully!"); // הודעת הצלחה
     } catch (error) {
       console.error("Error adding todo:", error);
-      setMessage("Failed to add the task."); // הודעת שגיאה
+      showMessage("Failed to add the task."); // הודעת שגיאה
     }
+  };
+
+  const showMessage = (msg) => {
+    setMessage(msg);
+    setTimeout(() => {
+      setMessage(""); // איפוס ההודעה לאחר 2 שניות
+    }, 2000);
   };
 
   return (
