@@ -229,30 +229,6 @@
         "catchPhrase": "Centralized empowering task-force",
         "bs": "target end-to-end models"
       }
-    },
-   
-    {
-      "id": "5631",
-      "username": "p",
-      "website": "p",
-      "name": "ppp",
-      "email": "p@p",
-      "address": {
-        "street": "",
-        "suite": "",
-        "city": "po",
-        "zipcode": "",
-        "geo": {
-          "lat": "",
-          "lng": ""
-        }
-      },
-      "phone": "8",
-      "company": {
-        "name": "",
-        "catchPhrase": "",
-        "bs": ""
-      }
     }
   ],
   "todoes": [
