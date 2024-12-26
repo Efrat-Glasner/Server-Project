@@ -108,7 +108,7 @@ function Todos({message,showMessage}) {
       </div>
 
       {/* הודעה למשתמש */}
-      {message && <p style={{ color: message.includes("successfully") ? "green" : "red" }}>{message}</p>}
+      {message && <p className="toast" >{message}</p>}
       
       {/* הוספת select למיון */}
       <div>

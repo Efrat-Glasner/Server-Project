@@ -136,7 +136,7 @@ function Posts({ message, showMessage }) {
             )}
 
             {message && (
-                <p style={{ color: message.includes("successfully") ? "green" : "red" }}>
+                <p className="toast">
                     {message}
                 </p>
             )}
