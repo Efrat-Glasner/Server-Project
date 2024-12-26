@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect, useContext } from "react";
 import { CurrentUser } from "../App";
 import Todo from './Todo';
@@ -5,12 +6,10 @@ import "../css/todo.css";
 import { get } from "../js/controller";
 import { post } from "../js/controller";
 
-function Todos() {
+function Todos({message,showMessage}) {
   const { currentUser } = useContext(CurrentUser); // גישה ל-currentUser מתוך הקונטקסט
   const [todos, setTodos] = useState([]); // סטייט לשמירת המשימות
   const [newTask, setNewTask] = useState(""); // סטייט לשמירת המשימה החדשה שהמשתמש מקיש
-  const [message, setMessage] = useState(""); // סטייט להצגת הודעה למשתמש
-  const [messageTimeout, setMessageTimeout] = useState(null); // סטייט לשמירת timeout של ההודעה
   const [sortBy, setSortBy] = useState('id'); // קריטריון המיון (לפי ברירת מחדל: ID)
   const [searchQuery, setSearchQuery] = useState(""); // קריטריון החיפוש (כותרת, מזהה, מצב ביצוע)
   const [searchCriterion, setSearchCriterion] = useState("id"); // קריטריון החיפוש (ברירת מחדל: ID)
@@ -90,22 +89,6 @@ function Todos() {
     } catch (error) {
       showMessage("Failed to add the task.", error);
     }
-  };
-
-  const showMessage = (msg) => {
-    // אם יש הודעה קיימת, מבצעים איפוס של timeout
-    if (messageTimeout) {
-      clearTimeout(messageTimeout);
-    }
-
-    setMessage(msg);
-
-    // הגדרת timeout חדש למחיקת ההודעה
-    const timeout = setTimeout(() => {
-      setMessage(""); // איפוס ההודעה לאחר 2 שניות
-    }, 2000);
-
-    setMessageTimeout(timeout); // שמירת ה-timeout בסטייט
   };
 
   return (

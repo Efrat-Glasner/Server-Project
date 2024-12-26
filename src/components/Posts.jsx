@@ -1,53 +1,67 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useContext, useState } from "react";
 import { CurrentUser } from "../App";
 import { get } from "../js/controller";
+<<<<<<< HEAD
 import '../css/post.css';
+=======
+import "../css/todo.css";
+>>>>>>> 191171edb8ce0fd9278bfb283f5e99f9d57ef59f
 import { post } from "../js/controller";
 import Post from "./Post";
 
-function Posts() {
+function Posts({ message, showMessage }) {
     const { currentUser } = useContext(CurrentUser);
-    const [posts, setPosts] = useState([]); // סטייט לשמירת המשימות
-    const [message, setMessage] = useState(""); // סטייט להצגת הודעה למשתמש
-    const [messageTimeout, setMessageTimeout] = useState(null); // סטייט לשמירת timeout של ההודעה
-    const [statePosts, setStatePosts] = useState('myPosts'); // סטייט למצב הפוסטים
-    const [newPost, setNewPost] = useState({ title: "", body: "" }); // סטייט לשמירת הפוסט החדשה שהמשתמש מקיש
-    const [showAddPost, setShowAddPost] = useState(false); // סטייט לקביעה אם להציג את ה-DIV להוספת פוסט
+    const [posts, setPosts] = useState([]);
+
+    const [statePosts, setStatePosts] = useState("myPosts");
+    const [newPost, setNewPost] = useState({ title: "", body: "" });
+    const [showAddPost, setShowAddPost] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchCriterion, setSearchCriterion] = useState("id");
+    const [expandedPosts, setExpandedPosts] = useState({});
 
     useEffect(() => {
-        const fetchposts = async () => {
+        const fetchPosts = async () => {
             try {
                 if (!currentUser) return;
-                const data = statePosts === 'myPosts'
-                    ? await get(`posts?userId=${currentUser.id}`)
-                    : await get('posts');
+                const data =
+                    statePosts === "myPosts"
+                        ? await get(`posts?userId=${currentUser.id}`)
+                        : await get("posts");
                 setPosts(data);
             } catch (error) {
                 console.error("Error fetching posts:", error);
             }
         };
-        fetchposts();
+        fetchPosts();
     }, [currentUser, statePosts]);
 
     const togglePosts = () => {
-        setStatePosts((prevState) => (prevState === 'myPosts' ? 'allPosts' : 'myPosts'));
+        setStatePosts((prevState) =>
+            prevState === "myPosts" ? "allPosts" : "myPosts"
+        );
     };
 
-    const showMessage = (msg) => {
-        // אם יש הודעה קיימת, מבצעים איפוס של timeout
-        if (messageTimeout) {
-            clearTimeout(messageTimeout);
-        }
+    const filterPosts = (posts, query, criterion) => {
+        if (!query) return posts;
 
-        setMessage(msg);
-
-        // הגדרת timeout חדש למחיקת ההודעה
-        const timeout = setTimeout(() => {
-            setMessage(""); // איפוס ההודעה לאחר 2 שניות
-        }, 2000);
-
-        setMessageTimeout(timeout); // שמירת ה-timeout בסטייט
+        return posts.filter((post) => {
+            switch (criterion) {
+                case "id":
+                    return post.id.toString().includes(query);
+                case "title":
+                    return post.title.toLowerCase().includes(query.toLowerCase());
+                case "body":
+                    return post.body.toLowerCase().includes(query.toLowerCase());
+                default:
+                    return posts;
+            }
+        });
     };
+
+    const filteredPosts = filterPosts(posts, searchQuery, searchCriterion);
+
 
     const handleAddPost = async () => {
         if (!newPost.title.trim() || !newPost.body.trim()) {
@@ -57,7 +71,8 @@ function Posts() {
 
         const isDuplicate = posts.some(
             (post) =>
-                post.title === newPost.title.trim() && post.body === newPost.body.trim()
+                post.title === newPost.title.trim() &&
+                post.body === newPost.body.trim()
         );
 
         if (isDuplicate) {
@@ -82,6 +97,13 @@ function Posts() {
         }
     };
 
+    const togglePostExpansion = (postId) => {
+        setExpandedPosts((prev) => ({
+            ...prev,
+            [postId]: !prev[postId],
+        }));
+    };
+
     return (
         <>
             <h1>Posts</h1>
@@ -96,13 +118,17 @@ function Posts() {
                         type="text"
                         placeholder="Enter post title"
                         value={newPost.title}
-                        onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+                        onChange={(e) =>
+                            setNewPost({ ...newPost, title: e.target.value })
+                        }
                     />
                     <input
                         type="text"
                         placeholder="Enter post body"
                         value={newPost.body}
-                        onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
+                        onChange={(e) =>
+                            setNewPost({ ...newPost, body: e.target.value })
+                        }
                     />
                     <button
                         onClick={handleAddPost}
@@ -113,28 +139,73 @@ function Posts() {
                 </div>
             )}
 
-            {message && <p style={{ color: message.includes("successfully") ? "green" : "red" }}>{message}</p>}
+            {message && (
+                <p style={{ color: message.includes("successfully") ? "green" : "red" }}>
+                    {message}
+                </p>
+            )}
 
             <button onClick={togglePosts}>
-                {statePosts === 'myPosts' ? 'All Posts' : 'My Posts'}
+                {statePosts === "myPosts" ? "All Posts" : "My Posts"}
             </button>
+
+            <div>
+                <select
+                    onChange={(e) => setSearchCriterion(e.target.value)}
+                    value={searchCriterion}
+                >
+                    <option value="id">Search by ID</option>
+                    <option value="title">Search by Title</option>
+                    <option value="body">Search by Body</option>
+                </select>
+            </div>
+
+            <div>
+                <input
+                    type="text"
+                    placeholder="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </div>
+
+            {filteredPosts.length === 0 && searchQuery && (
+                <p>No posts found for the given search criteria.</p>
+            )}
+
             <div className="posts-container">
-                {posts.map((post) => (
-                    <div key={post.id}>
-                        <Post post={post}
-                            onDelete={(id) => {
-                                setPosts((prevPosts) => prevPosts.filter((p) => p.id !== id));
-                                showMessage("Task deleted successfully!");
-                            }}
-                            onUpdate={(id, updatedPost) => {
-                                setPosts((prevPosts) =>
-                                    prevPosts.map((post) =>
-                                        post.id === id ? { ...post, ...updatedPost } : post
-                                    )
-                                );
-                                showMessage("Task updated successfully!");
-                            }}
-                        />
+                {filteredPosts.map((post) => (
+                    <div
+                        key={post.id}
+                        className={`post ${expandedPosts[post.id] ? "expanded" : ""}`}
+                    >
+                        <h3
+                            className="post-title"
+                            onClick={() => togglePostExpansion(post.id)}
+                        >
+                            {post.title}
+                        </h3>
+                        {expandedPosts[post.id] && (
+                            <div>
+                                <Post
+                                    post={post}
+                                    onDelete={(id) => {
+                                        setPosts((prevPosts) =>
+                                            prevPosts.filter((p) => p.id !== id)
+                                        );
+                                        showMessage("Post deleted successfully!");
+                                    }}
+                                    onUpdate={(id, updatedPost) => {
+                                        setPosts((prevPosts) =>
+                                            prevPosts.map((post) =>
+                                                post.id === id ? { ...post, ...updatedPost } : post
+                                            )
+                                        );
+                                        showMessage("Post updated successfully!");
+                                    }}
+                                />
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>

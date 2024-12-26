@@ -89,6 +89,7 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+<<<<<<< HEAD
 .header-row {
   display: flex;
   justify-content: center; /* ממקם את הכותרת באמצע */
@@ -116,4 +117,14 @@
   align-items: center;
   gap: 10px; /* מרווח בין האלמנטים */
   margin-bottom: 20px;
+=======
+.post-title {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.post-title:hover {
+  color: #007bff;
+  text-decoration: underline;
+>>>>>>> 191171edb8ce0fd9278bfb283f5e99f9d57ef59f
 }
