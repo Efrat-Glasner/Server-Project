@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { CurrentUser } from "../App";
 import { get } from "../js/controller";
-import '../css/todo.css';
+import '../css/post.css';
 import { post } from "../js/controller";
 import Post from "./Post";
 
