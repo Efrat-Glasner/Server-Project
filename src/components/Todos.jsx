@@ -43,7 +43,6 @@ function Todos({message,showMessage}) {
         return todos;
     }
   };
-
   // פונקציה לסינון על פי חיפוש
   const filterTodos = (todos, query, criterion) => {
     if (!query) return todos;
@@ -94,10 +93,19 @@ function Todos({message,showMessage}) {
 
   return (
     <div>
-      <h1>Todos</h1>
-      
-      {/* שדה טקסט וכפתור להוספת משימה */}
-      <div>
+      {/* כותרת ושורת המיון */}
+      <div className="header-row">
+        <h1>Todos</h1>
+        <select onChange={(e) => setSortBy(e.target.value)} value={sortBy}>
+          <option value="id">Sort by ID</option>
+          <option value="alphabetical">Sort Alphabetically</option>
+          <option value="completed">Sort by Completion</option>
+          <option value="random">Sort Randomly</option>
+        </select>
+      </div>
+  
+      {/* שורת הוספת משימה */}
+      <div className="add-row">
         <input
           type="text"
           placeholder="Enter a new task"
@@ -106,6 +114,7 @@ function Todos({message,showMessage}) {
         />
         <button onClick={handleAddTodo}>Add Task</button>
       </div>
+<<<<<<< HEAD
 
       {/* הודעה למשתמש */}
       {message && <p className="toast" >{message}</p>}
@@ -132,19 +141,37 @@ function Todos({message,showMessage}) {
       {/* שדה חיפוש */}
       <div>
         <input
+=======
+      {message && (
+        <p style={{ color: message.includes("successfully") ? "green" : "red" }}>
+          {message}
+        </p>
+      )}
+  
+      {/* שורת החיפוש */}
+      <div className="search-row">
+      <input
+>>>>>>> 8dcdd9d89bb3b921622eb89910efa440ab2ae383
           type="text"
           placeholder="Search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
+        <select
+          onChange={(e) => setSearchCriterion(e.target.value)}
+          value={searchCriterion}
+        >
+          <option value="id">Search by ID</option>
+          <option value="title">Search by Title</option>
+          <option value="completed">Search by Completion Status</option>
+        </select>
       </div>
-
-      {/* אם לא נמצאו תוצאות */}
+  
+      {/* הצגת משימות */}
       {filteredTodos.length === 0 && searchQuery && (
         <p>No tasks found for the given search criteria.</p>
       )}
-
-      {/* הצגת המשימות */}
+  
       <div className="todos-container">
         {filteredTodos.map((todo) => (
           <div key={todo.id}>
@@ -167,7 +194,7 @@ function Todos({message,showMessage}) {
         ))}
       </div>
     </div>
-  );
+  );  
 }
 
 export default Todos;
