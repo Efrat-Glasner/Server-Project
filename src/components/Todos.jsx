@@ -2,6 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import { CurrentUser } from "../App";
 import Todo from './Todo';
 import "../css/todo.css";
+import { get } from "../js/controller";
+import { post } from "../js/controller";
 
 function Todos() {
   const { currentUser } = useContext(CurrentUser); // גישה ל-currentUser מתוך הקונטקסט
@@ -11,87 +13,75 @@ function Todos() {
   const [messageTimeout, setMessageTimeout] = useState(null); // סטייט לשמירת timeout של ההודעה
 
   useEffect(() => {
-    // שליחת בקשת GET לשרת עבור המשימות של המשתמש הנוכחי
     const fetchTodos = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/todoes?userId=${currentUser.id}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch todos");
-        }
-        const data = await response.json();
-        setTodos(data); // שמירת המשימות בסטייט
+        if (!currentUser) return;
+        const data = await get(`todoes?userId=${currentUser.id}`);
+        setTodos(data);
       } catch (error) {
         console.error("Error fetching todos:", error);
       }
     };
-
-    if (currentUser) {
-      fetchTodos();
-    }
+  
+    fetchTodos();
   }, [currentUser]);
+  
 
   const handleAddTodo = async () => {
     if (!newTask.trim()) {
       showMessage("Please enter a task!");
       return;
     }
-
-    // בדיקה אם המשימה כבר קיימת
     const isDuplicate = todos.some((todo) => todo.title === newTask.trim());
     if (isDuplicate) {
       showMessage("The task already exists!");
       return;
     }
-
     const newTodo = {
-      userId: currentUser.id, // ה-ID של המשתמש הנוכחי
-      title: newTask.trim(), // המשימה שהמשתמש הקיש
-      complete: false, // ברירת מחדל של false
+      userId: currentUser.id,
+      title: newTask.trim(),
+      complete: false,
     };
-
+  
     try {
-      const response = await fetch("http://localhost:3000/todoes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTodo),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add todo");
-      }
-
-      const addedTodo = await response.json();
-      setTodos((prevTodos) => [...prevTodos, addedTodo]); // עדכון הסטייט עם המשימה החדשה
-      setNewTask(""); // איפוס שדה המשימה
-      showMessage("The task was added successfully!"); // הודעת הצלחה
+      const addedTodo = await post("todoes", newTodo);
+      setTodos((prevTodos) => [...prevTodos, addedTodo]);
+      setNewTask("");
+      showMessage("The task was added successfully!");
     } catch (error) {
-      console.error("Error adding todo:", error);
-      showMessage("Failed to add the task."); // הודעת שגיאה
+      showMessage("Failed to add the task.");
     }
   };
 
+  const handleUpdateTodo = (id, updatedTodo) => {
+    setTodos((prevTodos) =>
+      prevTodos.map(todo =>
+        todo.id === id ? { ...todo, ...updatedTodo } : todo
+      )
+    );
+  };
+  
+  const handleDelete = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  };
+  
   const showMessage = (msg) => {
-    // אם יש הודעה קיימת, מבצעים איפוס של timeout
     if (messageTimeout) {
       clearTimeout(messageTimeout);
     }
 
     setMessage(msg);
 
-    // הגדרת timeout חדש למחיקת ההודעה
     const timeout = setTimeout(() => {
       setMessage(""); // איפוס ההודעה לאחר 2 שניות
     }, 2000);
 
-    setMessageTimeout(timeout); // שמירת ה-timeout בסטייט
+    setMessageTimeout(timeout);
   };
 
   return (
     <div>
       <h1>Todos</h1>
-      {/* שדה טקסט וכפתור להוספת משימה */}
       <div>
         <input
           type="text"
@@ -101,21 +91,17 @@ function Todos() {
         />
         <button onClick={handleAddTodo}>Add Task</button>
       </div>
-      {/* הודעה למשתמש */}
       {message && <p style={{ color: message.includes("successfully") ? "green" : "red" }}>{message}</p>}
 
-      {/* שים את המשימות בתוך div עם class="todos-container" */}
       <div className="todos-container">
         {todos.map((todo) => (
-          <div key={todo.id}>
-            <Todo
-              todo={todo}
-              onDelete={(id) => {
-                setTodos((prevTodos) => prevTodos.filter((t) => t.id !== id));
-                showMessage("Task deleted successfully!"); // הצגת הודעה אם מחיקה הצליחה
-              }}
-            />
-          </div>
+          <Todo
+            key={todo.id}
+            todo={todo}
+            onDelete={handleDelete}
+            showMessage={showMessage}
+            onUpdate={handleUpdateTodo}
+          />
         ))}
       </div>
     </div>
