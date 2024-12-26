@@ -114,7 +114,6 @@ function Todos({message,showMessage}) {
         />
         <button onClick={handleAddTodo}>Add Task</button>
       </div>
-<<<<<<< HEAD
 
       {/* הודעה למשתמש */}
       {message && <p className="toast" >{message}</p>}
@@ -141,17 +140,6 @@ function Todos({message,showMessage}) {
       {/* שדה חיפוש */}
       <div>
         <input
-=======
-      {message && (
-        <p style={{ color: message.includes("successfully") ? "green" : "red" }}>
-          {message}
-        </p>
-      )}
-  
-      {/* שורת החיפוש */}
-      <div className="search-row">
-      <input
->>>>>>> 8dcdd9d89bb3b921622eb89910efa440ab2ae383
           type="text"
           placeholder="Search"
           value={searchQuery}
