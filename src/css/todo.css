@@ -89,3 +89,12 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+.post-title {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.post-title:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
