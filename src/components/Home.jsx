@@ -2,7 +2,7 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 
 import "../css/home.css";
-import { CurrentUser } from "../App";
+import { CurrentUser } from "./App";
 
 const Home = () => {
   const { currentUser } = useContext(CurrentUser);

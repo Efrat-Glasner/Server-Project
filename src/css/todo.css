@@ -1,128 +1,160 @@
 .todos-container,
 .posts-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 טורים */
-    gap: 20px; /* רווח בין המשימות */
-    justify-content: center;
-    padding: 20px;
-    width: 100%; /* תופס את כל הרוחב של העמוד */
-    box-sizing: border-box; /* מתחשב בגבולות וב-padding */
-  }
-  
-  .todo-container,
-  .post-container {
-    position: relative;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px; /* גודל קבוע למשימות */
-    height: auto;
-    list-style: none; /* הסרת הנקודות */
-  }
-  
-  .todo-details,
-  .post-details {
-    width: 100%;
-    text-align: left;
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-  
-  .todo-checkbox-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 10px;
-  }
-  
-  .todo-checkbox-label {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 5px;
-  }
-  
-  .todo-checkbox {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    appearance: none;
-    border: 2px solid #007bff;
-    border-radius: 4px;
-    outline: none;
-    transition: background-color 0.3s, border-color 0.3s;
-  }
-
-  .todo-checkbox:checked {
-    background-color: #007bff;
-    border-color: #0056b3;
-  }
-  
-  .todo-actions,
-  .post-actions {
-    display: flex;
-    gap: 5px;
-    margin-top: 10px;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  button {
-    padding: 8px 15px;
-    font-size: 14px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #f0f0f0;
-  }
-  button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 טורים */
+  gap: 20px;
+  /* רווח בין המשימות */
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  /* תופס את כל הרוחב של העמוד */
+  box-sizing: border-box;
+  /* מתחשב בגבולות וב-padding */
 }
+<<<<<<< HEAD
+=======
+
+.todo-container,
+.post-container {
+  position: relative;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  /* גודל קבוע למשימות */
+  height: auto;
+  list-style: none;
+  /* הסרת הנקודות */
+}
+
+.todo-details,
+.post-details {
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.todo-checkbox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.todo-checkbox-label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.todo-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  appearance: none;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.todo-checkbox:checked {
+  background-color: #007bff;
+  border-color: #0056b3;
+}
+
+.todo-actions,
+.post-actions {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+button {
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+>>>>>>> bc7286aaca12622e576a0d156fa1b2c800591f75
 .header-row {
   display: flex;
-  justify-content: center; /* ממקם את הכותרת באמצע */
+  justify-content: center;
+  /* ממקם את הכותרת באמצע */
   align-items: center;
-  position: relative; /* מאפשר למקם את המיון בצד ימין */
+  position: relative;
+  /* מאפשר למקם את המיון בצד ימין */
   margin-bottom: 20px;
 }
 
 .header-row select {
   position: absolute;
-  right: 0; /* ממקם את המיון בצד ימין */
+  right: 0;
+  /* ממקם את המיון בצד ימין */
 }
 
 .add-row {
   display: flex;
-  justify-content: flex-start; /* ממקם את האלמנטים באותה שורה */
+  justify-content: flex-start;
+  /* ממקם את האלמנטים באותה שורה */
   align-items: center;
-  gap: 10px; /* מרווח בין האלמנטים */
+  gap: 10px;
+  /* מרווח בין האלמנטים */
   margin-bottom: 20px;
 }
 
 .search-row {
   display: flex;
-  justify-content: flex-start; /* ממקם את האלמנטים באותה שורה */
+  justify-content: flex-start;
+  /* ממקם את האלמנטים באותה שורה */
   align-items: center;
-  gap: 10px; /* מרווח בין האלמנטים */
+  gap: 10px;
+  /* מרווח בין האלמנטים */
   margin-bottom: 20px;
+<<<<<<< HEAD
 }
 .post-title {
   cursor: pointer;
   transition: color 0.3s;
+=======
+>>>>>>> bc7286aaca12622e576a0d156fa1b2c800591f75
 }
+  .post-title {
+    cursor: pointer;
+    transition: color 0.3s;
+  }
 
+<<<<<<< HEAD
 .post-title:hover {
   color: #007bff;
   text-decoration: underline;
 }
+=======
+  .post-title:hover {
+    color: #007bff;
+    text-decoration: underline;
+  }
+>>>>>>> bc7286aaca12622e576a0d156fa1b2c800591f75

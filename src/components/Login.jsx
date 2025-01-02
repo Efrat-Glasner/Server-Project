@@ -2,7 +2,7 @@ import { useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../css/form.css";
-import { CurrentUser } from "../App";
+import { CurrentUser } from "./App";
 //login
 function Login() {
   const [user, setUser] = useState({ name: "", password: "" });

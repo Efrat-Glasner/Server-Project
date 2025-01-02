@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useContext, useState } from "react";
 import { deleteRequest, put } from "../js/controller";
-import { CurrentUser } from "../App";
-
+import { CurrentUser } from "./App";
+import Comments from "./Comments";
 function Post({ post, onDelete, showMessage, onUpdate }) {
     const [isEditing, setIsEditing] = useState(false);
     const [newPost, setNewPost] = useState({ title: post.title, body: post.body });
+    const [showComments, setShowComments] = useState(false);
     const { currentUser } = useContext(CurrentUser);
 
     // בדיקה אם המשתמש הנוכחי הוא המחבר של הפוסט
@@ -43,13 +44,14 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
     };
 
     const handleShowComments = () => {
-        console.log("Showing comments for post with ID:", post.id);
+        setShowComments((prev) => !prev)
     };
 
     return (
         <div className="post-container">
             <div className="post-details">
                 <p><strong>ID:</strong> {post.id}</p>
+                { /*שדות לעריכה*/}
                 {isEditing ? (
                     <>
                         <input
@@ -67,7 +69,7 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
                     </>
                 ) : (
                     <>
-                        <p><strong>TITLE:</strong> {post.title}</p>
+                        <p ><strong>TITLE:</strong> {post.title}</p>
                         <p><strong>BODY:</strong> {post.body}</p>
                     </>
                 )}
@@ -91,10 +93,12 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
                         Update
                     </button>
                 )}
+                <button onClick={handleShowComments}>{showComments ? 'Hide commetns' : 'Comments'}</button>
 
-                {/* כפתור הצגת תגובות */}
-                <button onClick={handleShowComments}>Comments</button>
             </div>
+            {/* כפתור הצגת תגובות */}
+            {showComments && <Comments thisPost={post} showMessage={showMessage} />}
+
         </div>
     );
 }

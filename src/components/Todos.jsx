@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useContext } from "react";
-import { CurrentUser } from "../App";
+import { CurrentUser } from "./App";
 import Todo from './Todo';
 import "../css/todo.css";
 import { get } from "../js/controller";
@@ -114,15 +114,32 @@ function Todos({message,showMessage}) {
         />
         <button onClick={handleAddTodo}>Add Task</button>
       </div>
-      {message && (
-        <p style={{ color: message.includes("successfully") ? "green" : "red" }}>
-          {message}
-        </p>
-      )}
-  
-      {/* שורת החיפוש */}
-      <div className="search-row">
-      <input
+
+      {/* הודעה למשתמש */}
+      {message && <p className="toast" >{message}</p>}
+      
+      {/* הוספת select למיון */}
+      <div>
+        <select onChange={(e) => setSortBy(e.target.value)} value={sortBy}>
+          <option value="id">Sort by ID</option>
+          <option value="alphabetical">Sort Alphabetically</option>
+          <option value="completed">Sort by Completion</option>
+          <option value="random">Sort Randomly</option>
+        </select>
+      </div>
+
+      {/* הוספת select לחיפוש לפי קריטריון */}
+      <div>
+        <select onChange={(e) => setSearchCriterion(e.target.value)} value={searchCriterion}>
+          <option value="id">Search by ID</option>
+          <option value="title">Search by Title</option>
+          <option value="completed">Search by Completion Status</option>
+        </select>
+      </div>
+
+      {/* שדה חיפוש */}
+      <div>
+        <input
           type="text"
           placeholder="Search"
           value={searchQuery}
