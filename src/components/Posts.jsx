@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useContext, useState } from "react";
-import { CurrentUser } from "../App";
+import { CurrentUser } from "./App";
 import { get } from "../js/controller";
 import '../css/post.css';
 
@@ -104,11 +104,11 @@ function Posts({ message, showMessage }) {
     return (
         <>
             <h1>Posts</h1>
-
+            {/*הצגת כפתור הוספת פוסט/ ביטול*/}
             <button onClick={() => setShowAddPost((prev) => !prev)}>
                 {showAddPost ? "Cancel" : "Add Post"}
             </button>
-
+            {/*הכנסת פרטי פוסט חדש*/}
             {showAddPost && (
                 <div className="add-post-container">
                     <input
@@ -135,17 +135,18 @@ function Posts({ message, showMessage }) {
                     </button>
                 </div>
             )}
+            {/*הצגת הודעות*/}
 
             {message && (
                 <p className="toast">
                     {message}
                 </p>
             )}
-
+            {/*כפתור הצגת כל הפוסטים*/}
             <button onClick={togglePosts}>
                 {statePosts === "myPosts" ? "All Posts" : "My Posts"}
             </button>
-
+            {/* חיפוש*/}
             <div>
                 <select
                     onChange={(e) => setSearchCriterion(e.target.value)}
@@ -169,7 +170,7 @@ function Posts({ message, showMessage }) {
             {filteredPosts.length === 0 && searchQuery && (
                 <p>No posts found for the given search criteria.</p>
             )}
-
+            {/*הצגת כל פוסט*/}
             <div className="posts-container">
                 {filteredPosts.map((post) => (
                     <div
@@ -183,8 +184,9 @@ function Posts({ message, showMessage }) {
                             {post.title}
                         </h3>
                         {expandedPosts[post.id] && (
-                            <div>
-                                <Post
+                            <div >
+                                <Post 
+                                    showMessage={showMessage}
                                     post={post}
                                     onDelete={(id) => {
                                         setPosts((prevPosts) =>

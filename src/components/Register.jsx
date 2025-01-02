@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../css/form.css";
-import { CurrentUser } from "../App";
+import { CurrentUser } from "./App";
 
 function Register() {
   const { setCurrentUser } = useContext(CurrentUser);

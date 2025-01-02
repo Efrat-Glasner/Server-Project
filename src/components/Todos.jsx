@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useContext } from "react";
-import { CurrentUser } from "../App";
+import { CurrentUser } from "./App";
 import Todo from './Todo';
 import "../css/todo.css";
 import { get } from "../js/controller";
