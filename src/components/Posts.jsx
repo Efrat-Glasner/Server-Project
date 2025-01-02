@@ -2,11 +2,7 @@
 import { useEffect, useContext, useState } from "react";
 import { CurrentUser } from "../App";
 import { get } from "../js/controller";
-<<<<<<< HEAD
 import '../css/post.css';
-=======
-import "../css/todo.css";
->>>>>>> 191171edb8ce0fd9278bfb283f5e99f9d57ef59f
 import { post } from "../js/controller";
 import Post from "./Post";
 

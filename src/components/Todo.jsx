@@ -16,9 +16,9 @@ const Todo = ({ todo, onDelete, showMessage, onUpdate }) => {
         ...todo, // שמירת כל שאר הנתונים מהמשימה הישנה
         ...updatedData // עדכון רק את הנתונים ששונו
       });
-  
+
       console.log(`Todo with ID: ${todo.id} updated!`);
-  
+
       // עדכון המשימה המעודכנת בקומפוננטת Todos
       onUpdate(todo.id, updatedTodo); // עדכון המשימה בהצלחה
     } catch (error) {
@@ -26,19 +26,19 @@ const Todo = ({ todo, onDelete, showMessage, onUpdate }) => {
       showMessage("Failed to update the task.");
     }
   };
-  
+
   const handleSave = async () => {
     if (newTitle.trim() === "") return;
     setIsEditing(false);
-  
+
     await updateTodo({ title: newTitle }); // עדכון הכותרת באמצעות PUT
   };
-  
+
   const handleToggle = async () => {
     setIsCompleted(!isCompleted);
     await updateTodo({ completed: !isCompleted }); // עדכון מצב ההשלמה באמצעות PUT
   };
-  
+
 
   const handleDelete = async () => {
     try {
