@@ -18,7 +18,7 @@ function Todos({message,showMessage}) {
     const fetchTodos = async () => {
       try {
         if (!currentUser) return;
-        const data = await get(`todoes?userId=${currentUser.id}`);
+        const data = await get(`todos?userId=${currentUser.id}`);
         setTodos(data);
       } catch (error) {
         console.error("Error fetching todos:", error);
@@ -82,7 +82,7 @@ function Todos({message,showMessage}) {
     };
   
     try {
-      const addedTodo = await post("todoes", newTodo);
+      const addedTodo = await post("todos", newTodo);
       setTodos((prevTodos) => [...prevTodos, addedTodo]);
       setNewTask("");
       showMessage("The task was added successfully!");

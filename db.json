@@ -254,7 +254,7 @@
       }
     }
   ],
-  "todoes": [
+  "todos": [
     {
       "userId": 1,
       "id": "1",
@@ -1457,13 +1457,6 @@
     }
   ],
   "photos": [
-    {
-      "albumId": 1,
-      "id": "1",
-      "title": "accusamus beatae ad facilis cum similique qui sunt",
-      "url": "https://via.placeholder.com/600/92c952",
-      "thumbnailUrl": "https://via.placeholder.com/150/92c952"
-    },
     {
       "albumId": 1,
       "id": "2",
@@ -36458,7 +36451,7 @@
       "thumbnailUrl": "https://via.placeholder.com/150/6dd9cb"
     }
   ],
-  "album": [
+  "albums": [
     {
       "userId": 1,
       "id": "1",
@@ -40464,7 +40457,7 @@
     {
       "id": "d920",
       "postId": "4",
-      "name": "name of commentsh",
+      "name": "name of comments jj",
       "body": "body of command hi there everybody",
       "email": "Sincere@april.biz"
     }

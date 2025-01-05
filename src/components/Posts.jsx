@@ -3,10 +3,6 @@ import { useEffect, useContext, useState } from "react";
 import { CurrentUser } from "./App";
 import { get } from "../js/controller";
 import '../css/post.css';
-<<<<<<< HEAD
-=======
-
->>>>>>> bc7286aaca12622e576a0d156fa1b2c800591f75
 import { post } from "../js/controller";
 import Post from "./Post";
 

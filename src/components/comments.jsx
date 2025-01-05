@@ -4,7 +4,7 @@ import { CurrentUser } from "./App";
 import { get, post } from "../js/controller";
 import Comment from "./Comment";
 
-function Comments({ thisPost, showMessage }) {
+function Comments({ postId, showMessage }) {
     const { currentUser } = useContext(CurrentUser);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState({ name: "", body: "" });
@@ -12,15 +12,15 @@ function Comments({ thisPost, showMessage }) {
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                if (!currentUser || !thisPost) return;
-                const data = await get(`comments?postId=${thisPost.id}`);
+                if (!currentUser ) return;
+                const data = await get(`comments?postId=${postId}`);
                 setComments(data);
             } catch (error) {
                 console.error("Error fetching comments:", error);
             }
         };
         fetchComments();
-    }, [currentUser, thisPost]);
+    }, [currentUser, postId]);
 
     const handleDeleteComment = (id) => {
         setComments((prev) => prev.filter((comment) => comment.id !== id));
@@ -48,10 +48,9 @@ function Comments({ thisPost, showMessage }) {
             showMessage("The comment already exists!");
             return;
         }
-        console.log(thisPost);
 
         const newCommentData = {
-            postId: thisPost.id,
+            postId: postId,
             name: newComment.name.trim(),
             body: newComment.body.trim(),
             email: currentUser.email

@@ -12,7 +12,7 @@ const Todo = ({ todo, onDelete, showMessage, onUpdate }) => {
   const updateTodo = async (updatedData) => {
     try {
       // עדכון כל הנתונים, לא רק את השדה המועדכן
-      const updatedTodo = await put(`todoes/${todo.id}`, {
+      const updatedTodo = await put(`todos/${todo.id}`, {
         ...todo, // שמירת כל שאר הנתונים מהמשימה הישנה
         ...updatedData // עדכון רק את הנתונים ששונו
       });
@@ -42,7 +42,7 @@ const Todo = ({ todo, onDelete, showMessage, onUpdate }) => {
 
   const handleDelete = async () => {
     try {
-      await deleteRequest(`todoes/${todo.id}`); // קריאה לפקודת DELETE
+      await deleteRequest(`todos/${todo.id}`); // קריאה לפקודת DELETE
       console.log(`Todo with ID: ${todo.id} deleted!`);
       onDelete(todo.id); // קריאה למחיקת המשימה מהסטייט של Todos
     } catch (error) {

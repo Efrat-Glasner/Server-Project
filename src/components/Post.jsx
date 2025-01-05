@@ -97,7 +97,7 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
 
             </div>
             {/* כפתור הצגת תגובות */}
-            {showComments && <Comments thisPost={post} showMessage={showMessage} />}
+            {showComments && <Comments postId={post.id} showMessage={showMessage} />}
 
         </div>
     );
