@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { get, post } from "../js/controller";
 import Photo from "./Photo";
 
-function Photos({ albumId }) {
+function Photos({ albumId, showMessage, message }) {
     const [photos, setPhotos] = useState([]);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
@@ -32,33 +32,6 @@ function Photos({ albumId }) {
         }
     };
 
-    const handleDelete = async (id) => {
-        try {
-            // מחיקה מהשרת (אם נחוץ)
-            // await post(`photos/${id}`, { method: "DELETE" });
-
-            // מחיקה מקומית
-            setPhotos((prevPhotos) => prevPhotos.filter((photo) => photo.id !== id));
-        } catch (error) {
-            console.error("Error deleting photo:", error);
-        }
-    };
-
-    const handleUpdate = async (id, updatedPhoto) => {
-        try {
-            // עדכון בשרת (אם נחוץ)
-            // await post(`photos/${id}`, { ...updatedPhoto });
-
-            // עדכון מקומי
-            setPhotos((prevPhotos) =>
-                prevPhotos.map((photo) =>
-                    photo.id === id ? { ...photo, ...updatedPhoto } : photo
-                )
-            );
-        } catch (error) {
-            console.error("Error updating photo:", error);
-        }
-    };
 
     useEffect(() => {
         fetchPhotos();
@@ -72,11 +45,28 @@ function Photos({ albumId }) {
                     <Photo
                         key={photo.id}
                         photo={photo}
-                        onDelete={handleDelete}
-                        onUpdate={handleUpdate}
-                    />
+                        onDelete={(id) => {
+                            setPhotos((prevPhotos) =>
+                                prevPhotos.filter((photo) => photo.id !== id)
+                            );
+                            showMessage("Photo deleted successfully!");
+
+                        }}
+
+                        onUpdate={(id, updatedPhoto) => {
+                            setPhotos((prevPhotos) =>
+                                prevPhotos.map((photo) =>
+                                    photo.id === id ? { ...photo, ...updatedPhoto } : photo
+                                )
+                            );
+                            showMessage("Photo updated successfully!");
+                        }} />
                 ))}
             </div>
+
+            {/* הודעה למשתמש */}
+            {message && <p className="toast" >{message}</p>}
+
             {hasMore && (
                 <button onClick={fetchPhotos} style={{ marginTop: "20px", padding: "10px 20px", cursor: "pointer" }}>
                     Load More

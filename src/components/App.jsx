@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     if (currentUser) {
       navigate(`/home/user/${currentUser.id}`);
-      localStorage.setItem('currentUser',JSON.stringify(currentUser));
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
   }, [currentUser]);
 
@@ -43,7 +43,7 @@ function App() {
           <Route path="" element={<></>} />
           <Route path="todos" element={<Todos message={message} showMessage={showMessage} />} />
           <Route path="posts" element={<Posts message={message} showMessage={showMessage} />} />
-          <Route path="albums" element={<Albums />} />
+          <Route path="albums" element={<Albums message={message} showMessage={showMessage} />} />
         </Route>
       </Routes>
     </CurrentUser.Provider>

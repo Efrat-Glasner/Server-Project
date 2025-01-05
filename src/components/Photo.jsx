@@ -12,7 +12,7 @@ function Photo({ photo, onDelete, onUpdate,showMessage }) {
       }
     };
     function handleUpdate() {
-        
+        onUpdate()
     }
 
     return (

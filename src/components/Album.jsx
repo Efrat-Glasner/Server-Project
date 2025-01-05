@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Photos from "./Photos"; // נניח שהקומפוננטה קיימת
 
-function Album({ album }) {
+function Album({ album ,showMessage,message}) {
     const [showPhotos, setShowPhotos] = useState(false);
 
     const handleAlbumClick = () => {
@@ -15,7 +15,7 @@ function Album({ album }) {
                 <p><strong>ID:</strong> {album.id}</p>
                 <p><strong>Title:</strong> {album.title}</p>
             </div>
-            {showPhotos && <Photos albumId={album.id} />} {/* מציג את קומפוננטת Photos */}
+            {showPhotos && <Photos albumId={album.id} showMessage={showMessage} message={message}/>} {/* מציג את קומפוננטת Photos */}
         </>
     );
 }
