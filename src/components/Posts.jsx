@@ -9,7 +9,6 @@ import Post from "./Post";
 function Posts({ message, showMessage }) {
     const { currentUser } = useContext(CurrentUser);
     const [posts, setPosts] = useState([]);
-
     const [statePosts, setStatePosts] = useState("myPosts");
     const [newPost, setNewPost] = useState({ title: "", body: "" });
     const [showAddPost, setShowAddPost] = useState(false);

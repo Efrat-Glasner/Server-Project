@@ -96,12 +96,6 @@ function Todos({message,showMessage}) {
       {/* כותרת ושורת המיון */}
       <div className="header-row">
         <h1>Todos</h1>
-        <select onChange={(e) => setSortBy(e.target.value)} value={sortBy}>
-          <option value="id">Sort by ID</option>
-          <option value="alphabetical">Sort Alphabetically</option>
-          <option value="completed">Sort by Completion</option>
-          <option value="random">Sort Randomly</option>
-        </select>
       </div>
   
       {/* שורת הוספת משימה */}
@@ -126,17 +120,7 @@ function Todos({message,showMessage}) {
           <option value="completed">Sort by Completion</option>
           <option value="random">Sort Randomly</option>
         </select>
-      </div>
-
-      {/* הוספת select לחיפוש לפי קריטריון */}
-      <div>
-        <select onChange={(e) => setSearchCriterion(e.target.value)} value={searchCriterion}>
-          <option value="id">Search by ID</option>
-          <option value="title">Search by Title</option>
-          <option value="completed">Search by Completion Status</option>
-        </select>
-      </div>
-
+      </div>     
       {/* שדה חיפוש */}
       <div>
         <input
