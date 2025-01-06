@@ -1,34 +1,41 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CurrentUser } from "./App";
 import { get, post } from "../js/controller";
 import Comment from "./Comment";
 
-function Comments({ postId, showMessage }) {
+function Comments({postId, showMessage }) {
     const { currentUser } = useContext(CurrentUser);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState({ name: "", body: "" });
+    const navigate = useNavigate();
 
     useEffect(() => {
+        // עדכון ה-URL לכתובת הכוללת את ה-user וה-post
+        navigate(`/user/${currentUser.id}/posts/${postId}/comments`, { replace: false });
+
         const fetchComments = async () => {
             try {
-                if (!currentUser ) return;
+                if (!currentUser) return;
                 const data = await get(`comments?postId=${postId}`);
                 setComments(data);
             } catch (error) {
                 console.error("Error fetching comments:", error);
             }
         };
+
         fetchComments();
     }, [currentUser, postId]);
 
-    const handleDeleteComment = (id) => {
-        setComments((prev) => prev.filter((comment) => comment.id !== id));
+    // שאר הפונקציות לא השתנו
+    const handleDeleteComment = (commentId) => {
+        setComments((prev) => prev.filter((comment) => comment.id !== commentId));
     };
 
-    const handleUpdateComment = (id, updatedComment) => {
+    const handleUpdateComment = (commentId, updatedComment) => {
         setComments((prev) =>
-            prev.map((comment) => (comment.id === id ? updatedComment : comment))
+            prev.map((comment) => (comment.id === commentId ? updatedComment : comment))
         );
     };
 
@@ -53,7 +60,7 @@ function Comments({ postId, showMessage }) {
             postId: postId,
             name: newComment.name.trim(),
             body: newComment.body.trim(),
-            email: currentUser.email
+            email: currentUser.email,
         };
 
         try {
@@ -87,9 +94,7 @@ function Comments({ postId, showMessage }) {
                         setNewComment({ ...newComment, body: e.target.value })
                     }
                 />
-                <button onClick={handleAddComment}>
-                    Add Comment
-                </button>
+                <button onClick={handleAddComment}>Add Comment</button>
             </div>
             <ul>
                 {comments.map((comment) => (
@@ -98,11 +103,10 @@ function Comments({ postId, showMessage }) {
                         comment={comment}
                         onDelete={handleDeleteComment}
                         onUpdate={handleUpdateComment}
-                    showMessage={showMessage}
+                        showMessage={showMessage}
                     />
                 ))}
             </ul>
-
         </div>
     );
 }

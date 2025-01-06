@@ -1,24 +1,34 @@
 /* eslint-disable react/prop-types */
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { deleteRequest, put } from "../js/controller";
 import { CurrentUser } from "./App";
+import { useNavigate } from "react-router-dom";
 import Comments from "./Comments";
+
 function Post({ post, onDelete, showMessage, onUpdate }) {
     const [isEditing, setIsEditing] = useState(false);
     const [newPost, setNewPost] = useState({ title: post.title, body: post.body });
     const [showComments, setShowComments] = useState(false);
     const { currentUser } = useContext(CurrentUser);
+    const navigate = useNavigate();
 
-    // בדיקה אם המשתמש הנוכחי הוא המחבר של הפוסט
     const isAuthor = String(post.userId) === String(currentUser.id);
-    console.log(post)
+
+    useEffect(() => {
+        if (showComments) {
+            navigate(`/user/${currentUser.id}/posts/${post.id}/comments`, { replace: false });
+        } else {
+            navigate(`/user/${currentUser.id}/posts/${post.id}`, { replace: true });
+        }
+    }, [showComments, currentUser.id, post.id, navigate]);
+
     const handleDelete = async () => {
         try {
-            await deleteRequest(`posts/${post.id}`); // קריאה לפקודת DELETE
-            onDelete(post.id); // קריאה למחיקת המשימה מהסטייט של posts
+            await deleteRequest(`posts/${post.id}`);
+            onDelete(post.id);
         } catch (error) {
             console.error("Error deleting the post:", error);
-            showMessage("Failed to delete the task.");
+            showMessage("Failed to delete the post.");
         }
     };
 
@@ -30,28 +40,25 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
         setIsEditing(false);
         try {
             const updatedPost = await put(`posts/${post.id}`, {
-                ...post, // שמירת כל שאר הנתונים מהמשימה הישנה
-                ...updatedData // עדכון רק את הנתונים ששונו
+                ...post,
+                ...updatedData,
             });
             setNewPost({ title: updatedPost.title, body: updatedPost.body });
-
-            console.log(`Post with ID: ${post.id} updated!`);
-            onUpdate(post.id, updatedPost); // עדכון המשימה בהצלחה
+            onUpdate(post.id, updatedPost);
         } catch (error) {
             console.error("Error updating the post:", error);
-            showMessage("Failed to update the task.");
+            showMessage("Failed to update the post.");
         }
     };
 
-    const handleShowComments = () => {
-        setShowComments((prev) => !prev)
+    const toggleComments = () => {
+        setShowComments((prev) => !prev);
     };
 
     return (
         <div className="post-container">
             <div className="post-details">
                 <p><strong>ID:</strong> {post.id}</p>
-                { /*שדות לעריכה*/}
                 {isEditing ? (
                     <>
                         <input
@@ -69,18 +76,15 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
                     </>
                 ) : (
                     <>
-                        <p ><strong>TITLE:</strong> {post.title}</p>
+                        <p><strong>TITLE:</strong> {post.title}</p>
                         <p><strong>BODY:</strong> {post.body}</p>
                     </>
                 )}
             </div>
             <div className="post-actions">
-                {/* כפתור מחיקה */}
                 <button onClick={handleDelete} disabled={!isAuthor}>
                     Delete
                 </button>
-
-                {/* כפתור עדכון */}
                 {isEditing ? (
                     <button
                         onClick={() => handleUpdate({ title: newPost.title, body: newPost.body })}
@@ -93,14 +97,14 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
                         Update
                     </button>
                 )}
-                <button onClick={handleShowComments}>{showComments ? 'Hide commetns' : 'Comments'}</button>
-
+                <button onClick={toggleComments}>
+                    {showComments ? "Hide Comments" : "Show Comments"}
+                </button>
             </div>
-            {/* כפתור הצגת תגובות */}
             {showComments && <Comments postId={post.id} showMessage={showMessage} />}
-
         </div>
     );
 }
+
 
 export default Post;
