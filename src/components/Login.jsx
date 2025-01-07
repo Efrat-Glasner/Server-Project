@@ -1,14 +1,21 @@
-import { useState, useContext} from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../css/form.css";
 import { CurrentUser } from "./App";
-//login
+
 function Login() {
   const [user, setUser] = useState({ name: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
-  const { setCurrentUser } = useContext(CurrentUser);
+  const { setCurrentUser, currentUser } = useContext(CurrentUser);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // אם המשתמש כבר מחובר, ננווט ישירות ל-NAVBAR
+    if (currentUser) {
+      navigate(`/home/user/${currentUser.id}`);
+    }
+  }, [currentUser, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,12 +28,9 @@ function Login() {
       const foundUser = users.find(
         (u) => u.username === user.name && u.website === user.password
       );
-      alert(foundUser.name);
       if (foundUser) {
-        alert("Login successful!");
         setCurrentUser(foundUser);
-        navigate("/home");
-
+        navigate(`/home/user/${foundUser.id}`);
       } else {
         setErrorMessage("Invalid username or password");
       }
@@ -35,6 +39,7 @@ function Login() {
       setErrorMessage("Something went wrong. Please try again later.");
     }
   };
+
   return (
     <div className="login-container">
       <h2>Login</h2>
