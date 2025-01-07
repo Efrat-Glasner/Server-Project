@@ -22,17 +22,7 @@ function Register() {
     e.preventDefault();
 
     try {
-      // const newUser = {
-      //   ...currentUser, // Use the existing data from CurrentUser
-      //   ...details, // Merge with the new details
-      // };
 
-      // Update CurrentUser context
-
-
-
-
-      // Save to the server
        await fetch("http://localhost:3000/user", {
         method: "POST",
         headers: {

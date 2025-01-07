@@ -7,6 +7,8 @@ function Photos({ albumId, showMessage, message }) {
     const [photos, setPhotos] = useState([]);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
+    const [isAdding, setIsAdding] = useState(false);
+    const [newPhoto, setNewPhoto] = useState({ url: "", title: "" });
     const PHOTOS_PER_PAGE = 10;
     const isFetching = useRef(false);
 
@@ -32,6 +34,24 @@ function Photos({ albumId, showMessage, message }) {
         }
     };
 
+    const handleAddPhoto = async () => {
+        try {
+            const newPhotoData = {
+                albumId: albumId,
+                title: newPhoto.title,
+                thumbnailUrl: newPhoto.url,
+                url:newPhoto.url
+            };
+            const addedPhoto = await post("photos", newPhotoData); // קריאה לפונקציית POST
+            setPhotos((prevPhotos) => [addedPhoto, ...prevPhotos]); // הוספת התמונה החדשה לסטייט
+            setNewPhoto({ url: "", title: "" }); // איפוס השדות
+            setIsAdding(false); // סיום מצב הוספה
+            showMessage("Photo added successfully!");
+        } catch (error) {
+            console.error("Error adding the photo:", error);
+            showMessage("Failed to add the photo.");
+        }
+    };
 
     useEffect(() => {
         fetchPhotos();
@@ -40,6 +60,39 @@ function Photos({ albumId, showMessage, message }) {
     return (
         <div style={{ margin: "10px", padding: "10px", border: "1px dashed blue" }}>
             <h3>Photos for Album ID: {albumId}</h3>
+            {/* כפתור הוספה */}
+            {!isAdding ? (
+                <button onClick={() => setIsAdding(true)} style={{ marginBottom: "10px" }}>
+                    Add Photo
+                </button>
+            ) : (
+                <div style={{ marginBottom: "10px" }}>
+                    <input
+                        type="text"
+                        placeholder="Title"
+                        value={newPhoto.title}
+                        onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}
+                        style={{ marginRight: "5px" }}
+                    />
+                    <input
+                        type="text"
+                        placeholder="URL"
+                        value={newPhoto.url}
+                        onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })}
+                        style={{ marginRight: "5px" }}
+                    />
+                    <button
+                        onClick={handleAddPhoto}
+                        disabled={!newPhoto.url.trim() || !newPhoto.title.trim()}
+                    >
+                        Confirm
+                    </button>
+                    <button onClick={() => setIsAdding(false)} style={{ marginLeft: "5px" }}>
+                        Cancel
+                    </button>
+                </div>
+            )}
+
             <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
                 {photos.map((photo) => (
                     <Photo
@@ -50,9 +103,7 @@ function Photos({ albumId, showMessage, message }) {
                                 prevPhotos.filter((photo) => photo.id !== id)
                             );
                             showMessage("Photo deleted successfully!");
-
                         }}
-
                         onUpdate={(id, updatedPhoto) => {
                             setPhotos((prevPhotos) =>
                                 prevPhotos.map((photo) =>
@@ -60,15 +111,19 @@ function Photos({ albumId, showMessage, message }) {
                                 )
                             );
                             showMessage("Photo updated successfully!");
-                        }} />
+                        }}
+                    />
                 ))}
             </div>
 
             {/* הודעה למשתמש */}
-            {message && <p className="toast" >{message}</p>}
+            {message && <p className="toast">{message}</p>}
 
             {hasMore && (
-                <button onClick={fetchPhotos} style={{ marginTop: "20px", padding: "10px 20px", cursor: "pointer" }}>
+                <button
+                    onClick={fetchPhotos}
+                    style={{ marginTop: "20px", padding: "10px 20px", cursor: "pointer" }}
+                >
                     Load More
                 </button>
             )}
