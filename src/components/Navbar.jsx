@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-import { Link, Outlet } from "react-router-dom";
-import { useContext, useState } from "react";
 import "../css/navbar.css";
-=======
-import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import "../css/home.css";
->>>>>>> c82b29c3f07db206f19796740641dbd823c7e75c
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { CurrentUser } from "./App";
 import UserInfo from "./UserInfo";
 
