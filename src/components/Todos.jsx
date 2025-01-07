@@ -17,7 +17,7 @@ function Todos({message,showMessage}) {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        if (!currentUser) return;
+       
         const data = await get(`todos?userId=${currentUser.id}`);
         setTodos(data);
       } catch (error) {

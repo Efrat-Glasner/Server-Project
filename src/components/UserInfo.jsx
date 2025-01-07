@@ -4,10 +4,12 @@ import { CurrentUser } from "./App";
 import { useContext } from "react";
 
 const UserInfo = ({ onClose }) => {
-  const { currentUser } = useContext(CurrentUser);
+  const { setCurrentUser,currentUser } = useContext(CurrentUser);
 
-  if (!currentUser) {
-    // טיפול במקרה שבו currentUser לא מוגדר
+  if (!currentUser) 
+    setCurrentUser(JSON.parse(localStorage.getItem('currentUser')));
+  ;
+  if(!currentUser){
     return (
       <div className="user-info-container">
         <div className="user-info">

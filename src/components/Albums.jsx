@@ -11,7 +11,7 @@ function Albums({ showMessage, message }) {
   useEffect(() => {
     const fetchAlbums = async () => {
       try {
-        if (!currentUser) return;
+        
         const data = await get(`albums?userId=${currentUser.id}`);
         setAlbums(data);
       } catch (error) {
