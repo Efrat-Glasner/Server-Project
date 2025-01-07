@@ -1,0 +1,49 @@
+.navbar-container {
+    background-color: #f0f8ff;
+    margin: 0;
+}
+
+.navbar {
+    background-color: #333;
+    padding: 10px;
+}
+
+.navbar-links,
+.user-info-button {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-link,
+.user-info-button {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.user-info-button {
+    background-color: #333;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.user-info-button:hover {
+    color: #00d4ff;
+    cursor: pointer;
+    background-color: #333;
+    border-color: #333;
+}
+
+.navbar-link:hover {
+    color: #00d4ff;
+    cursor: pointer;
+}
+
+.user-name {
+    color: #c4bfbf;
+
+}

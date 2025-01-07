@@ -1,6 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { useContext, useState } from "react";
-import "../css/home.css";
+import "../css/navbar.css";
 import { CurrentUser } from "./App";
 import UserInfo from "./UserInfo";
 
