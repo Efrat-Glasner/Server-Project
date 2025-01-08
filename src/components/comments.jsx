@@ -13,7 +13,7 @@ function Comments({postId, showMessage }) {
 
     useEffect(() => {
         // עדכון ה-URL לכתובת הכוללת את ה-user וה-post
-        navigate(`/user/${currentUser.id}/posts/${postId}/comments`, { replace: false });
+        // navigate(`/user/${currentUser.id}/posts/${postId}/comments`, { replace: false });
 
         const fetchComments = async () => {
             try {

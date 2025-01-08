@@ -1492,27 +1492,6 @@
     },
     {
       "albumId": 1,
-      "id": "11",
-      "title": "nihil at amet non hic quia qui",
-      "url": "https://via.placeholder.com/600/1ee8a4",
-      "thumbnailUrl": "https://via.placeholder.com/150/1ee8a4"
-    },
-    {
-      "albumId": 1,
-      "id": "14",
-      "title": "est necessitatibus architecto ut laborum",
-      "url": "https://via.placeholder.com/600/61a65",
-      "thumbnailUrl": "https://via.placeholder.com/150/61a65"
-    },
-    {
-      "albumId": 1,
-      "id": "15",
-      "title": "harum dicta similique quis dolore earum ex qui",
-      "url": "https://via.placeholder.com/600/f9cee5",
-      "thumbnailUrl": "https://via.placeholder.com/150/f9cee5"
-    },
-    {
-      "albumId": 1,
       "id": "16",
       "title": "iusto sunt nobis quasi veritatis quas expedita voluptatum deserunt",
       "url": "https://via.placeholder.com/600/fdf73e",
@@ -1727,27 +1706,6 @@
       "title": "et soluta est",
       "url": "https://via.placeholder.com/600/b4412f",
       "thumbnailUrl": "https://via.placeholder.com/150/b4412f"
-    },
-    {
-      "albumId": 1,
-      "id": "48",
-      "title": "ut esse id",
-      "url": "https://via.placeholder.com/600/68e0a8",
-      "thumbnailUrl": "https://via.placeholder.com/150/68e0a8"
-    },
-    {
-      "albumId": 1,
-      "id": "49",
-      "title": "quasi quae est modi quis quam in impedit",
-      "url": "https://via.placeholder.com/600/2cd88b",
-      "thumbnailUrl": "https://via.placeholder.com/150/2cd88b"
-    },
-    {
-      "albumId": 1,
-      "id": "50",
-      "title": "et inventore quae ut tempore eius voluptatum",
-      "url": "https://via.placeholder.com/600/9e59da",
-      "thumbnailUrl": "https://via.placeholder.com/150/9e59da"
     },
     {
       "albumId": 2,
@@ -40370,7 +40328,7 @@
     },
     {
       "id": "d920",
-      "postId": "4",
+      "postId": null,
       "name": "name of comments jj",
       "body": "body of command hi there everybody",
       "email": "Sincere@april.biz"
@@ -40382,12 +40340,6 @@
       "id": "2",
       "title": "qui est esse",
       "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
-    },
-    {
-      "userId": 1,
-      "id": "4",
-      "title": "eum et est occaecatia",
-      "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
     },
     {
       "userId": 1,
@@ -40404,14 +40356,8 @@
     {
       "userId": 1,
       "id": "7",
-      "title": "magnam facilis autem",
+      "title": "magnam facilis autemhii",
       "body": "dolore placeat quibusdam ea quo vitae\nmagni quis enim qui quis quo nemo aut saepe\nquidem repellat excepturi ut quia\nsunt ut sequi eos ea sed quas"
-    },
-    {
-      "userId": 1,
-      "id": "8",
-      "title": "dolorem dolore est ipsam",
-      "body": "dignissimos aperiam dolorevvvm qui eumfacilis quibusdam animi sint suscipit qui sint possimus cumquaerat magni maiores excepturiipsam ut commodi dolor voluptatum modi aut vitae"
     },
     {
       "userId": 1,

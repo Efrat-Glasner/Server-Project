@@ -2,7 +2,7 @@
 import { useContext, useState, useEffect } from "react";
 import { deleteRequest, put } from "../js/controller";
 import { CurrentUser } from "./App";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams,useLocation } from "react-router-dom";
 import Comments from "./Comments";
 
 function Post({ post, onDelete, showMessage, onUpdate }) {
@@ -11,7 +11,7 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
     const [showComments, setShowComments] = useState(false);
     const { currentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
-
+    const location =useLocation();
     const isAuthor = String(post.userId) === String(currentUser.id);
 
     useEffect(() => {
@@ -21,7 +21,15 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
             navigate(`/user/${currentUser.id}/posts/${post.id}`, { replace: true });
         }
     }, [showComments, currentUser.id, post.id, navigate]);
-
+    useEffect(() => {
+        const hasCommentsPath = location.pathname.includes('/comments');
+        if (hasCommentsPath) {
+            setShowComments(true)
+        }
+        else{
+            setShowComments(false)
+        }
+    }, [location]);
     const handleDelete = async () => {
         try {
             await deleteRequest(`posts/${post.id}`);
