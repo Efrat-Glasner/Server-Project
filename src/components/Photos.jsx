@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import { get, post } from "../js/controller";
 import Photo from "./Photo";
 import "../css/photo.css";
-
 function Photos({ albumId, albumTitle, showMessage }) {
     const [photos, setPhotos] = useState([]);
     const [page, setPage] = useState(0);
@@ -13,6 +12,7 @@ function Photos({ albumId, albumTitle, showMessage }) {
     const PHOTOS_PER_PAGE = 10;
     const isFetching = useRef(false);
 
+    
     const isValidUrl = (url) => {
         try {
             new URL(url);

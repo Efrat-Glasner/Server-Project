@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { CurrentUser } from "./App";
 import { get, post } from "../js/controller";
 import "../css/album.css";
@@ -13,7 +14,8 @@ function Albums({ showMessage }) {
   const [newAlbum, setNewAlbum] = useState({ title: "" });
   const [searchQuery, setSearchQuery] = useState("");
   const [searchCriterion, setSearchCriterion] = useState("id");
-
+  const { albumId } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchAlbums = async () => {
       try {
@@ -22,10 +24,23 @@ function Albums({ showMessage }) {
       } catch (error) {
         console.error("Error fetching albums:", error);
       }
+
     };
 
     fetchAlbums();
   }, [currentUser]);
+  useEffect(() => {
+    if (selectedAlbum) {
+      navigate(`/user/${currentUser.id}/albums/${selectedAlbum.id}/photos`, { replace: true });
+    }
+  }, [selectedAlbum]);
+  useEffect(() => {
+    if (albumId && albums) {
+      albums.map((album) => (
+        (album.id == albumId ? setSelectedAlbum(album) : null)
+      ))
+    }
+  }, [albums, albumId]);
 
   const handleAddAlbum = async () => {
     try {
@@ -107,9 +122,8 @@ function Albums({ showMessage }) {
           {filteredAlbums.map((album) => (
             <div
               key={album.id}
-              className={`album-title ${
-                selectedAlbum && selectedAlbum.id === album.id ? "active" : ""
-              }`}
+              className={`album-title ${selectedAlbum && selectedAlbum.id === album.id ? "active" : ""
+                }`}
               onClick={() => setSelectedAlbum(album)}
             >
               {album.title}

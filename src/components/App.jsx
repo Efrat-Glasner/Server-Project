@@ -13,6 +13,8 @@ import Comments from "./Comments";
 import Post from "./Post";
 import NotFound from "./NotFound"; // עמוד שגיאה מותאם אישית
 import Logout from "./LogOut";
+import Photos from "./Photos";
+
 export const CurrentUser = createContext({});
 
 function App() {
@@ -72,13 +74,15 @@ function App() {
             path="/user/:id/posts"
             element={<Posts message={message} showMessage={showMessage} />}
           >
-            <Route path="/user/:id/posts/:postId/" element={<Post />} />
-            <Route path="/user/:id/posts/:postId/comments" element={<Comments />} />
+            <Route path=":postId/" element={<Post />} />
+            <Route path=":postId/comments" element={<Comments />} />
           </Route>
           <Route
             path="/user/:id/albums"
             element={<Albums message={message} showMessage={showMessage} />}
-          />
+          >
+            <Route path={":albumId/photos"} element={<Photos />} />
+          </Route>
         </Route>
 
         {/* עמוד שגיאה */}

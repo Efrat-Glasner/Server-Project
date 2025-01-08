@@ -2,7 +2,7 @@
 import { useContext, useState, useEffect } from "react";
 import { deleteRequest, put } from "../js/controller";
 import { CurrentUser } from "./App";
-import { useNavigate, useParams,useLocation } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import Comments from "./Comments";
 
 function Post({ post, onDelete, showMessage, onUpdate }) {
