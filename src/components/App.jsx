@@ -14,7 +14,7 @@ import Post from "./Post";
 import NotFound from "./NotFound"; // עמוד שגיאה מותאם אישית
 import Logout from "./LogOut";
 import Photos from "./Photos";
-
+//
 export const CurrentUser = createContext({});
 
 function App() {
