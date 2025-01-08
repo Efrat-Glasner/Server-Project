@@ -81,7 +81,7 @@ function App() {
             path="/user/:id/albums"
             element={<Albums message={message} showMessage={showMessage} />}
           >
-            <Route path={":albumId/photos"} element={<Photos />} />
+            <Route path=":albumId/photos" element={<Photos />} />
           </Route>
         </Route>
 

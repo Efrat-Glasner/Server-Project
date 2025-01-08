@@ -5,7 +5,7 @@ import { get, post } from "../js/controller";
 import Comment from "./Comment";
 import "../css/comment.css";
 
-function Comments({ postId, showMessage }) {
+function Comments({ postId, showMessage, message }) {
     const { currentUser } = useContext(CurrentUser);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState({ name: "", body: "" });
@@ -28,12 +28,16 @@ function Comments({ postId, showMessage }) {
 
     const handleDeleteComment = (commentId) => {
         setComments((prev) => prev.filter((comment) => comment.id !== commentId));
+        showMessage("The comment was deleted successfully!");
+
     };
 
     const handleUpdateComment = (commentId, updatedComment) => {
         setComments((prev) =>
             prev.map((comment) => (comment.id === commentId ? updatedComment : comment))
         );
+        showMessage("The comment was updated successfully!");
+
     };
 
     const handleAddComment = async () => {
@@ -121,6 +125,8 @@ function Comments({ postId, showMessage }) {
                     />
                 ))}
             </ul>
+        {message && <p className="toast">{message}</p>}
+
         </div>
     );
 }
