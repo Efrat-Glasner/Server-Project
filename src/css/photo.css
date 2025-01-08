@@ -41,7 +41,8 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 200px; /* הקטנת רוחב כל כרטיס תמונה */
+    max-width: 200px;
+    max-height: 260px;
     padding: 15px;
     border: 2px solid #ddd;
     border-radius: 10px;

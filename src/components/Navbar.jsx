@@ -33,6 +33,7 @@ const Navbar = () => {
     return (
         <div className="navbar-container">
             <nav className="navbar">
+                <h3 className="user-name">{`Hello ${currentUser.username}`}</h3>
                 <ul className="navbar-links">
                     <li>
                         <Link to="/logout" className="navbar-link">
@@ -66,7 +67,6 @@ const Navbar = () => {
                     </li>
 
                 </ul>
-                <h3 className="user-name">{`Hello ${currentUser.username}`}</h3>
             </nav>
             {showUserInfo && <UserInfo onClose={toggleUserInfo} />}
             <Outlet />

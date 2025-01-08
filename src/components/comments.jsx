@@ -1,18 +1,17 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { CurrentUser } from "./App";
 import { get, post } from "../js/controller";
 import Comment from "./Comment";
+import "../css/comment.css";
 
-function Comments({postId, showMessage }) {
+function Comments({ postId, showMessage }) {
     const { currentUser } = useContext(CurrentUser);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState({ name: "", body: "" });
-    const navigate = useNavigate();
+    const [showAddComment, setShowAddComment] = useState(false);
 
     useEffect(() => {
-        // עדכון ה-URL לכתובת הכוללת את ה-user וה-post
 
         const fetchComments = async () => {
             try {
@@ -27,7 +26,6 @@ function Comments({postId, showMessage }) {
         fetchComments();
     }, [currentUser, postId]);
 
-    // שאר הפונקציות לא השתנו
     const handleDeleteComment = (commentId) => {
         setComments((prev) => prev.filter((comment) => comment.id !== commentId));
     };
@@ -67,6 +65,7 @@ function Comments({postId, showMessage }) {
             setComments((prevComments) => [...prevComments, addedComment]);
             setNewComment({ name: "", body: "" });
             showMessage("The comment was added successfully!");
+            setShowAddComment(false); // סגירת האינפוטים לאחר הוספה
         } catch (error) {
             showMessage("Failed to add the comment.");
             console.error(error);
@@ -76,26 +75,42 @@ function Comments({postId, showMessage }) {
     return (
         <div>
             <h3>Comments:</h3>
-            <div className="add-comment">
-                <input
-                    type="text"
-                    placeholder="Enter comment name"
-                    value={newComment.name}
-                    onChange={(e) =>
-                        setNewComment({ ...newComment, name: e.target.value })
-                    }
-                />
-                <input
-                    type="text"
-                    placeholder="Enter comment body"
-                    value={newComment.body}
-                    onChange={(e) =>
-                        setNewComment({ ...newComment, body: e.target.value })
-                    }
-                />
-                <button onClick={handleAddComment}>Add Comment</button>
-            </div>
-            <ul>
+
+            {/* כפתור להוספה */}
+            <button onClick={() => setShowAddComment((prev) => !prev)}>
+                {showAddComment ? "Cancel" : "Add Comment"}
+            </button>
+
+            {/* הצגת האינפוטים רק אם showAddComment פעיל */}
+            {showAddComment && (
+                <div className="add-comment">
+                    <input
+                        type="text"
+                        placeholder="Enter comment name"
+                        value={newComment.name}
+                        onChange={(e) =>
+                            setNewComment({ ...newComment, name: e.target.value })
+                        }
+                    />
+                    <input
+                        type="text"
+                        placeholder="Enter comment body"
+                        value={newComment.body}
+                        onChange={(e) =>
+                            setNewComment({ ...newComment, body: e.target.value })
+                        }
+                    />
+                    <button
+                        onClick={handleAddComment}
+                        disabled={!newComment.name || !newComment.body}
+                    >
+                        Submit
+                    </button>
+                </div>
+            )}
+
+            {/* הצגת התגובות */}
+            <ul className="all-comment">
                 {comments.map((comment) => (
                     <Comment
                         key={comment.id}

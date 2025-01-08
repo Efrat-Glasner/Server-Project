@@ -1,10 +1,11 @@
-import { useState, useContext } from "react";
+import { useState, useContext , useEffect} from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../css/form.css";
+
 import { CurrentUser } from "./App";
 
 function Register() {
-  const { setCurrentUser } = useContext(CurrentUser);
+  const { setCurrentUser, currentUser } = useContext(CurrentUser);
   const navigate = useNavigate();
   const location = useLocation(); // Hook לגישה לנתוני state
   const { username, password } = location.state || {}; // קריאה לנתונים מ-state
@@ -17,6 +18,12 @@ function Register() {
     phone: "",
     company: { name: "", catchPhrase: "", bs: "" }
   });
+  useEffect(() => {
+      // אם המשתמש כבר מחובר, ננווט ישירות ל-NAVBAR
+      if (currentUser) {
+        navigate(`/home/user/${currentUser.id}`);
+      }
+    }, [currentUser, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -120,8 +127,7 @@ function Register() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="lng">Longitude:</label>
-          onChange={(e) => setDetails({
+          <label htmlFor="lng" onChange={(e) => setDetails({
             ...details,
             address: {
               ...details.address,
@@ -130,7 +136,8 @@ function Register() {
                 lng: e.target.value
               }
             }
-          })}
+          })}>Longitude:</label>
+          
 
         </div>
         <div className="form-group">

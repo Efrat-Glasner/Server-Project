@@ -11,7 +11,6 @@ function Photos({ albumId, albumTitle, showMessage }) {
     const [newPhoto, setNewPhoto] = useState({ url: "", title: "" });
     const PHOTOS_PER_PAGE = 10;
     const isFetching = useRef(false);
-
     
     const isValidUrl = (url) => {
         try {
