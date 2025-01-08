@@ -14,7 +14,7 @@ import Post from "./Post";
 import NotFound from "./NotFound"; // עמוד שגיאה מותאם אישית
 import Logout from "./LogOut";
 import Photos from "./Photos";
-
+//
 export const CurrentUser = createContext({});
 
 function App() {
@@ -81,7 +81,7 @@ function App() {
             path="/user/:id/albums"
             element={<Albums message={message} showMessage={showMessage} />}
           >
-            <Route path={":albumId/photos"} element={<Photos />} />
+            <Route path=":albumId/photos" element={<Photos />} />
           </Route>
         </Route>
 

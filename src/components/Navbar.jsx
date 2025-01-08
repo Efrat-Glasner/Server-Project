@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { CurrentUser } from "./App";
 import UserInfo from "./UserInfo";
-
+//
 const Navbar = () => {
     const { setCurrentUser, currentUser } = useContext(CurrentUser);
     const [showUserInfo, setShowUserInfo] = useState(false);

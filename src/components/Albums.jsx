@@ -6,7 +6,7 @@ import { get, post } from "../js/controller";
 import "../css/album.css";
 import Photos from "./Photos";
 
-function Albums({ showMessage }) {
+function Albums({message, showMessage }) {
   const { currentUser } = useContext(CurrentUser);
   const [albums, setAlbums] = useState([]);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
@@ -143,6 +143,8 @@ function Albums({ showMessage }) {
           <div className="placeholder">Select an album to view details</div>
         )}
       </div>
+      {message && <p className="toast">{message}</p>}
+
     </div>
   );
 }
