@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useContext, useState } from "react";
 import { CurrentUser } from "./App";
-import { put,deleteRequest } from "../js/controller";
-function Comment({ comment, onDelete, onUpdate,showMessage }) {
+import '../css/comment.css';
+import { put, deleteRequest } from "../js/controller";
+function Comment({ comment, onDelete, onUpdate, showMessage }) {
     const { currentUser } = useContext(CurrentUser);
     const [isEditing, setIsEditing] = useState(false);
     const [updatedComment, setUpdatedComment] = useState({
@@ -30,73 +31,75 @@ function Comment({ comment, onDelete, onUpdate,showMessage }) {
         setIsEditing(false);
         try {
             const updatedComment = await put(`comments/${comment.id}`, {
-                ...comment, 
-                ...updatedData 
+                ...comment,
+                ...updatedData
             });
             setUpdatedComment({ name: updatedComment.name, body: updatedComment.body });
-            onUpdate(comment.id, updatedComment); 
+            onUpdate(comment.id, updatedComment);
         } catch (error) {
             console.error("Error updating the comment:", error);
             showMessage("Failed to update the comment.");
         }
     };
     return (
-        <li>
-            <p>
-                <strong>
+        <div className="comment-card">
+            <li>
+                <p>
+                    <strong>
+                        {isEditing ? (
+                            <input
+                                type="text"
+                                value={updatedComment.name}
+                                onChange={(e) =>
+                                    setUpdatedComment({
+                                        ...updatedComment,
+                                        name: e.target.value,
+                                    })
+                                }
+                            />
+                        ) : (
+                            comment.name
+                        )}
+                    </strong>
+                    :{" "}
                     {isEditing ? (
                         <input
                             type="text"
-                            value={updatedComment.name}
+                            value={updatedComment.body}
                             onChange={(e) =>
                                 setUpdatedComment({
                                     ...updatedComment,
-                                    name: e.target.value,
+                                    body: e.target.value,
                                 })
                             }
                         />
                     ) : (
-                        comment.name
+                        comment.body
                     )}
-                </strong>
-                :{" "}
-                {isEditing ? (
-                    <input
-                        type="text"
-                        value={updatedComment.body}
-                        onChange={(e) =>
-                            setUpdatedComment({
-                                ...updatedComment,
-                                body: e.target.value,
-                            })
-                        }
-                    />
-                ) : (
-                    comment.body
-                )}
-            </p>
-            <p>
-                <small>email: {comment.email}</small>
-            </p>
-            <div className="comment-actions">
-                {isEditing ? (
-                  <button 
-                  onClick={() => handleUpdate({ name: updatedComment.name, body: updatedComment.body })} 
-                  disabled={!isAuthor}
-              >
-                  Save
-              </button>
-              
-                ) : (
-                    <button onClick={() => setIsEditing(true)} disabled={!isAuthor}>
-                        Update
+                </p>
+                <p>
+                    <small><i className="fa-solid fa-user"></i> {comment.email}</small>
+                </p>
+                <div className="comment-actions">
+                    {isEditing ? (
+                        <button
+                            onClick={() => handleUpdate({ name: updatedComment.name, body: updatedComment.body })}
+                            disabled={!isAuthor}
+                        >
+                            Save
+                        </button>
+
+                    ) : (
+                        <button onClick={() => setIsEditing(true)} disabled={!isAuthor}>
+                            Update
+                        </button>
+                    )}
+                    <button onClick={handleDelete} disabled={!isAuthor}>
+                        Delete
                     </button>
-                )}
-                <button onClick={handleDelete} disabled={!isAuthor}>
-                    Delete
-                </button>
-            </div>
-        </li>
+                </div>
+            </li>
+        </div>
     );
 }
 
