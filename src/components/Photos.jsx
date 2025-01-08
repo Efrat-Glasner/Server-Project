@@ -2,8 +2,9 @@
 import { useEffect, useState, useRef } from "react";
 import { get, post } from "../js/controller";
 import Photo from "./Photo";
+import "../css/photo.css";
 
-function Photos({ albumId, showMessage, message }) {
+function Photos({ albumId, albumTitle, showMessage }) {
     const [photos, setPhotos] = useState([]);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
@@ -12,23 +13,31 @@ function Photos({ albumId, showMessage, message }) {
     const PHOTOS_PER_PAGE = 10;
     const isFetching = useRef(false);
 
-    const fetchPhotos = async () => {
-        if (isFetching.current || !hasMore) return;
+    const isValidUrl = (url) => {
+        try {
+            new URL(url);
+            return true;
+        } catch {
+            return false;
+        }
+    };
+
+    const fetchPhotos = async (reset = false) => {
+        if (isFetching.current || (!reset && !hasMore)) return;
         isFetching.current = true;
 
         try {
-            const startIndex = page * PHOTOS_PER_PAGE;
+            const currentPage = reset ? 0 : page;
+            const startIndex = currentPage * PHOTOS_PER_PAGE;
             const endpoint = `photos?albumId=${albumId}&_start=${startIndex}&_limit=${PHOTOS_PER_PAGE}`;
             const data = await get(endpoint);
 
-            setPhotos((prevPhotos) => [...prevPhotos, ...data]);
-            if (data.length < PHOTOS_PER_PAGE) {
-                setHasMore(false);
-            } else {
-                setPage((prevPage) => prevPage + 1);
-            }
+            setPhotos((prevPhotos) => (reset ? data : [...prevPhotos, ...data]));
+            setHasMore(data.length === PHOTOS_PER_PAGE);
+            setPage(reset ? 1 : currentPage + 1);
         } catch (error) {
             console.error("Error fetching photos:", error);
+            showMessage("Failed to load photos. Please try again.");
         } finally {
             isFetching.current = false;
         }
@@ -40,12 +49,12 @@ function Photos({ albumId, showMessage, message }) {
                 albumId: albumId,
                 title: newPhoto.title,
                 thumbnailUrl: newPhoto.url,
-                url:newPhoto.url
+                url: newPhoto.url,
             };
-            const addedPhoto = await post("photos", newPhotoData); // קריאה לפונקציית POST
-            setPhotos((prevPhotos) => [addedPhoto, ...prevPhotos]); // הוספת התמונה החדשה לסטייט
-            setNewPhoto({ url: "", title: "" }); // איפוס השדות
-            setIsAdding(false); // סיום מצב הוספה
+            const addedPhoto = await post("photos", newPhotoData);
+            setPhotos((prevPhotos) => [addedPhoto, ...prevPhotos]);
+            setNewPhoto({ url: "", title: "" });
+            setIsAdding(false);
             showMessage("Photo added successfully!");
         } catch (error) {
             console.error("Error adding the photo:", error);
@@ -54,49 +63,53 @@ function Photos({ albumId, showMessage, message }) {
     };
 
     useEffect(() => {
-        fetchPhotos();
-    }, []);
+        setPhotos([]);
+        setPage(0);
+        setHasMore(true);
+        fetchPhotos(true);
+    }, [albumId]);
 
     return (
-        <div style={{ margin: "10px", padding: "10px", border: "1px dashed blue" }}>
-            <h3>Photos for Album ID: {albumId}</h3>
-            {/* כפתור הוספה */}
-            {!isAdding ? (
-                <button onClick={() => setIsAdding(true)} style={{ marginBottom: "10px" }}>
-                    Add Photo
-                </button>
-            ) : (
-                <div style={{ marginBottom: "10px" }}>
-                    <input
-                        type="text"
-                        placeholder="Title"
-                        value={newPhoto.title}
-                        onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}
-                        style={{ marginRight: "5px" }}
-                    />
-                    <input
-                        type="text"
-                        placeholder="URL"
-                        value={newPhoto.url}
-                        onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })}
-                        style={{ marginRight: "5px" }}
-                    />
-                    <button
-                        onClick={handleAddPhoto}
-                        disabled={!newPhoto.url.trim() || !newPhoto.title.trim()}
-                    >
-                        Confirm
-                    </button>
-                    <button onClick={() => setIsAdding(false)} style={{ marginLeft: "5px" }}>
-                        Cancel
-                    </button>
-                </div>
-            )}
+        <div className="photos-wrapper">
+            <div className="album-title-wrapper">
+                <h1 className="album-title">{albumTitle}</h1>
+                {!isAdding ? (
+                    <button onClick={() => setIsAdding(true)}>Add Photo</button>
+                ) : (
+                    <button onClick={() => setIsAdding(false)}>Cancel</button>
+                )}
+            </div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            <div className={`add-photo ${isAdding ? 'active' : ''}`}>
+                <input
+                    type="text"
+                    placeholder="Title"
+                    value={newPhoto.title}
+                    onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}
+                />
+                <input
+                    type="text"
+                    placeholder="URL"
+                    value={newPhoto.url}
+                    onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })}
+                />
+                <button
+                    onClick={handleAddPhoto}
+                    disabled={
+                        !newPhoto.url.trim() ||
+                        !newPhoto.title.trim() ||
+                        !isValidUrl(newPhoto.url)
+                    }
+                >
+                    Confirm
+                </button>
+            </div>
+
+            <div className="photos-list">
                 {photos.map((photo) => (
                     <Photo
                         key={photo.id}
+                        showMessage={showMessage}
                         photo={photo}
                         onDelete={(id) => {
                             setPhotos((prevPhotos) =>
@@ -116,18 +129,13 @@ function Photos({ albumId, showMessage, message }) {
                 ))}
             </div>
 
-            {/* הודעה למשתמש */}
-            {message && <p className="toast">{message}</p>}
-
             {hasMore && (
-                <button
-                    onClick={fetchPhotos}
-                    style={{ marginTop: "20px", padding: "10px 20px", cursor: "pointer" }}
-                >
+                <button onClick={() => fetchPhotos(false)}>
                     Load More
                 </button>
             )}
         </div>
+
     );
 }
 

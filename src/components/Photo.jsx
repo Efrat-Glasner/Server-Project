@@ -2,6 +2,7 @@
 import { deleteRequest } from "../js/controller";
 import { useState } from "react";
 import { put } from "../js/controller";
+import "../css/photo.css"; // חיבור לקובץ העיצוב
 
 function Photo({ photo, onDelete, onUpdate, showMessage }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -12,9 +13,8 @@ function Photo({ photo, onDelete, onUpdate, showMessage }) {
 
   const handleDelete = async () => {
     try {
-      await deleteRequest(`photos/${photo.id}`); // קריאה לפקודת DELETE
-      console.log(`Photo with ID: ${photo.id} deleted!`);
-      onDelete(photo.id); // קריאה למחיקת המשימה מהסטייט של Photos
+      await deleteRequest(`photos/${photo.id}`);
+      onDelete(photo.id);
     } catch (error) {
       console.error("Error deleting the photo:", error);
       showMessage("Failed to delete the photo.");
@@ -55,14 +55,7 @@ function Photo({ photo, onDelete, onUpdate, showMessage }) {
   };
 
   return (
-    <div
-      style={{
-        textAlign: "center",
-        margin: "10px",
-        border: "1px solid gray",
-        padding: "10px",
-      }}
-    >
+    <div className="photo-card">
       {isEditing ? (
         <>
           <input
@@ -72,7 +65,7 @@ function Photo({ photo, onDelete, onUpdate, showMessage }) {
               setUpdatedPhoto({ ...updatedPhoto, title: e.target.value })
             }
             placeholder="Enter new title"
-            style={{ margin: "5px", padding: "5px", width: "80%" }}
+            className="photo-input"
           />
           <input
             type="text"
@@ -81,31 +74,29 @@ function Photo({ photo, onDelete, onUpdate, showMessage }) {
               setUpdatedPhoto({ ...updatedPhoto, url: e.target.value })
             }
             placeholder="Enter new image URL"
-            style={{ margin: "5px", padding: "5px", width: "80%" }}
+            className="photo-input"
           />
-          <div>
-            <button onClick={handleSave} style={{ margin: "5px" }}>
+          <div className="photo-buttons">
+            <button onClick={handleSave} className="photo-button save">
               Save
             </button>
-            <button onClick={handleCancel} style={{ margin: "5px" }}>
+            <button onClick={handleCancel} className="photo-button cancel">
               Cancel
             </button>
           </div>
         </>
       ) : (
         <>
-          <img
-            src={photo.thumbnailUrl}
-            alt={photo.title}
-            style={{ width: "150px", height: "150px" }}
-          />
-          <p>{photo.title}</p>
-          <button onClick={handleDelete} style={{ margin: "5px" }}>
-            Delete
-          </button>
-          <button onClick={handleEditClick} style={{ margin: "5px" }}>
-            Edit
-          </button>
+          <img src={photo.thumbnailUrl} alt={photo.title} className="photo-img" />
+          <p className="photo-title">{photo.title}</p>
+          <div className="photo-buttons">
+            <button onClick={handleDelete} className="photo-button delete">
+              Delete
+            </button>
+            <button onClick={handleEditClick} className="photo-button edit">
+              Edit
+            </button>
+          </div>
         </>
       )}
     </div>

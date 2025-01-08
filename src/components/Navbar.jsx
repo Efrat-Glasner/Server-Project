@@ -33,10 +33,12 @@ const Navbar = () => {
     return (
         <div className="navbar-container">
             <nav className="navbar">
-                <Link to="/logout" className="navbar-link">
-                    Logout
-                </Link>
                 <ul className="navbar-links">
+                    <li>
+                        <Link to="/logout" className="navbar-link">
+                            Logout
+                        </Link>
+                    </li>
                     <li>
                         <Link to={`/home/user/${currentUser.id}`} className="navbar-link">
                             Home
