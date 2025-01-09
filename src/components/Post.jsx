@@ -1,19 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useContext, useState, useEffect } from "react";
-import { CurrentUser } from "./App";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Comments from "./Comments";
+import "../css/post.css";
+import Edit from "./Edit";
 import Delete from "./Delete";
-import { put } from "../js/controller";
+import Comments from "./Comments";
+import { CurrentUser } from "./App";
 
-function Post({ post, setPosts, showMessage, onUpdate, setSelectedPost }) {
-    const [isEditing, setIsEditing] = useState(false);
-    const [newPost, setNewPost] = useState({ title: post.title, body: post.body });
+function Post({ post, setPosts, showMessage, setSelectedPost }) {
     const [showComments, setShowComments] = useState(false);
-    const { currentUser } = useContext(CurrentUser);
+    const { currentUser } = useContext(CurrentUser); 
     const navigate = useNavigate();
     const location = useLocation();
-    const isAuthor = String(post.userId) === String(currentUser.id);
+    const isAuthor = String(post.userId) === String(currentUser.id); 
 
     useEffect(() => {
         if (showComments) {
@@ -22,94 +21,58 @@ function Post({ post, setPosts, showMessage, onUpdate, setSelectedPost }) {
             navigate(`/user/${currentUser.id}/posts/${post.id}`, { replace: true });
         }
     }, [showComments, currentUser.id, post.id, navigate]);
-    useEffect(() => {
-        const hasCommentsPath = location.pathname.includes('/comments');
-        if (hasCommentsPath) {
-            setShowComments(true)
-        }
-        else {
-            setShowComments(false)
-        }
-    }, [location]);
 
-    const handleUpdate = async (updatedData) => {
-        if (newPost.title.trim() === "" || newPost.body.trim() === "") {
-            showMessage("Both title and body must have valid values.");
-            return;
-        }
-        setIsEditing(false);
-        try {
-            const updatedPost = await put(`posts/${post.id}`, {
-                ...post,
-                ...updatedData,
-            });
-            setNewPost({ title: updatedPost.title, body: updatedPost.body });
-            onUpdate(post.id, updatedPost);
-        } catch (error) {
-            console.error("Error updating the post:", error);
-            showMessage("Failed to update the post.");
-        }
-    };
+    useEffect(() => {
+        const hasCommentsPath = location.pathname.includes("/comments");
+        setShowComments(hasCommentsPath);
+    }, [location]);
 
     const toggleComments = () => {
         setShowComments((prev) => !prev);
     };
 
     return (
-        <div className="post-container">
+        <div className="post-card">
+
+            {/* Display post details */}
             <div className="post-details">
-                <p><strong>ID:</strong> {post.id}</p>
-                {isEditing ? (
-                    <>
-                        <input
-                            type="text"
-                            value={newPost.title}
-                            onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-                            placeholder="Edit Title"
-                        />
-                        <input
-                            type="text"
-                            value={newPost.body}
-                            onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
-                            placeholder="Edit Body"
-                        />
-                    </>
-                ) : (
-                    <>
-                        <p><strong>TITLE:</strong> {post.title}</p>
-                        <p><strong>BODY:</strong> {post.body}</p>
-                    </>
-                )}
+                <p className="post-title">
+                    <strong>Title:</strong> {post.title}
+                </p>
+                <p className="post-body">
+                    <strong>Body:</strong> {post.body}
+                </p>
             </div>
-            <div className="post-actions">
+
+            {/* Actions for delete and comments */}
+            <div className="post-buttons">
                 <Delete
-                    type={"posts"}
+                    type="posts"
                     id={post.id}
                     setDetails={setPosts}
                     activity={!isAuthor}
                     showMessage={showMessage}
                     setSelectedItem={setSelectedPost}
                 />
-                {isEditing ? (
-                    <button
-                        onClick={() => handleUpdate({ title: newPost.title, body: newPost.body })}
-                        disabled={!isAuthor}
-                    >
-                        Save
-                    </button>
-                ) : (
-                    <button onClick={() => setIsEditing(true)} disabled={!isAuthor}>
-                        Update
-                    </button>
-                )}
+                {/* Edit component */}
+                <Edit
+                    type="posts"
+                    item={post}
+                    inputs={["title", "body"]}
+                    setDetails={setPosts}
+                    showMessage={showMessage}
+                    setSelectedItem={setSelectedPost}
+                    activity={!isAuthor}
+                />
                 <button onClick={toggleComments}>
                     {showComments ? "Hide Comments" : "Show Comments"}
                 </button>
             </div>
+
+            {/* Comments section */}
             {showComments && <Comments postId={post.id} showMessage={showMessage} />}
         </div>
     );
 }
-
 
 export default Post;

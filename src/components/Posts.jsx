@@ -151,14 +151,6 @@ function Posts({ message, showMessage }) {
                         showMessage={showMessage}
                         setSelectedPost={setSelectedPost}
                         setPosts={setPosts}
-                        onUpdate={(id, updatedPost) => {
-                            setPosts((prevPosts) =>
-                                prevPosts.map((post) =>
-                                    post.id === id ? { ...post, ...updatedPost } : post
-                                )
-                            );
-                            showMessage("Post updated successfully!");
-                        }}
                     />
                 ) : (
                     <div className="placeholder">Select a post to view details</div>
