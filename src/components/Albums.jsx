@@ -126,7 +126,7 @@ function Albums({message, showMessage }) {
                 }`}
               onClick={() => setSelectedAlbum(album)}
             >
-              {album.title}
+                        <p> <strong> ID:</strong> {album.id}:<br></br> {album.title}</p>
             </div>
           ))}
 

@@ -154,7 +154,8 @@ function Posts({ message, showMessage }) {
                         className={`post-title ${selectedPost?.id === post.id ? "active" : ""}`}
                         onClick={() => setSelectedPost(post)}
                     >
-                        {post.title}
+                        <p> <strong> ID:</strong> {post.id}:<br></br> {post.title}</p>
+                        
                     </div>
                 ))}
             </div>
