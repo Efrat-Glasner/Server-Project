@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
-import { deleteRequest } from "../js/controller";
 import { useState } from "react";
 import { put } from "../js/controller";
 import "../css/photo.css"; // חיבור לקובץ העיצוב
-
+import Delete from "./Delete";
 function Photo({ photo, onDelete, onUpdate, showMessage }) {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedPhoto, setUpdatedPhoto] = useState({
@@ -11,15 +10,15 @@ function Photo({ photo, onDelete, onUpdate, showMessage }) {
     url: photo.thumbnailUrl,
   });
 
-  const handleDelete = async () => {
-    try {
-      await deleteRequest(`photos/${photo.id}`);
-      onDelete(photo.id);
-    } catch (error) {
-      console.error("Error deleting the photo:", error);
-      showMessage("Failed to delete the photo.");
-    }
-  };
+  // const handleDelete = async () => {
+  //   try {
+  //     await deleteRequest(`photos/${photo.id}`);
+  //     onDelete(photo.id);
+  //   } catch (error) {
+  //     console.error("Error deleting the photo:", error);
+  //     showMessage("Failed to delete the photo.");
+  //   }
+  // };
 
   const handleSave = async () => {
     if (updatedPhoto.title.trim() === "" || updatedPhoto.url.trim() === "") {
@@ -90,9 +89,10 @@ function Photo({ photo, onDelete, onUpdate, showMessage }) {
           <img src={photo.thumbnailUrl} alt={photo.title} className="photo-img" />
           <p className="photo-title">{photo.title}</p>
           <div className="photo-buttons">
-            <button onClick={handleDelete} className="photo-button delete">
+            {/* <button onClick={handleDelete} className="photo-button delete">
               Delete
-            </button>
+            </button> */}
+            <Delete type={"photos"} id={photo.id} onDelete={onDelete} activity={false}></Delete>
             <button onClick={handleEditClick} className="photo-button edit">
               Edit
             </button>

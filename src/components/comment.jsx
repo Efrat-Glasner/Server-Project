@@ -2,7 +2,8 @@
 import { useContext, useState } from "react";
 import { CurrentUser } from "./App";
 import '../css/comment.css';
-import { put, deleteRequest } from "../js/controller";
+import { put } from "../js/controller";
+import Delete from "./Delete";
 function Comment({ comment, onDelete, onUpdate, showMessage }) {
     const { currentUser } = useContext(CurrentUser);
     const [isEditing, setIsEditing] = useState(false);
@@ -12,17 +13,6 @@ function Comment({ comment, onDelete, onUpdate, showMessage }) {
     });
 
     const isAuthor = comment.email === currentUser.email;
-
-    const handleDelete = async () => {
-        try {
-            await deleteRequest(`comments/${comment.id}`); // קריאה לפקודת DELETE
-            onDelete(comment.id); // קריאה למחיקת המשימה מהסטייט של comments
-        } catch (error) {
-            console.error("Error deleting the comment:", error);
-            showMessage("Failed to delete the task.");
-        }
-    };
-
     const handleUpdate = async (updatedData) => {
         if (updatedComment.name.trim() === "" || updatedComment.body.trim() === "") {
             showMessage("Both title and body must have valid values.");
@@ -94,13 +84,11 @@ function Comment({ comment, onDelete, onUpdate, showMessage }) {
                             Update
                         </button>
                     )}
-                    <button onClick={handleDelete} disabled={!isAuthor}>
-                        Delete
-                    </button>
+
+                    <Delete type={"comments"} id={comment.id} onDelete={onDelete} activity={!isAuthor}/>
                 </div>
             </li>
         </div>
     );
 }
-
 export default Comment;

@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import "../css/todo.css";
-import { deleteRequest } from "../js/controller";
 import { put } from "../js/controller";
-
+import Delete from "./Delete";
 const Todo = ({ todo, onDelete, showMessage, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(todo.title);
@@ -39,18 +38,6 @@ const Todo = ({ todo, onDelete, showMessage, onUpdate }) => {
     await updateTodo({ completed: !isCompleted }); // עדכון מצב ההשלמה באמצעות PUT
   };
 
-
-  const handleDelete = async () => {
-    try {
-      await deleteRequest(`todos/${todo.id}`); // קריאה לפקודת DELETE
-      console.log(`Todo with ID: ${todo.id} deleted!`);
-      onDelete(todo.id); // קריאה למחיקת המשימה מהסטייט של Todos
-    } catch (error) {
-      console.error("Error deleting the todo:", error);
-      showMessage("Failed to delete the task.");
-    }
-  };
-
   return (
     <div className="todo-container">
       <div className="todo-details">
@@ -81,7 +68,12 @@ const Todo = ({ todo, onDelete, showMessage, onUpdate }) => {
         ) : (
           <button onClick={() => setIsEditing(true)}>Edit</button>
         )}
-        <button onClick={handleDelete}>Delete</button>
+        <Delete
+          type={"todos"}
+          id={todo.id}
+          onDelete={onDelete}
+          activity={false}
+        />
       </div>
     </div>
   );

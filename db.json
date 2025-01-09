@@ -257,18 +257,6 @@
   "todos": [
     {
       "userId": 1,
-      "id": "1",
-      "title": "delectus aut autem",
-      "completed": true
-    },
-    {
-      "userId": 1,
-      "id": "3",
-      "title": "fugiat veniam minus",
-      "completed": false
-    },
-    {
-      "userId": 1,
       "id": "4",
       "title": "et porro tempora",
       "completed": true
@@ -2049,13 +2037,6 @@
       "title": "et eius nisi in ut reprehenderit labore eum",
       "url": "https://via.placeholder.com/600/35cedf",
       "thumbnailUrl": "https://via.placeholder.com/150/35cedf"
-    },
-    {
-      "albumId": 3,
-      "id": "104",
-      "title": "et natus vero quia totam aut et minima",
-      "url": "https://via.placeholder.com/600/313b40",
-      "thumbnailUrl": "https://via.placeholder.com/150/313b40"
     },
     {
       "albumId": 3,
@@ -40343,12 +40324,6 @@
     },
     {
       "userId": 1,
-      "id": "7",
-      "title": "magnam facilis autemhii",
-      "body": "dolore placeat quibusdam ea quo vitae\nmagni quis enim qui quis quo nemo aut saepe\nquidem repellat excepturi ut quia\nsunt ut sequi eos ea sed quas"
-    },
-    {
-      "userId": 1,
       "id": "9",
       "title": "nesciunt iure omnis dolorem tempora et accusantium",
       "body": "consectetur animi nesciunt iure dolore\nenim quia ad\nveniam autem ut quam aut nobis\net est aut quod aut provident voluptas autem voluptas"
@@ -40910,12 +40885,6 @@
       "userId": "eb91",
       "title": "project",
       "body": "hi ew creat api project"
-    },
-    {
-      "id": "9a1a",
-      "userId": "1",
-      "title": "dfghjk",
-      "body": "sdfghjkh"
     }
   ]
 }

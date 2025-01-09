@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useContext, useState, useEffect } from "react";
-import { deleteRequest, put } from "../js/controller";
 import { CurrentUser } from "./App";
 import { useNavigate,useLocation } from "react-router-dom";
 import Comments from "./Comments";
+import Delete from "./Delete";
+import { put } from "../js/controller";
 
 function Post({ post, onDelete, showMessage, onUpdate }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -30,15 +31,6 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
             setShowComments(false)
         }
     }, [location]);
-    const handleDelete = async () => {
-        try {
-            await deleteRequest(`posts/${post.id}`);
-            onDelete(post.id);
-        } catch (error) {
-            console.error("Error deleting the post:", error);
-            showMessage("Failed to delete the post.");
-        }
-    };
 
     const handleUpdate = async (updatedData) => {
         if (newPost.title.trim() === "" || newPost.body.trim() === "") {
@@ -90,9 +82,10 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
                 )}
             </div>
             <div className="post-actions">
-                <button onClick={handleDelete} disabled={!isAuthor}>
+                {/* <button onClick={handleDelete} disabled={!isAuthor}>
                     Delete
-                </button>
+                </button> */}
+                <Delete type={"posts"}id={post.id} onDelete={onDelete} activity={!isAuthor}></Delete>
                 {isEditing ? (
                     <button
                         onClick={() => handleUpdate({ title: newPost.title, body: newPost.body })}
