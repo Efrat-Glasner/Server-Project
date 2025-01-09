@@ -1,18 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useContext, useState, useEffect } from "react";
 import { CurrentUser } from "./App";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Comments from "./Comments";
 import Delete from "./Delete";
 import { put } from "../js/controller";
 
-function Post({ post, onDelete, showMessage, onUpdate }) {
+function Post({ post, setPosts, showMessage, onUpdate, setSelectedPost }) {
     const [isEditing, setIsEditing] = useState(false);
     const [newPost, setNewPost] = useState({ title: post.title, body: post.body });
     const [showComments, setShowComments] = useState(false);
     const { currentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
-    const location =useLocation();
+    const location = useLocation();
     const isAuthor = String(post.userId) === String(currentUser.id);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
         if (hasCommentsPath) {
             setShowComments(true)
         }
-        else{
+        else {
             setShowComments(false)
         }
     }, [location]);
@@ -82,10 +82,14 @@ function Post({ post, onDelete, showMessage, onUpdate }) {
                 )}
             </div>
             <div className="post-actions">
-                {/* <button onClick={handleDelete} disabled={!isAuthor}>
-                    Delete
-                </button> */}
-                <Delete type={"posts"}id={post.id} onDelete={onDelete} activity={!isAuthor}></Delete>
+                <Delete
+                    type={"posts"}
+                    id={post.id}
+                    setDetails={setPosts}
+                    activity={!isAuthor}
+                    showMessage={showMessage}
+                    setSelectedItem={setSelectedPost}
+                />
                 {isEditing ? (
                     <button
                         onClick={() => handleUpdate({ title: newPost.title, body: newPost.body })}

@@ -3,7 +3,7 @@ import { useState } from "react";
 import "../css/todo.css";
 import { put } from "../js/controller";
 import Delete from "./Delete";
-const Todo = ({ todo, onDelete, showMessage, onUpdate }) => {
+const Todo = ({ todo, setTodos, showMessage, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(todo.title);
   const [isCompleted, setIsCompleted] = useState(todo.completed);
@@ -71,8 +71,10 @@ const Todo = ({ todo, onDelete, showMessage, onUpdate }) => {
         <Delete
           type={"todos"}
           id={todo.id}
-          onDelete={onDelete}
           activity={false}
+          setDetails={setTodos}
+          showMessage={showMessage}
+          setSelectedItem={null}
         />
       </div>
     </div>

@@ -1,26 +1,23 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState, useRef } from "react";
-import { get, post } from "../js/controller";
+import { get } from "../js/controller";
 import Photo from "./Photo";
 import "../css/photo.css";
+import Add from "./Add";
 function Photos({ albumId, albumTitle, showMessage }) {
     const [photos, setPhotos] = useState([]);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
-    const [isAdding, setIsAdding] = useState(false);
-    const [newPhoto, setNewPhoto] = useState({ url: "", title: "" });
     const PHOTOS_PER_PAGE = 10;
     const isFetching = useRef(false);
-    
-    const isValidUrl = (url) => {
-        try {
-            new URL(url);
-            return true;
-        } catch {
-            return false;
-        }
-    };
-
+    // const isValidUrl = (url) => {
+    //     try {
+    //         new URL(url);
+    //         return true;
+    //     } catch {
+    //         return false;
+    //     }
+    // };
     const fetchPhotos = async (reset = false) => {
         if (isFetching.current || (!reset && !hasMore)) return;
         isFetching.current = true;
@@ -41,26 +38,6 @@ function Photos({ albumId, albumTitle, showMessage }) {
             isFetching.current = false;
         }
     };
-
-    const handleAddPhoto = async () => {
-        try {
-            const newPhotoData = {
-                albumId: albumId,
-                title: newPhoto.title,
-                thumbnailUrl: newPhoto.url,
-                url: newPhoto.url,
-            };
-            const addedPhoto = await post("photos", newPhotoData);
-            setPhotos((prevPhotos) => [addedPhoto, ...prevPhotos]);
-            setNewPhoto({ url: "", title: "" });
-            setIsAdding(false);
-            showMessage("Photo added successfully!");
-        } catch (error) {
-            console.error("Error adding the photo:", error);
-            showMessage("Failed to add the photo.");
-        }
-    };
-
     useEffect(() => {
         setPhotos([]);
         setPage(0);
@@ -69,53 +46,24 @@ function Photos({ albumId, albumTitle, showMessage }) {
     }, [albumId]);
 
     return (
-        <div className="photos-wrapper">
+         <div className="photos-wrapper">
             <div className="album-title-wrapper">
                 <h1 className="album-title">{albumTitle}</h1>
-                {!isAdding ? (
-                    <button onClick={() => setIsAdding(true)}>Add Photo</button>
-                ) : (
-                    <button onClick={() => setIsAdding(false)}>Cancel</button>
-                )}
             </div>
-
-            <div className={`add-photo ${isAdding ? 'active' : ''}`}>
-                <input
-                    type="text"
-                    placeholder="Title"
-                    value={newPhoto.title}
-                    onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}
-                />
-                <input
-                    type="text"
-                    placeholder="URL"
-                    value={newPhoto.url}
-                    onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })}
-                />
-                <button
-                    onClick={handleAddPhoto}
-                    disabled={
-                        !newPhoto.url.trim() ||
-                        !newPhoto.title.trim() ||
-                        !isValidUrl(newPhoto.url)
-                    }
-                >
-                    Confirm
-                </button>
-            </div>
-
+            <Add
+                type={"photos"}
+                setDetails={setPhotos}
+                inputs={["title", "thumbnailUrl"]}
+                knownFields={{ albumId: albumId, }}
+                showMessage={showMessage}
+            />
             <div className="photos-list">
                 {photos.map((photo) => (
                     <Photo
                         key={photo.id}
                         showMessage={showMessage}
                         photo={photo}
-                        onDelete={(id) => {
-                            setPhotos((prevPhotos) =>
-                                prevPhotos.filter((photo) => photo.id !== id)
-                            );
-                            showMessage("Photo deleted successfully!");
-                        }}
+                        setPhotos={setPhotos}
                         onUpdate={(id, updatedPhoto) => {
                             setPhotos((prevPhotos) =>
                                 prevPhotos.map((photo) =>
@@ -137,5 +85,4 @@ function Photos({ albumId, albumTitle, showMessage }) {
 
     );
 }
-
 export default Photos;

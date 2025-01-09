@@ -4,7 +4,7 @@ import { CurrentUser } from "./App";
 import '../css/comment.css';
 import { put } from "../js/controller";
 import Delete from "./Delete";
-function Comment({ comment, onDelete, onUpdate, showMessage }) {
+function Comment({ comment, setDetails, onUpdate, showMessage, message }) {
     const { currentUser } = useContext(CurrentUser);
     const [isEditing, setIsEditing] = useState(false);
     const [updatedComment, setUpdatedComment] = useState({
@@ -85,7 +85,15 @@ function Comment({ comment, onDelete, onUpdate, showMessage }) {
                         </button>
                     )}
 
-                    <Delete type={"comments"} id={comment.id} onDelete={onDelete} activity={!isAuthor}/>
+                    <Delete
+                        type={"comments"}
+                        id={comment.id}
+                        setDetails={setDetails}
+                        activity={!isAuthor}
+                        showMessage={showMessage}
+                        message={message}
+                        setSelectedItem={null}
+                    />
                 </div>
             </li>
         </div>

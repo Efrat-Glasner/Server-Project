@@ -2,16 +2,15 @@
 import { useEffect, useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CurrentUser } from "./App";
-import { get, post } from "../js/controller";
+import { get } from "../js/controller";
 import "../css/album.css";
 import Photos from "./Photos";
+import Add from "./Add";
 
-function Albums({message, showMessage }) {
+function Albums({ message, showMessage }) {
   const { currentUser } = useContext(CurrentUser);
   const [albums, setAlbums] = useState([]);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
-  const [isAdding, setIsAdding] = useState(false);
-  const [newAlbum, setNewAlbum] = useState({ title: "" });
   const [searchQuery, setSearchQuery] = useState("");
   const [searchCriterion, setSearchCriterion] = useState("id");
   const { albumId } = useParams();
@@ -41,25 +40,6 @@ function Albums({message, showMessage }) {
       ))
     }
   }, [albums, albumId]);
-
-  const handleAddAlbum = async () => {
-    try {
-      const newAlbumData = {
-        userId: currentUser.id,
-        title: newAlbum.title,
-      };
-
-      const addedAlbum = await post("albums", newAlbumData);
-      setAlbums((prevAlbums) => [addedAlbum, ...prevAlbums]);
-      setNewAlbum({ title: "" });
-      setIsAdding(false);
-      showMessage("Album added successfully!");
-    } catch (error) {
-      console.error("Error adding the album:", error);
-      showMessage("Failed to add the album.");
-    }
-  };
-
   const filterAlbums = (albums, query, criterion) => {
     if (!query) return albums;
 
@@ -81,26 +61,13 @@ function Albums({message, showMessage }) {
     <div className="albums-wrapper">
       <div className="albums-sidebar">
         <div className="albums-header">
-          {!isAdding ? (
-            <button onClick={() => setIsAdding(true)}>Add Album</button>
-          ) : (
-            <div className="add-album">
-              <input
-                type="text"
-                placeholder="Album Title"
-                value={newAlbum.title}
-                onChange={(e) => setNewAlbum({ title: e.target.value })}
-              />
-              <button
-                onClick={handleAddAlbum}
-                disabled={!newAlbum.title.trim()}
-              >
-                Confirm
-              </button>
-              <button onClick={() => setIsAdding(false)}>Cancel</button>
-            </div>
-          )}
-
+          <Add
+            type={"albums"}
+            setDetails={setAlbums}
+            inputs={["title"]}
+            knownFields={{ userId: currentUser.id }}
+            showMessage={showMessage}
+          />
           <div className="search-albums">
             <input
               type="text"
@@ -126,7 +93,7 @@ function Albums({message, showMessage }) {
                 }`}
               onClick={() => setSelectedAlbum(album)}
             >
-                        <p> <strong> ID:</strong> {album.id}:<br></br> {album.title}</p>
+              <p> <strong> ID:</strong> {album.id}:<br></br> {album.title}</p>
             </div>
           ))}
 
@@ -135,10 +102,9 @@ function Albums({message, showMessage }) {
           )}
         </div>
       </div>
-
       <div className="album-content">
         {selectedAlbum ? (
-          <Photos albumId={selectedAlbum.id} albumTitle={selectedAlbum.title} showMessage={showMessage} />
+          <Photos albumId={selectedAlbum.id} albumTitle={selectedAlbum.title} showMessage={showMessage} message={message} />
         ) : (
           <div className="placeholder">Select an album to view details</div>
         )}
@@ -148,5 +114,4 @@ function Albums({message, showMessage }) {
     </div>
   );
 }
-
 export default Albums;

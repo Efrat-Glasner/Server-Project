@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { get, post } from "../js/controller";
+import { get } from "../js/controller";
 import { CurrentUser } from "./App";
 import Post from "./Post";
 import "../css/post.css";
+import Add from "./Add";
 
 function Posts({ message, showMessage }) {
     const { currentUser } = useContext(CurrentUser);
     const [posts, setPosts] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
-    const [newPost, setNewPost] = useState({ title: "", body: "" });
     const [showAddPost, setShowAddPost] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchCriterion, setSearchCriterion] = useState("id");
@@ -55,28 +55,28 @@ function Posts({ message, showMessage }) {
     const filteredPosts = filterPosts(posts, searchQuery, searchCriterion);
 
 
-    const handleAddPost = async () => {
-        if (!newPost.title.trim() || !newPost.body.trim()) {
-            showMessage("Please fill in both fields!");
-            return;
-        }
+    // const handleAddPost = async () => {
+    //     if (!newPost.title.trim() || !newPost.body.trim()) {
+    //         showMessage("Please fill in both fields!");
+    //         return;
+    //     }
 
-        const newPostData = {
-            userId: currentUser.id,
-            title: newPost.title.trim(),
-            body: newPost.body.trim(),
-        };
+    //     const newPostData = {
+    //         userId: currentUser.id,
+    //         title: newPost.title.trim(),
+    //         body: newPost.body.trim(),
+    //     };
 
-        try {
-            const addedPost = await post("posts", newPostData);
-            setPosts((prevPosts) => [...prevPosts, addedPost]);
-            setNewPost({ title: "", body: "" });
-            showMessage("The post was added successfully!");
-        } catch (error) {
-            showMessage("Failed to add the post.");
-            console.error(error);
-        }
-    };
+    //     try {
+    //         const addedPost = await post("posts", newPostData);
+    //         setPosts((prevPosts) => [...prevPosts, addedPost]);
+    //         setNewPost({ title: "", body: "" });
+    //         showMessage("The post was added successfully!");
+    //     } catch (error) {
+    //         showMessage("Failed to add the post.");
+    //         console.error(error);
+    //     }
+    // };
 
     const getPlaceholderText = () => {
         switch (searchCriterion) {
@@ -114,7 +114,7 @@ function Posts({ message, showMessage }) {
                         </select>
                     </div>
                 </div>
-                <button onClick={() => setShowAddPost((prev) => !prev)}>
+                 <button onClick={() => setShowAddPost((prev) => !prev)}>
                     {showAddPost ? "Cancel" : "Add Post"}
                 </button>
                 <button onClick={() => setShowAllPosts((prev) => !prev)}>
@@ -122,32 +122,15 @@ function Posts({ message, showMessage }) {
                 </button>
 
                 {showAddPost && (
-                    <div className="add-post-container">
-                        <input
-                            type="text"
-                            placeholder="Enter post title"
-                            value={newPost.title}
-                            onChange={(e) =>
-                                setNewPost({ ...newPost, title: e.target.value })
-                            }
-                        />
-                        <input
-                            type="text"
-                            placeholder="Enter post body"
-                            value={newPost.body}
-                            onChange={(e) =>
-                                setNewPost({ ...newPost, body: e.target.value })
-                            }
-                        />
-                        <button
-                            onClick={handleAddPost}
-                            disabled={!newPost.title || !newPost.body}
-                        >
-                            Submit
-                        </button>
-                    </div>
-                )}
-
+                     <Add
+                     type={"posts"}
+                     setDetails={setPosts}
+                     inputs={["title","body"]}
+                     knownFields={{userId:currentUser.id}}
+                     showMessage={showMessage}
+ 
+                 />
+                )} 
                 {filteredPosts.map((post) => (
                     <div
                         key={post.id}
@@ -155,7 +138,7 @@ function Posts({ message, showMessage }) {
                         onClick={() => setSelectedPost(post)}
                     >
                         <p> <strong> ID:</strong> {post.id}:<br></br> {post.title}</p>
-                        
+
                     </div>
                 ))}
             </div>
@@ -166,13 +149,8 @@ function Posts({ message, showMessage }) {
                     <Post
                         post={selectedPost}
                         showMessage={showMessage}
-                        onDelete={(id) => {
-                            setPosts((prevPosts) =>
-                                prevPosts.filter((p) => p.id !== id)
-                            );
-                            setSelectedPost(null);
-                            showMessage("Post deleted successfully!");
-                        }}
+                        setSelectedPost={setSelectedPost}
+                        setPosts={setPosts}
                         onUpdate={(id, updatedPost) => {
                             setPosts((prevPosts) =>
                                 prevPosts.map((post) =>

@@ -3,22 +3,13 @@ import { useState } from "react";
 import { put } from "../js/controller";
 import "../css/photo.css"; // חיבור לקובץ העיצוב
 import Delete from "./Delete";
-function Photo({ photo, onDelete, onUpdate, showMessage }) {
+function Photo({ photo, setPhotos, onUpdate, showMessage }) {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedPhoto, setUpdatedPhoto] = useState({
     title: photo.title,
     url: photo.thumbnailUrl,
   });
 
-  // const handleDelete = async () => {
-  //   try {
-  //     await deleteRequest(`photos/${photo.id}`);
-  //     onDelete(photo.id);
-  //   } catch (error) {
-  //     console.error("Error deleting the photo:", error);
-  //     showMessage("Failed to delete the photo.");
-  //   }
-  // };
 
   const handleSave = async () => {
     if (updatedPhoto.title.trim() === "" || updatedPhoto.url.trim() === "") {
@@ -89,10 +80,14 @@ function Photo({ photo, onDelete, onUpdate, showMessage }) {
           <img src={photo.thumbnailUrl} alt={photo.title} className="photo-img" />
           <p className="photo-title">{photo.title}</p>
           <div className="photo-buttons">
-            {/* <button onClick={handleDelete} className="photo-button delete">
-              Delete
-            </button> */}
-            <Delete type={"photos"} id={photo.id} onDelete={onDelete} activity={false}></Delete>
+            <Delete
+              type={"photos"}
+              id={photo.id}
+              setDetails={setPhotos}
+              activity={false}
+              showMessage={showMessage}
+              setSelectedItem={null}
+            />
             <button onClick={handleEditClick} className="photo-button edit">
               Edit
             </button>
