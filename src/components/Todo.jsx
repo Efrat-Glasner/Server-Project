@@ -1,84 +1,55 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
 import "../css/todo.css";
-import { put } from "../js/controller";
+import Edit from "./Edit";
 import Delete from "./Delete";
-const Todo = ({ todo, setTodos, showMessage, onUpdate }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [newTitle, setNewTitle] = useState(todo.title);
-  const [isCompleted, setIsCompleted] = useState(todo.completed);
+import { put } from "../js/controller";
 
-  const updateTodo = async (updatedData) => {
-    try {
-      // עדכון כל הנתונים, לא רק את השדה המועדכן
-      const updatedTodo = await put(`todos/${todo.id}`, {
-        ...todo, // שמירת כל שאר הנתונים מהמשימה הישנה
-        ...updatedData // עדכון רק את הנתונים ששונו
-      });
+const Todo = ({ todo, setTodos, showMessage }) => {
+    const handleToggleCompleted = async () => {
+        try {
+            const updatedTodo = await put(`todos/${todo.id}`, {
+                ...todo,
+                completed: !todo.completed,
+            });
+            setTodos((prev) =>
+                prev.map((t) => (t.id === todo.id ? updatedTodo : t))
+            );
+            showMessage("Task updated successfully!");
+        } catch (error) {
+            console.error("Error updating task:", error);
+            showMessage("Failed to update the task.");
+        }
+    };
 
-      console.log(`Todo with ID: ${todo.id} updated!`);
-
-      // עדכון המשימה המעודכנת בקומפוננטת Todos
-      onUpdate(todo.id, updatedTodo); // עדכון המשימה בהצלחה
-    } catch (error) {
-      console.error("Error updating the todo:", error);
-      showMessage("Failed to update the task.");
-    }
-  };
-
-  const handleSave = async () => {
-    if (newTitle.trim() === "") return;
-    setIsEditing(false);
-
-    await updateTodo({ title: newTitle }); // עדכון הכותרת באמצעות PUT
-  };
-
-  const handleToggle = async () => {
-    setIsCompleted(!isCompleted);
-    await updateTodo({ completed: !isCompleted }); // עדכון מצב ההשלמה באמצעות PUT
-  };
-
-  return (
-    <div className="todo-container">
-      <div className="todo-details">
-        <p><strong>ID:</strong> {todo.id}</p>
-        {isEditing ? (
-          <input
-            type="text"
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-            className="todo-edit-input"
-          />
-        ) : (
-          <p><strong>Title:</strong> {todo.title}</p>
-        )}
-      </div>
-      <div className="todo-checkbox-container">
-        <label className="todo-checkbox-label"></label>
-        <input
-          type="checkbox"
-          checked={isCompleted}
-          onChange={handleToggle}
-          className="todo-checkbox"
-        />
-      </div>
-      <div className="todo-actions">
-        {isEditing ? (
-          <button onClick={handleSave}>Save</button>
-        ) : (
-          <button onClick={() => setIsEditing(true)}>Edit</button>
-        )}
-        <Delete
-          type={"todos"}
-          id={todo.id}
-          activity={false}
-          setDetails={setTodos}
-          showMessage={showMessage}
-          setSelectedItem={null}
-        />
-      </div>
-    </div>
-  );
+    return (
+        <div className="todo-container">
+            <div className="todo-checkbox-container">
+                <input
+                    type="checkbox"
+                    checked={todo.completed}
+                    onChange={handleToggleCompleted}
+                    className="todo-checkbox"
+                />
+            </div>
+            <div className="todo-details">
+                <p><strong>Title:</strong> {todo.title}</p>
+            </div>
+            <div className="todo-actions">
+                <Edit
+                    type="todos"
+                    item={todo}
+                    inputs={["title"]} 
+                    setDetails={setTodos}
+                    showMessage={showMessage}
+                />
+                <Delete
+                    type="todos"
+                    id={todo.id}
+                    setDetails={setTodos}
+                    showMessage={showMessage}
+                />
+            </div>
+        </div>
+    );
 };
-
 export default Todo;
