@@ -49,7 +49,7 @@ function App() {
     setMessage(msg);
     const timeout = setTimeout(() => {
       setMessage("");
-    }, 2000);
+    }, 2500);
     setMessageTimeout(timeout);
   };
 

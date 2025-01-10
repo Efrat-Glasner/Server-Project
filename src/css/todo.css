@@ -12,8 +12,6 @@
   box-sizing: border-box;
   /* מתחשב בגבולות וב-padding */
 }
-<<<<<<< HEAD
-=======
 
 .todo-container,
 .post-container {
@@ -21,7 +19,7 @@
   border: 1px solid #ccc;
   padding: 20px;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #e7171700;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -99,7 +97,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
->>>>>>> bc7286aaca12622e576a0d156fa1b2c800591f75
 .header-row {
   display: flex;
   justify-content: center;
@@ -134,27 +131,20 @@ button:disabled {
   gap: 10px;
   /* מרווח בין האלמנטים */
   margin-bottom: 20px;
-<<<<<<< HEAD
 }
 .post-title {
   cursor: pointer;
   transition: color 0.3s;
-=======
->>>>>>> bc7286aaca12622e576a0d156fa1b2c800591f75
 }
   .post-title {
     cursor: pointer;
     transition: color 0.3s;
   }
 
-<<<<<<< HEAD
 .post-title:hover {
   color: #007bff;
   text-decoration: underline;
 }
-=======
-  .post-title:hover {
-    color: #007bff;
-    text-decoration: underline;
-  }
->>>>>>> bc7286aaca12622e576a0d156fa1b2c800591f75
+.todo{
+  margin-left: 20%;
+}

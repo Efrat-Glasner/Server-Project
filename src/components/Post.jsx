@@ -9,10 +9,10 @@ import { CurrentUser } from "./App";
 
 function Post({ post, setPosts, showMessage, setSelectedPost }) {
     const [showComments, setShowComments] = useState(false);
-    const { currentUser } = useContext(CurrentUser); 
+    const { currentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
     const location = useLocation();
-    const isAuthor = String(post.userId) === String(currentUser.id); 
+    const isAuthor = String(post.userId) === String(currentUser.id);
 
     useEffect(() => {
         if (showComments) {
@@ -47,13 +47,14 @@ function Post({ post, setPosts, showMessage, setSelectedPost }) {
             {/* Actions for delete and comments */}
             <div className="post-buttons">
                 <Delete
-                    type="posts"
+                    types={["comments/postId", "posts"]}
                     id={post.id}
                     setDetails={setPosts}
                     activity={!isAuthor}
                     showMessage={showMessage}
                     setSelectedItem={setSelectedPost}
                 />
+
                 {/* Edit component */}
                 <Edit
                     type="posts"

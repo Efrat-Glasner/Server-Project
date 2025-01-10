@@ -43,7 +43,7 @@ const Todo = ({ todo, setTodos, showMessage }) => {
                     showMessage={showMessage}
                 />
                 <Delete
-                    type="todos"
+                    types={["todos"]}
                     id={todo.id}
                     setDetails={setTodos}
                     showMessage={showMessage}

@@ -10,7 +10,7 @@ function Photo({ photo, setPhotos, showMessage }) {
       <p className="photo-title">{photo.title}</p>
       <div className="photo-buttons">
         <Delete
-          type="photos"
+          types={["photos"]}
           id={photo.id}
           setDetails={setPhotos}
           activity={false}

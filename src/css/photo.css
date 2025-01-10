@@ -26,7 +26,7 @@
     grid-template-columns: repeat(3, 1fr); /* הגדרת 3 תמונות בשורה */
     gap: 20px; /* רווחים בין התמונות */
     justify-items: center;
-    height: 600px; /* גובה מקסימלי לתצוגה */
+    height: 100%; /* גובה מקסימלי לתצוגה */
     overflow-y: auto; /* גלילה פנימית אנכית */
     overflow-x: hidden; /* מניעת גלילה אופקית */
     padding: 10px;
