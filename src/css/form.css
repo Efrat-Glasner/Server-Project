@@ -1,47 +1,110 @@
-/* עיצוב הטופס */
-.login-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  .login-button {
-    width: 100%;
-    padding: 10px 15px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .login-button:hover {
-    background-color: #0056b3;
-  }
+/* עיצוב הכללי */
+body {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f7f8fa;
+  color: #333;
+}
+
+/* עיצוב טופס הכניסה וההרשמה */
+.login-container, .signup-container, .register-container {
+  max-width: 450px;
+  width: 100%;
+  padding: 35px;
+  border: none;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 15px 40px rgba(35, 3, 41, 0.3);
+  transition: all 0.3s ease;
+}
+
+.login-container:hover, .signup-container:hover, .register-container:hover {
+  box-shadow: 0 20px 60px rgba(35, 3, 41, 0.3);
+}
+
+/* כותרת */
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* עיצוב קבוצת השדות */
+.form-group {
+  margin-bottom: 25px;
+}
+
+/* עיצוב התווית */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #0e0319;
+  font-weight: 500;
+}
+
+/* עיצוב השדות */
+input {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #9e4edf;
+  background-color: #fff;
+  outline: none;
+}
+
+/* עיצוב כפתור הכניסה וההרשמה */
+.login-button, .signup-button, .register-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #9e4edf;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-button:hover, .signup-button:hover, .register-button:hover {
+  background-color: #b72ed9;
+  transform: translateY(-3px);
+}
+
+.login-button:active, .signup-button:active, .register-button:active {
+  background-color: #811dbf;
+  transform: translateY(1px);
+}
+
+/* עיצוב טקסט תחתון */
+.text-center {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.text-center a {
+  color: #4e73df;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.text-center a:hover {
+  color: #2e59d9;
+  text-decoration: underline;
+}
