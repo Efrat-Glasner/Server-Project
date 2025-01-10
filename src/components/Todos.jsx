@@ -114,8 +114,8 @@ function Todos({ message, showMessage }) {
 
       <div className="todos-container">
         {filteredTodos.map((todo) => (
-          <div key={todo.id}>
-            <Todo
+          <div className="todo" key={todo.id}>
+            <Todo 
               todo={todo}
               setTodos={setTodos}
               showMessage={showMessage}

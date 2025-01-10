@@ -35,6 +35,7 @@ function Posts({ message, showMessage }) {
             ))
         }
     }, [posts, postId]);
+
     const filterPosts = (posts, query, criterion) => {
         if (!query) return posts;
 
@@ -54,30 +55,6 @@ function Posts({ message, showMessage }) {
 
     const filteredPosts = filterPosts(posts, searchQuery, searchCriterion);
 
-
-    // const handleAddPost = async () => {
-    //     if (!newPost.title.trim() || !newPost.body.trim()) {
-    //         showMessage("Please fill in both fields!");
-    //         return;
-    //     }
-
-    //     const newPostData = {
-    //         userId: currentUser.id,
-    //         title: newPost.title.trim(),
-    //         body: newPost.body.trim(),
-    //     };
-
-    //     try {
-    //         const addedPost = await post("posts", newPostData);
-    //         setPosts((prevPosts) => [...prevPosts, addedPost]);
-    //         setNewPost({ title: "", body: "" });
-    //         showMessage("The post was added successfully!");
-    //     } catch (error) {
-    //         showMessage("Failed to add the post.");
-    //         console.error(error);
-    //     }
-    // };
-
     const getPlaceholderText = () => {
         switch (searchCriterion) {
             case "id":
@@ -93,7 +70,6 @@ function Posts({ message, showMessage }) {
 
     return (
         <div className="posts-wrapper">
-            {/* Sidebar */}
             <div className="posts-sidebar">
                 <div className="search-container">
                     <div className="search-input-wrapper">

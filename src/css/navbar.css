@@ -1,10 +1,12 @@
 .navbar-container {
     background-color: #f0f8ff;
     margin: 0;
+   
 }
 
 .navbar {
     background-color: #333;
+    
 }
 
 .navbar-links,

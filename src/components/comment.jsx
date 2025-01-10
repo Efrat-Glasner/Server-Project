@@ -22,7 +22,7 @@ function Comment({ comment, setDetails, showMessage, message }) {
                         activity={!isAuthor}
                     />
                     <Delete
-                        type={"comments"}
+                        types={["comments"]}
                         id={comment.id}
                         setDetails={setDetails}
                         activity={!isAuthor}
