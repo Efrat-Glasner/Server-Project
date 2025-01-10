@@ -114,7 +114,7 @@ function Posts({ message, showMessage }) {
                         </select>
                     </div>
                 </div>
-                 <button onClick={() => setShowAddPost((prev) => !prev)}>
+                <button onClick={() => setShowAddPost((prev) => !prev)}>
                     {showAddPost ? "Cancel" : "Add Post"}
                 </button>
                 <button onClick={() => setShowAllPosts((prev) => !prev)}>
@@ -122,15 +122,15 @@ function Posts({ message, showMessage }) {
                 </button>
 
                 {showAddPost && (
-                     <Add
-                     type={"posts"}
-                     setDetails={setPosts}
-                     inputs={["title","body"]}
-                     knownFields={{userId:currentUser.id}}
-                     showMessage={showMessage}
- 
-                 />
-                )} 
+                    <Add
+                        type={"posts"}
+                        setDetails={setPosts}
+                        inputs={["title", "body"]}
+                        knownFields={{ userId: currentUser.id }}
+                        showMessage={showMessage}
+
+                    />
+                )}
                 {filteredPosts.map((post) => (
                     <div
                         key={post.id}

@@ -10,8 +10,8 @@ function Edit({ type, item, inputs, setDetails, showMessage, setSelectedItem, ac
             initialData[input] = item[input];
         });
         return initialData;
-    });
-
+    }); 
+      
     const handleSave = async () => {
         try {
             const updatedItem = await put(`${type}/${item.id}`, { ...item, ...editedData });
@@ -34,15 +34,21 @@ function Edit({ type, item, inputs, setDetails, showMessage, setSelectedItem, ac
             {isEditing ? (
                 <div className="edit-form">
                     {inputs.map((input) => (
-                        <input
-                            key={input}
-                            type="text"
-                            value={editedData[input]}
-                            onChange={(e) =>
-                                setEditedData((prev) => ({ ...prev, [input]: e.target.value }))
-                            }
-                            placeholder={`Edit ${input}`}
-                        />
+                        <div key={input} className="edit-field">
+                            <p htmlFor={`edit-${input}`} className="edit-label">
+                                {input}:
+                            </p>
+                            <input
+                                id={`edit-${input}`}
+                                type="text"
+                                value={editedData[input]}
+                                onChange={(e) =>
+                                    setEditedData((prev) => ({ ...prev, [input]: e.target.value }))
+                                }
+                                placeholder={`Edit ${input}`}
+                                className="edit-input"
+                            />
+                        </div>
                     ))}
                     <button onClick={handleSave} disabled={activity}>
                         Save

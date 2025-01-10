@@ -4,7 +4,6 @@ import { CurrentUser } from "./App";
 import Todo from './Todo';
 import "../css/todo.css";
 import { get } from "../js/controller";
-import { post } from "../js/controller";
 import Add from "./Add";
 
 function Todos({ message, showMessage }) {

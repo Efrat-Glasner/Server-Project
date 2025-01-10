@@ -15,7 +15,6 @@ function Photo({ photo, setPhotos, showMessage }) {
           setDetails={setPhotos}
           activity={false}
           showMessage={showMessage}
-          setSelectedItem={null}
         />
         <Edit
           type="photos"
@@ -23,7 +22,6 @@ function Photo({ photo, setPhotos, showMessage }) {
           inputs={["title", "thumbnailUrl"]}
           setDetails={setPhotos}
           showMessage={showMessage}
-          setSelectedItem={null}
           isAuthor={false}
         />
       </div>

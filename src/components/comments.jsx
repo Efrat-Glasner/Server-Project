@@ -23,14 +23,7 @@ function Comments({ postId, showMessage, message }) {
 
         fetchComments();
     }, [currentUser, postId]);
-
-    const handleUpdateComment = (commentId, updatedComment) => {
-        setComments((prev) =>
-            prev.map((comment) => (comment.id === commentId ? updatedComment : comment))
-        );
-        showMessage("The comment was updated successfully!");
-
-    };
+    
     return (
         <div>
             <h3>Comments:</h3>
@@ -48,7 +41,6 @@ function Comments({ postId, showMessage, message }) {
                         key={comment.id}
                         comment={comment}
                         setDetails={setComments}
-                        onUpdate={handleUpdateComment}
                         showMessage={showMessage}
                     />
                 ))}
