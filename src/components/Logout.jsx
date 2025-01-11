@@ -10,6 +10,7 @@ const Logout = () => {
         // הסרת המשתמש מהקונטקסט ומה-localStorage
         setCurrentUser(null);
         localStorage.removeItem("currentUser");
+        localStorage.removeItem("showAllPosts")
         navigate("/login"); // ניתוב לדף ההתחברות
     }, [setCurrentUser, navigate]);
 
