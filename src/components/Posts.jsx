@@ -6,133 +6,86 @@ import { CurrentUser } from "./App";
 import Post from "./Post";
 import "../css/post.css";
 import Add from "./Add";
+import Search from "./Search"; 
 
 function Posts({ message, showMessage }) {
     const { currentUser } = useContext(CurrentUser);
     const [posts, setPosts] = useState([]);
+    const [filteredPosts, setFilteredPosts] = useState([]); 
     const [selectedPost, setSelectedPost] = useState(null);
-    const [showAddPost, setShowAddPost] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [searchCriterion, setSearchCriterion] = useState("id");
     const [showAllPosts, setShowAllPosts] = useState(false);
     const { postId } = useParams();
+
     useEffect(() => {
         const fetchPosts = async () => {
             try {
                 const url = showAllPosts ? "posts" : `posts?userId=${currentUser.id}`;
                 const data = await get(url);
                 setPosts(data);
+                setFilteredPosts(data); // אתחל גם את הפוסטים המסוננים
             } catch (error) {
                 console.error("Error fetching posts:", error);
             }
         };
         fetchPosts();
     }, [currentUser, showAllPosts]);
+
     useEffect(() => {
         if (postId && posts) {
             posts.map((post) => (
                 (post.id == postId ? setSelectedPost(post) : null)
-            ))
+            ));
         }
     }, [posts, postId]);
 
-    const filterPosts = (posts, query, criterion) => {
-        if (!query) return posts;
-
-        return posts.filter((post) => {
-            switch (criterion) {
-                case "id":
-                    return post.id.toString().includes(query);
-                case "title":
-                    return post.title.toLowerCase().includes(query.toLowerCase());
-                case "body":
-                    return post.body.toLowerCase().includes(query.toLowerCase());
-                default:
-                    return posts;
-            }
-        });
-    };
-
-    const filteredPosts = filterPosts(posts, searchQuery, searchCriterion);
-
-    const getPlaceholderText = () => {
-        switch (searchCriterion) {
-            case "id":
-                return "Search by ID";
-            case "title":
-                return "Search by Title";
-            case "body":
-                return "Search by Body";
-            default:
-                return "Search";
-        }
+    const handleFilterChange = (filtered) => {
+        setFilteredPosts(filtered); // עדכון הפוסטים המסוננים
     };
 
     return (
         <div className="posts-wrapper">
             <div className="posts-sidebar">
                 <div className="search-container">
-                    <div className="search-input-wrapper">
-                        <input
-                            type="text"
-                            placeholder={getPlaceholderText()}
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                        <select
-                            className="search-dropdown"
-                            value={searchCriterion}
-                            onChange={(e) => setSearchCriterion(e.target.value)}
-                        >
-                            <option value="id">ID</option>
-                            <option value="title">Title</option>
-                            <option value="body">Body</option>
-                        </select>
-                    </div>
+                    <Search
+                        data={posts} // נשלח את המידע המקורי
+                        onFilter={handleFilterChange} // עדכון הפוסטים המסוננים
+                        searchFields={["id", "title", "body"]}
+                    />
                 </div>
-                <button onClick={() => setShowAddPost((prev) => !prev)}>
-                    {showAddPost ? "Cancel" : "Add Post"}
-                </button>
                 <button onClick={() => setShowAllPosts((prev) => !prev)}>
                     {showAllPosts ? "Show My Posts" : "Show All Posts"}
                 </button>
-
-                {showAddPost && (
-                    <Add
-                        type={"posts"}
-                        setDetails={setPosts}
-                        inputs={["title", "body"]}
-                        knownFields={{ userId: currentUser.id }}
-                        showMessage={showMessage}
-
-                    />
-                )}
+                <Add
+                    type={"posts"}
+                    setDetails={setPosts}
+                    inputs={["title", "body"]}
+                    knownFields={{ userId: currentUser.id }}
+                    showMessage={showMessage}
+                />
                 {filteredPosts.map((post) => (
                     <div
                         key={post.id}
                         className={`post-title ${selectedPost?.id === post.id ? "active" : ""}`}
                         onClick={() => setSelectedPost(post)}
                     >
-                        <p> <strong> ID:</strong> {post.id}:<br></br> {post.title}</p>
-
+                        <p><strong>ID:</strong> {post.id}:<br />{post.title}</p>
                     </div>
                 ))}
             </div>
 
-            {/* Content */}
             <div className="post-content">
                 {selectedPost ? (
-                    <Post
-                        post={selectedPost}
-                        showMessage={showMessage}
-                        setSelectedPost={setSelectedPost}
-                        setPosts={setPosts}
+                    <Post 
+                        post={selectedPost} 
+                        showMessage={showMessage} 
+                        setSelectedPost={setSelectedPost} 
+                        setPosts={setPosts} 
+                        onFilter={handleFilterChange}
                     />
                 ) : (
                     <div className="placeholder">Select a post to view details</div>
                 )}
             </div>
-
             {message && <p className="toast">{message}</p>}
         </div>
     );

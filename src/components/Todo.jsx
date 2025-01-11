@@ -4,7 +4,7 @@ import Edit from "./Edit";
 import Delete from "./Delete";
 import { put } from "../js/controller";
 
-const Todo = ({ todo, setTodos, showMessage }) => {
+const Todo = ({ todo, setTodos, showMessage, onFilter }) => {
     const handleToggleCompleted = async () => {
         try {
             const updatedTodo = await put(`todos/${todo.id}`, {
@@ -47,6 +47,7 @@ const Todo = ({ todo, setTodos, showMessage }) => {
                     id={todo.id}
                     setDetails={setTodos}
                     showMessage={showMessage}
+                    onFilter={onFilter}
                 />
             </div>
         </div>
