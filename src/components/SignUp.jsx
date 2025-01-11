@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // ייבוא Link
 import "../css/form.css";
 
 function Signup() {
@@ -75,6 +75,9 @@ function Signup() {
         <button type="submit" className="signup-button">Signup</button>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </form>
+      <p className="login-link">
+        Already have an account? <Link to="/login">Log in here</Link>
+      </p>
     </div>
   );
 }

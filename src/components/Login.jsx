@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-//vv
+import { useNavigate, Link } from "react-router-dom"; // ייבוא Link
 import "../css/form.css";
 import { CurrentUser } from "./App";
 
@@ -67,6 +66,9 @@ function Login() {
         <button type="submit" className="login-button">Login</button>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </form>
+      <p className="signup-link">
+        Don't have an account? <Link to="/signup">Sign up here</Link>
+      </p>
     </div>
   );
 }
