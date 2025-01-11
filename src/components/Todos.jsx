@@ -5,20 +5,20 @@ import Todo from './Todo';
 import "../css/todo.css";
 import { get } from "../js/controller";
 import Add from "./Add";
+import Search from "./Search"; // Importing the Search component
 
 function Todos({ message, showMessage }) {
   const { currentUser } = useContext(CurrentUser); // גישה ל-currentUser מתוך הקונטקסט
   const [todos, setTodos] = useState([]); // סטייט לשמירת המשימות
   const [sortBy, setSortBy] = useState('id'); // קריטריון המיון (לפי ברירת מחדל: ID)
-  const [searchQuery, setSearchQuery] = useState(""); // קריטריון החיפוש (כותרת, מזהה, מצב ביצוע)
-  const [searchCriterion, setSearchCriterion] = useState("id"); // קריטריון החיפוש (ברירת מחדל: ID)
+  const [filteredTodos, setFilteredTodos] = useState([]); // סטייט למשימות מסוננות
 
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-
         const data = await get(`todos?userId=${currentUser.id}`);
         setTodos(data);
+        setFilteredTodos(data); // התחל עם כל המשימות לא מסוננות
       } catch (error) {
         console.error("Error fetching todos:", error);
       }
@@ -42,27 +42,16 @@ function Todos({ message, showMessage }) {
         return todos;
     }
   };
-  // פונקציה לסינון על פי חיפוש
-  const filterTodos = (todos, query, criterion) => {
-    if (!query) return todos;
 
-    return todos.filter(todo => {
-      switch (criterion) {
-        case 'id':
-          return todo.id.toString().includes(query); // חיפוש לפי מזהה
-        case 'title':
-          return todo.title.toLowerCase().includes(query.toLowerCase()); // חיפוש לפי כותרת
-        case 'completed':
-          return todo.completed.toString().includes(query); // חיפוש לפי מצב ביצוע
-        default:
-          return todos;
-      }
-    });
+  // הגדרת המיון
+  const sortedTodos = sortTodos(filteredTodos, sortBy);
+
+  // חיפוש
+  const handleFilter = (filtered) => {
+    setFilteredTodos(filtered);
   };
+  
 
-  // הגדרת המיון והחיפוש
-  const sortedTodos = sortTodos(todos, sortBy);
-  const filteredTodos = filterTodos(sortedTodos, searchQuery, searchCriterion); // חיפוש לפי הקריטריון שנבחר
   return (
     <div>
       {/* כותרת ושורת המיון */}
@@ -78,7 +67,7 @@ function Todos({ message, showMessage }) {
       />
 
       {/* הודעה למשתמש */}
-      {message && <p className="toast" >{message}</p>}
+      {message && <p className="toast">{message}</p>}
 
       {/* הוספת select למיון */}
       <div>
@@ -89,36 +78,27 @@ function Todos({ message, showMessage }) {
           <option value="random">Sort Randomly</option>
         </select>
       </div>
+
       {/* שדה חיפוש */}
-      <div>
-        <input
-          type="text"
-          placeholder="Search"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <select
-          onChange={(e) => setSearchCriterion(e.target.value)}
-          value={searchCriterion}
-        >
-          <option value="id">Search by ID</option>
-          <option value="title">Search by Title</option>
-          <option value="completed">Search by Completion Status</option>
-        </select>
-      </div>
+      <Search
+        data={todos}
+        onFilter={handleFilter}
+        searchFields={["id", "title", "completed"]}
+      />
 
       {/* הצגת משימות */}
-      {filteredTodos.length === 0 && searchQuery && (
+      {filteredTodos.length === 0 && (
         <p>No tasks found for the given search criteria.</p>
       )}
 
       <div className="todos-container">
-        {filteredTodos.map((todo) => (
+        {sortedTodos.map((todo) => (
           <div className="todo" key={todo.id}>
-            <Todo 
+            <Todo
               todo={todo}
               setTodos={setTodos}
               showMessage={showMessage}
+              onFilter={handleFilter}
               onUpdate={(id, updatedTodo) => {
                 setTodos((prevTodos) =>
                   prevTodos.map((todo) =>
@@ -136,3 +116,4 @@ function Todos({ message, showMessage }) {
 }
 
 export default Todos;
+

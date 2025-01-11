@@ -1,6 +1,7 @@
- /* eslint-disable react/prop-types */
-import { deleteRequest ,get} from "../js/controller";
-function Delete({ types, id, setDetails, activity, showMessage, setSelectedItem }) {
+/* eslint-disable react/prop-types */
+import { deleteRequest, get } from "../js/controller";
+
+function Delete({ types, id, setDetails, activity, showMessage, setSelectedItem, onFilter }) {
     const handleDelete = async () => {
         try {
             // מערך לשמירת כל ה-IDs של הילדים שצריך למחוק
@@ -30,8 +31,16 @@ function Delete({ types, id, setDetails, activity, showMessage, setSelectedItem 
                     throw new Error(`Failed to delete ${item.type} with ID: ${item.id}`);
                 }
             }
+
             if (setSelectedItem) setSelectedItem(null);
-            setDetails((prev) => prev.filter((item) => item.id !== id));
+
+            // עדכון הפוסטים לאחר מחיקה
+            setDetails((prev) => {
+                const updatedPosts = prev.filter((item) => item.id !== id);
+                onFilter(updatedPosts);  // עדכון הפוסטים המסוננים
+                return updatedPosts;
+            });
+
             showMessage("The item and its related items were deleted successfully!");
         } catch (error) {
             console.error("Error deleting the items:", error);
