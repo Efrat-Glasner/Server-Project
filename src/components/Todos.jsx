@@ -26,6 +26,9 @@ function Todos({ message, showMessage }) {
 
     fetchTodos();
   }, [currentUser]);
+  useEffect(() => {
+  setFilteredTodos(todos); // עדכון המשימות המסוננות בכל שינוי במשימות
+}, [todos]);
 
   // פונקציית מיון
   const sortTodos = (todos, criterion) => {

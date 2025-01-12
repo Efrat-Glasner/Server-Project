@@ -10,6 +10,9 @@
 .albums-header {
   margin-bottom: 10px;
 }
+input{
+  padding: 10px;
+}
 
 .add-album input {
   margin-right: 5px;
@@ -399,19 +402,22 @@ h1 {
 }
 
 .todo-checkbox {
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   cursor: pointer;
   appearance: none;
-  border: 2px solid #007bff;
+  border: 2px solid #333;
   border-radius: 4px;
   outline: none;
   transition: background-color 0.3s, border-color 0.3s;
 }
+.edit-button i{
+  color: #333;
+}
 
 .todo-checkbox:checked {
-  background-color: #007bff;
-  border-color: #0056b3;
+  background-color: #333;
+  border-color: #333;
 }
 
 .todo-actions,
