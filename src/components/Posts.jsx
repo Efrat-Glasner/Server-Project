@@ -10,7 +10,8 @@ import Search from "./Search";
 
 function Posts({ message, showMessage }) {
     const { currentUser } = useContext(CurrentUser);
-    const [posts, setPosts] = useState([]);
+    const [allPosts, setAllPosts] = useState([]);
+    const [myPosts, setMyPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
 
@@ -19,19 +20,41 @@ function Posts({ message, showMessage }) {
     const [showAllPosts, setShowAllPosts] = useState(initialShowAllPosts);
     const { postId } = useParams(); // קריאת מזהה הפוסט מה-URL
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const url = showAllPosts ? "posts" : `posts?userId=${currentUser.id}`;
-                const data = await get(url);
-                setPosts(data);
-                setFilteredPosts(data);
-            } catch (error) {
-                console.error("Error fetching posts:", error);
+        const fetchMyPosts = async () => {
+            if (myPosts.length === 0) {
+                try {
+                    const data = await get(`posts?userId=${currentUser.id}`);
+                    setMyPosts(data);
+                    setFilteredPosts(data);
+                } catch (error) {
+                    console.error("Error fetching my posts:", error);
+                }
+            } else {
+                setFilteredPosts(myPosts);
             }
         };
 
-        fetchPosts();
-    }, [currentUser, showAllPosts]);
+        const fetchAllPosts = async () => {
+            if (allPosts.length === 0) {
+                try {
+                    const data = await get("posts");
+                    setAllPosts(data);
+                    setFilteredPosts(data);
+                } catch (error) {
+                    console.error("Error fetching all posts:", error);
+                }
+            } else {
+                setFilteredPosts(allPosts);
+            }
+        };
+
+        if (showAllPosts) {
+            fetchAllPosts();
+        } else {
+            fetchMyPosts();
+        }
+    }, [showAllPosts, currentUser, myPosts, allPosts]);
+
 
     // טיפול ב-URL עם מזהה פוסט
     useEffect(() => {
@@ -56,7 +79,7 @@ function Posts({ message, showMessage }) {
             <div className="posts-sidebar">
                 <div className="search-container">
                     <Search
-                        data={posts}
+                        data={showAllPosts ? allPosts : myPosts}
                         onFilter={handleFilterChange}
                         searchFields={["id", "title", "body"]}
                     />
@@ -66,7 +89,7 @@ function Posts({ message, showMessage }) {
                 </button>
                 <Add
                     type={"posts"}
-                    setDetails={setPosts}
+                    setDetails={showAllPosts ? setAllPosts : setMyPosts}
                     inputs={["title", "body"]}
                     knownFields={{ userId: currentUser.id }}
                     showMessage={showMessage}

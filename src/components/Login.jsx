@@ -67,6 +67,7 @@ function Login() {
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </form>
       <p className="signup-link">
+        {/*  eslint-disable-next-line react/no-unescaped-entities */}
         Don't have an account? <Link to="/signup">Sign up here</Link>
       </p>
     </div>
