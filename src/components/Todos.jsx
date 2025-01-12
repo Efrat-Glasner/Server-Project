@@ -64,6 +64,7 @@ function Todos({ message, showMessage }) {
         inputs={["title"]}
         knownFields={{ userId: currentUser.id, completed: false }}
         showMessage={showMessage}
+        onFilter={handleFilter}
       />
 
       {/* הודעה למשתמש */}

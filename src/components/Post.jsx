@@ -159,7 +159,11 @@ function Post({ post, setPosts, showMessage, setSelectedPost, onFilter }) {
             </div>
 
             {/* Comments section */}
-            {showComments && <Comments postId={post.id} showMessage={showMessage} />}
+            {showComments && 
+            <Comments
+             postId={post.id} 
+             showMessage={showMessage}
+             onFilter={onFilter} />}
         </div>
     );
 }
