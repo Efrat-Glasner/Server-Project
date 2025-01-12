@@ -47,7 +47,7 @@ function Delete({ types, id, setDetails, activity, showMessage, setSelectedItem,
         }
     };
 
-    return <button onClick={handleDelete} disabled={activity}>Delete</button>;
+    return <button className="delete-button" onClick={handleDelete} disabled={activity}>Delete</button>;
 }
 
 export default Delete;

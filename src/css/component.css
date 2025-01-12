@@ -1,0 +1,487 @@
+.albums-sidebar {
+  flex: 1;
+  border-right: 2px solid #ddd;
+  padding: 10px;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+}
+
+.albums-header {
+  margin-bottom: 10px;
+}
+
+.add-album input {
+  margin-right: 5px;
+}
+
+.search-albums input {
+  margin-right: 5px;
+}
+
+.albums-list {
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.album-title,
+.post-title {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+.post-buttons{
+  display: flex;
+  margin:10px
+}
+
+.album-title:hover {
+  background-color: #ececec;
+}
+
+.album-content {
+  flex: 3;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.placeholder {
+  color: #aaa;
+  text-align: center;
+  font-size: 18px;
+}
+
+
+/* CSS Code */
+.posts-wrapper,
+.albums-wrapper {
+  display: flex;
+  height: calc(100vh - 60px);
+  /* מסך מלא פחות הסרגל */
+  padding: 20px;
+  box-sizing: border-box;
+  gap: 20px;
+}
+
+.posts-sidebar {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f4f4f4;
+  border-right: 2px solid #ddd;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.posts-sidebar .post-title {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.posts-sidebar {
+  background-color: #ececec;
+}
+
+.posts-sidebar .post-title.active .album-title:active {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.post-content {
+  flex: 3;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.post-content .placeholder {
+  color: #aaa;
+  text-align: center;
+  font-size: 18px;
+}
+
+.add-post-container {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-post-container input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-post-container button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-post-container button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.toast {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.search-input-wrapper input {
+  flex: 1;
+  padding: 8px;
+}
+
+.search-input-wrapper .search-dropdown {
+  padding: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.comment-card {
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 5px;
+}
+
+.comment-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.all-comment {
+  list-style-type: none;
+
+}
+
+.photos-wrapper {
+  width: 100%;
+  /* גבול רוחב התצוגה */
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.album-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-photo {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-photo.active,
+.comment-actions {
+  display: flex;
+}
+
+.photos-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-items: center;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.photo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 200px;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+h1 {
+  color: black;
+  font-size: 25px;
+}
+
+.photo-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* עיצוב התמונה */
+.photo-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* כותרת */
+.photo-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* כפתורים */
+.photo-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.photo-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.photo-button.save {
+  background-color: #4caf50;
+  color: white;
+}
+
+.photo-button.cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+/* .photo-button.delete-button {
+  background-color: #e91e63;
+  color: white;
+} */
+.delete-button,
+.edit-button,
+.show-comment {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-family: inherit;
+  background-color: #fffcfc;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+.delete-button:hover {
+  background-color: #e84e81;
+  color: white;
+}
+
+
+.photo-button.edit {
+  background-color: #2196f3;
+  color: white;
+}
+
+.photo-button:hover {
+  opacity: 0.9;
+}
+
+/* אינפוטים */
+/* .photo-input {
+  width: 90%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+} */
+
+/* התאמה למסכים קטנים */
+@media (max-width: 768px) {
+  .photos-list {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .photos-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.todos-container,
+.posts-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 טורים */
+  gap: 20px;
+  /* רווח בין המשימות */
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  /* תופס את כל הרוחב של העמוד */
+  box-sizing: border-box;
+  /* מתחשב בגבולות וב-padding */
+}
+
+.todo-container,
+.post-container {
+  position: relative;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #e7171700;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  /* גודל קבוע למשימות */
+  height: auto;
+  list-style: none;
+  /* הסרת הנקודות */
+}
+
+.todo-details,
+.post-details {
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.todo-checkbox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.todo-checkbox-label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.todo-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  appearance: none;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.todo-checkbox:checked {
+  background-color: #007bff;
+  border-color: #0056b3;
+}
+
+.todo-actions,
+.post-actions {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+button {
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.header-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.header-row select {
+  position: absolute;
+  right: 0;
+}
+
+.add-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.post-title {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+
+.post-title:hover,
+.album-title:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.todo {
+  margin-left: 20%;
+}

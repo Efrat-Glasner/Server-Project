@@ -45,7 +45,7 @@ function Photos({ album, showMessage, setAlbums, setSelectedAlbum, onFilter }) {
     return (
         <div className="photos-wrapper">
             <div className="album-title-wrapper">
-                <h1 className="album-title">{album.title}</h1>
+                <h1>{album.title}</h1>
             </div>
             <Add
                 type="photos"

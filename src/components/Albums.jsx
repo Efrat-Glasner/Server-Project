@@ -3,7 +3,7 @@ import { useEffect, useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CurrentUser } from "./App";
 import { get } from "../js/controller";
-import "../css/album.css";
+import "../css/component.css";
 import Photos from "./Photos";
 import Add from "./Add";
 import Search from "./Search"; // הוספתי את קומפוננטת החיפוש

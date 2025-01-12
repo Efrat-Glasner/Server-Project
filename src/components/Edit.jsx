@@ -56,7 +56,7 @@ function Edit({ type, item, inputs, setDetails, showMessage, setSelectedItem, ac
                     <button onClick={() => setIsEditing(false)}>Cancel</button>
                 </div>
             ) : (
-                <button
+                <button className="edit-button" 
                     onClick={() => setIsEditing(true)}
                     disabled={activity} 
                 >
