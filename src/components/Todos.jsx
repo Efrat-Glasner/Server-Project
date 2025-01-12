@@ -72,7 +72,7 @@ function Todos({ message, showMessage }) {
 
       {/* הוספת select למיון */}
       <div>
-        <select onChange={(e) => setSortBy(e.target.value)} value={sortBy}>
+        <select className="select-option"  onChange={(e) => setSortBy(e.target.value)} value={sortBy}>
           <option value="id">Sort by ID</option>
           <option value="alphabetical">Sort Alphabetically</option>
           <option value="completed">Sort by Completion</option>

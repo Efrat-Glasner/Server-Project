@@ -68,18 +68,18 @@ function Post({ post, setPosts, showMessage, setSelectedPost, onFilter }) {
                 />
             </div>
             <div>
-                <button onClick={toggleComments} className="show-comment">
+                <button onClick={toggleComments} className="show-button">
                     {showComments ? "Hide Comments" : "Show Comments"}
                 </button>
             </div>
 
 
             {/* Comments section */}
-            {showComments && 
-            <Comments
-             postId={post.id} 
-             showMessage={showMessage}
-             onFilter={onFilter} />}
+            {showComments &&
+                <Comments
+                    postId={post.id}
+                    showMessage={showMessage}
+                    onFilter={onFilter} />}
         </div>
     );
 }

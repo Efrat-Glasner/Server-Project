@@ -32,7 +32,7 @@ const Search = ({ data, onFilter, searchFields }) => {
         onChange={handleSearch}
         placeholder="Search..."
       />
-      <select onChange={handleCriterionChange} value={searchCriterion}>
+      <select className="select-option" onChange={handleCriterionChange} value={searchCriterion}>
         {searchFields.map((field) => (
           <option key={field} value={field}>
             {field}
