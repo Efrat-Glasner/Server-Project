@@ -8,7 +8,7 @@ import Photos from "./Photos";
 import Add from "./Add";
 import Search from "./Search"; // הוספתי את קומפוננטת החיפוש
 
-function Albums({ message, showMessage }) {
+function Albums({ message, showMessage}) {
   const { currentUser } = useContext(CurrentUser);
   const [albums, setAlbums] = useState([]);
   const [filteredAlbums, setFilteredAlbums] = useState([]); // מצב חדש עבור האלבומים המסוננים
@@ -57,10 +57,11 @@ function Albums({ message, showMessage }) {
             inputs={["title"]}
             knownFields={{ userId: currentUser.id }}
             showMessage={showMessage}
+            onFilter={handleFilterChange}
           />
           <Search
-            data={albums} // נשלח את המידע המקורי
-            onFilter={(filtered) => setFilteredAlbums(filtered)} // מעדכן את האלבומים המסוננים
+            data={albums} 
+            onFilter={handleFilterChange}
             searchFields={["id", "title"]}
           />
         </div>

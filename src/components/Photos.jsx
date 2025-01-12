@@ -53,6 +53,8 @@ function Photos({ album, showMessage, setAlbums, setSelectedAlbum, onFilter }) {
                 inputs={["title", "thumbnailUrl"]}
                 knownFields={album.id}
                 showMessage={showMessage}
+                onFilter={onFilter}
+
             />
             <Delete
                 types={["photos/albumId", "albums"]}

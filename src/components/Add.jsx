@@ -2,7 +2,7 @@
 import { post } from "../js/controller";
 import { useState } from "react";
 
-function Add({ type, setDetails, inputs, knownFields, showMessage }) {
+function Add({ type, setDetails, inputs, knownFields, showMessage, onFilter }) {
     const [newItem, setNewItem] = useState({});
     const [isAdding, setIsAdding] = useState(false);
 
@@ -14,7 +14,13 @@ function Add({ type, setDetails, inputs, knownFields, showMessage }) {
         try {
             const combinedData = { ...knownFields, ...newItem };
             const addedItem = await post(type, combinedData);
-            setDetails((prevDetails) => [addedItem, ...prevDetails]);
+            setDetails((prevDetails) => {
+                const updatedDetails = [addedItem, ...prevDetails];
+
+                // עדכון המשימות המסוננות באמצעות onFilter
+                onFilter(updatedDetails);
+                return updatedDetails;
+            });
             setNewItem({});
             setIsAdding(false);
             showMessage(`${type} added successfully!`);

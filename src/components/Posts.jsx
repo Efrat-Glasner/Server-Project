@@ -93,6 +93,7 @@ function Posts({ message, showMessage }) {
                     inputs={["title", "body"]}
                     knownFields={{ userId: currentUser.id }}
                     showMessage={showMessage}
+                    onFilter={handleFilterChange}
                 />
                 {filteredPosts.map((post) => (
                     <div

@@ -6,7 +6,7 @@ import Comment from "./Comment";
 import "../css/comment.css";
 import Add from "./Add";
 
-function Comments({ postId, showMessage, message }) {
+function Comments({ postId, showMessage, message, onFilter }) {
     const { currentUser } = useContext(CurrentUser);
     const [comments, setComments] = useState([]);
     useEffect(() => {
@@ -33,6 +33,7 @@ function Comments({ postId, showMessage, message }) {
                 inputs={["name","body"]}
                 knownFields={{postId:postId,email:currentUser.email}}
                 showMessage={showMessage}
+                onFilter={onFilter}
             />
             {/* הצגת התגובות */}
             <ul className="all-comment">
