@@ -2,7 +2,7 @@
   flex: 1;
   border-right: 2px solid #ddd;
   padding: 10px;
-  background-color: #f4f4f4;
+  background-color: #fffdfd;
   display: flex;
   flex-direction: column;
 }
@@ -35,11 +35,18 @@ input{
   transition: background-color 0.3s;
 }
 .post-buttons{
-  margin:10px
+  margin: 10px;
+  display: flex;
 }
 
-.album-title:hover {
-  background-color: #ececec;
+.album-title:hover{
+  background-color: #9dacf7;
+
+
+}
+.post-title:hover{
+  background-color: #9dacf7;
+
 }
 
 .album-content {
@@ -47,6 +54,7 @@ input{
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
 .placeholder {
@@ -84,14 +92,21 @@ input{
   transition: background-color 0.3s, color 0.3s;
 }
 
-.posts-sidebar {
-  background-color: #ececec;
-}
 
-.posts-sidebar .post-title.active .album-title:active {
-  background-color: #007bff;
-  color: white;
+
+.posts-sidebar {
+  background-color: #ffffff;
+  color: #333;
+}
+.album-title:active{
+  background-color: #9df7d2;
   font-weight: bold;
+  color: #333;
+}
+.post-title:active{
+  background-color: #9df7d2;
+  font-weight: bold;
+  color: #333;
 }
 
 .post-content {
@@ -115,7 +130,14 @@ input{
   flex-direction: column;
   gap: 10px;
 }
-
+.add-button:hover{
+color: wheat;
+background-color: #333;
+}
+.show-button:hover{
+  color: wheat;
+  background-color: #333;
+  }
 .add-post-container input {
   padding: 10px;
   border: 1px solid #ccc;
@@ -169,9 +191,9 @@ input{
   border: 2px solid #ddd;
   border-radius: 10px;
   background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s, box-shadow 0.2s;
-  margin-top: 5px;
+  margin-top: 7px;
 }
 
 .comment-card:hover {
@@ -220,7 +242,7 @@ input{
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 10px;
-  background-color: #f9f9f9;
+  background-color: #e3cab8;
 }
 
 .photo-card {
@@ -268,8 +290,28 @@ h1 {
 /* כפתורים */
 .photo-buttons {
   gap: 10px;
+  display: flex;
 }
-
+.load-more{
+ padding: 10px;
+ height: 60px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid #333;
+}
+.load-more:hover{
+  color: wheat;
+  background-color: #333;
+}
+.cancel-button:hover{
+color: #cd0707;
+}
+.confirm-button:hover{
+color: #4caf50;
+}
 .photo-button {
   padding: 8px 12px;
   border: none;
@@ -308,27 +350,33 @@ h1 {
   transition: border-color 0.25s;
   max-height: 40px;
 }
+.delete-button{
+  color: #cd0707;
+}
+.edit-button{
+  color: #cf5f0f;
+}
 .delete-button:hover {
-  background-color: #e84e81;
-  color: white;
+  background-color: #db6969;
+  color:#333
+}
+.edit-button:hover{
+  background-color: #ca926b;
+  color:#333
 }
 
 .select-option {
+  padding: 15px;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-family: inherit;
-  background-color: #fffcfc;
-  cursor: pointer;
-  transition: border-color 0.25s, background-color 0.25s;
-  max-height: 40px;
-  appearance: none; /* מסתיר את החץ הדיפולטי בדפדפנים */
+  box-sizing: border-box;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
-
 .select-option:focus {
-  outline: none;
-  border-color: #0f1265; /* צבע גבול בעת פוקוס */
+  outline: none; 
+  border-color: #9e4edf;
   background-color: #f0f8ff; /* רקע בהיר בעת פוקוס */
 }
 
@@ -407,7 +455,24 @@ h1 {
   list-style: none;
   /* הסרת הנקודות */
 }
+.todo-container {
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+}
+.todo-title{
+  color:#385f21;
+}
+/* .all-todos-container{
+ background-color: #fcefe1;
+} */
+.todos-container{
+  background-color: #ffffff00;
 
+}
 .todo-details,
 .post-details {
   width: 100%;
@@ -415,40 +480,32 @@ h1 {
   font-size: 14px;
   margin-bottom: 10px;
 }
-
-.todo-checkbox-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 10px;
-}
-
-.todo-checkbox-label {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 5px;
-}
-
 .todo-checkbox {
-  width: 10px;
-  height: 10px;
+  appearance: none; /* מסיר את הסטייל הבסיסי של הדפדפן */
+  width: 20px;
+  height: 20px;
+  border: 2px solid #007bff; /* מסגרת כחולה */
+  border-radius: 4px; /* פינות מעוגלות */
+  background-color: white; /* רקע לבן */
   cursor: pointer;
-  appearance: none;
-  border: 2px solid #333;
-  border-radius: 4px;
-  outline: none;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-.edit-button i{
-  color: #333;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 
 .todo-checkbox:checked {
-  background-color: #333;
-  border-color: #333;
+  background-color: #007bff; /* רקע כחול כשמסומן */
+  border-color: #0056b3; /* צבע מסגרת כהה יותר */
 }
 
-.todo-actions,
+.todo-checkbox:checked::after {
+  content: '✓'; /* אייקון וי */
+  color: white; /* צבע ה-וי */
+  font-size: 16px;
+  font-weight: bold;
+}
+
 .post-actions {
   display: flex;
   gap: 5px;
@@ -456,7 +513,16 @@ h1 {
   justify-content: space-between;
   width: 100%;
 }
-
+.todo-actions {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 5px;
+  margin-top: 10px;
+  width: 100%;
+}
+/* .todo{
+  background-color: #232323;
+} */
 button {
   padding: 8px 15px;
   font-size: 14px;
@@ -509,11 +575,15 @@ button:disabled {
   transition: color 0.3s;
 }
 
-
-.post-title:hover,
-.album-title:hover {
-  color: #007bff;
-  text-decoration: underline;
+.post-data-title{
+  color:blue;
+  font-weight: bold;
+  font-size: large;
+}
+.post-body{
+  color: #333;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: medium;
 }
 
 .todo {

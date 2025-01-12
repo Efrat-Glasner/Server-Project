@@ -45,7 +45,7 @@ function Photos({ album, showMessage, setAlbums, setSelectedAlbum, onFilter }) {
     return (
         <div className="photos-wrapper">
             <div className="album-title-wrapper">
-                <h1>{album.title}</h1>
+                <h1 className="album-title">{album.title}</h1>
             </div>
             <Add
                 type="photos"
@@ -75,7 +75,7 @@ function Photos({ album, showMessage, setAlbums, setSelectedAlbum, onFilter }) {
                     />
                 ))}
                 {hasMore && (
-                    <button onClick={() => fetchPhotos(false)}>Load More</button>
+                    <button className="load-more" onClick={() => fetchPhotos(false)}>Load More</button>
                 )}
             </div>
 

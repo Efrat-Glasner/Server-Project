@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 import { deleteRequest, get } from "../js/controller";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function Delete({ types, id, setDetails, activity, showMessage, setSelectedItem, onFilter }) {
     const handleDelete = async () => {
@@ -47,7 +49,8 @@ function Delete({ types, id, setDetails, activity, showMessage, setSelectedItem,
         }
     };
 
-    return <button className="delete-button" onClick={handleDelete} disabled={activity}>Delete</button>;
+    return <button className="delete-button" onClick={handleDelete} disabled={activity}>
+        <FontAwesomeIcon icon={faTrash} /></button>;
 }
 
 export default Delete;

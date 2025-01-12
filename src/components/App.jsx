@@ -1,6 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
-
 import { createContext, useState, useEffect } from "react";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import "../css/App.css";
@@ -58,7 +55,6 @@ function App() {
 
   return (
     <CurrentUser.Provider value={{ currentUser, setCurrentUser }}>
-       <FontAwesomeIcon icon={faCoffee} /> {/* אייקון כוס קפה */}
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />

@@ -36,8 +36,8 @@ function Post({ post, setPosts, showMessage, setSelectedPost, onFilter }) {
 
             {/* Display post details */}
             <div className="post-details">
-                <p >
-                    <strong>Title:</strong> {post.title}
+                <p className="post-data-title">
+                   {post.title}
                 </p>
                 <p className="post-body">
                     <strong>Body:</strong> {post.body}

@@ -24,16 +24,8 @@ const Todo = ({ todo, setTodos, showMessage, onFilter }) => {
   return (
     <div className="todo-container">
       <div className="todo-details">
-        <p><strong>ID:</strong> {todo.id}</p>
-        <p><strong>Title:</strong> {todo.title}</p>
-      </div>
-      <div className="todo-checkbox-container">
-        <input
-          type="checkbox"
-          checked={todo.completed}
-          onChange={handleToggleCompleted}
-          className="todo-checkbox"
-        />
+        <p className="todo-id"><strong>ID:</strong> {todo.id}</p>
+        <p className="todo-title"> {todo.title}</p>
       </div>
 
       <div className="todo-actions">
@@ -51,6 +43,15 @@ const Todo = ({ todo, setTodos, showMessage, onFilter }) => {
           showMessage={showMessage}
           onFilter={onFilter}
         />
+        <div className="todo-checkbox-container">
+        <input
+          type="checkbox"
+          checked={todo.completed}
+          onChange={handleToggleCompleted}
+          className="todo-checkbox"
+        />
+      </div>
+
       </div>
     </div>
   );

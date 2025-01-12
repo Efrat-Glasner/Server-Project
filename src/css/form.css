@@ -61,7 +61,6 @@ input {
 }
 
 input:focus {
-  border-color: #9e4edf;
   background-color: #fff;
   outline: none;
 }

@@ -56,11 +56,29 @@ function Todos({ message, showMessage }) {
   
 
   return (
-    <div>
+    <div className="all-todos-container">
       {/* כותרת ושורת המיון */}
       <div className="header-row">
         <h1>Todos</h1>
       </div>
+
+      {/* שדה חיפוש */}
+      <Search
+        data={todos}
+        onFilter={handleFilter}
+        searchFields={["id", "title", "completed"]}
+      />
+      {/* הוספת select למיון */}
+      <div>
+        <select className="select-option"  onChange={(e) => setSortBy(e.target.value)} value={sortBy}>
+          <option value="id">Sort by ID</option>
+          <option value="alphabetical">Sort Alphabetically</option>
+          <option value="completed">Sort by Completion</option>
+          <option value="random">Sort Randomly</option>
+        </select>
+      </div>
+
+
       <Add
         type={"todos"}
         setDetails={setTodos}
@@ -72,24 +90,6 @@ function Todos({ message, showMessage }) {
 
       {/* הודעה למשתמש */}
       {message && <p className="toast">{message}</p>}
-
-      {/* הוספת select למיון */}
-      <div>
-        <select className="select-option"  onChange={(e) => setSortBy(e.target.value)} value={sortBy}>
-          <option value="id">Sort by ID</option>
-          <option value="alphabetical">Sort Alphabetically</option>
-          <option value="completed">Sort by Completion</option>
-          <option value="random">Sort Randomly</option>
-        </select>
-      </div>
-
-      {/* שדה חיפוש */}
-      <Search
-        data={todos}
-        onFilter={handleFilter}
-        searchFields={["id", "title", "completed"]}
-      />
-
       {/* הצגת משימות */}
       {filteredTodos.length === 0 && (
         <p>No tasks found for the given search criteria.</p>

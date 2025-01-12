@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { put } from "../js/controller";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare, faTimes, faCheck  } from '@fortawesome/free-solid-svg-icons';
 
 function Edit({ type, item, inputs, setDetails, showMessage, setSelectedItem, activity }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -51,16 +53,16 @@ function Edit({ type, item, inputs, setDetails, showMessage, setSelectedItem, ac
                         </div>
                     ))}
                     <button onClick={handleSave} disabled={activity}>
-                        Save
+                    <FontAwesomeIcon icon={faCheck } />
                     </button>
-                    <button  className="add-button" onClick={() => setIsEditing(false)}>Cancel</button>
+                    <button  className="add-button" onClick={() => setIsEditing(false)}> <FontAwesomeIcon icon={faTimes} /></button>
                 </div>
             ) : (
                 <button className="edit-button" 
                     onClick={() => setIsEditing(true)}
                     disabled={activity} 
                 >
-                    Edit
+                    <FontAwesomeIcon icon={faPenToSquare} />
                 </button>
             )}
         </div>

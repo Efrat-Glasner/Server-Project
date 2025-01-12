@@ -36,7 +36,7 @@ function Add({ type, setDetails, inputs, knownFields, showMessage, onFilter }) {
                 <button  className="add-button" onClick={() => setIsAdding(true)}>Add {type}</button>
             ) : (
                 <>
-                    <button  className="add-button" onClick={() => setIsAdding(false)}>Cancel</button>
+                    <button  className="cancel-button" onClick={() => setIsAdding(false)}>Cancel</button>
                     <div className="add-item">
                         {inputs.map((field) => (
                             <input
@@ -47,7 +47,7 @@ function Add({ type, setDetails, inputs, knownFields, showMessage, onFilter }) {
                                 onChange={(e) => handleInputChange(field, e.target.value)}
                             />
                         ))}
-                        <button className="add-button"
+                        <button className="confirm-button"
                             onClick={handleAdd}
                             disabled={inputs.some((field) => !newItem[field]?.trim())}
                         >
