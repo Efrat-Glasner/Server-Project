@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { post } from "../js/controller";
 import { useState } from "react";
-
+import '../css/component.css'
 function Add({ type, setDetails, inputs, knownFields, showMessage, onFilter }) {
     const [newItem, setNewItem] = useState({});
     const [isAdding, setIsAdding] = useState(false);
@@ -33,10 +33,10 @@ function Add({ type, setDetails, inputs, knownFields, showMessage, onFilter }) {
     return (
         <>
             {!isAdding ? (
-                <button onClick={() => setIsAdding(true)}>Add {type}</button>
+                <button  className="add-button" onClick={() => setIsAdding(true)}>Add {type}</button>
             ) : (
                 <>
-                    <button onClick={() => setIsAdding(false)}>Cancel</button>
+                    <button  className="add-button" onClick={() => setIsAdding(false)}>Cancel</button>
                     <div className="add-item">
                         {inputs.map((field) => (
                             <input
@@ -47,7 +47,7 @@ function Add({ type, setDetails, inputs, knownFields, showMessage, onFilter }) {
                                 onChange={(e) => handleInputChange(field, e.target.value)}
                             />
                         ))}
-                        <button
+                        <button className="add-button"
                             onClick={handleAdd}
                             disabled={inputs.some((field) => !newItem[field]?.trim())}
                         >

@@ -84,7 +84,7 @@ function Posts({ message, showMessage }) {
                         searchFields={["id", "title", "body"]}
                     />
                 </div>
-                <button onClick={toggleView}>
+                <button className="show-button" onClick={toggleView}>
                     {showAllPosts ? "Show My Posts" : "Show All Posts"}
                 </button>
                 <Add

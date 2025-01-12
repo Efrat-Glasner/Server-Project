@@ -20,8 +20,8 @@ function Comments({ postId, showMessage, message, onFilter }) {
                 console.error("Error fetching comments:", error);
             }
         };
-
         fetchComments();
+
     }, [currentUser, postId]);
     
     return (
